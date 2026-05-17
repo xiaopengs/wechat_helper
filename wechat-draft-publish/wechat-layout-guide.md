@@ -20,25 +20,33 @@
 
 ```
 品牌主色：#1a73e8（科技蓝）
-辅助色：#ff6b35（活力橙，强调用）
+辅助色：#ff6b35（活力橙，强调/判断用）
 正文字色：#333333
 次要文字：#666666 / #999999
 背景色：白色为主
-引用背景：#f7f8fa
-互动框背景：#e8f0fe
-分割线：#eeeeee
+引用/摘要背景：#f7f8fa
+分割线：#1a73e8（4px 品牌色块，不再用细灰线）
+段落号：#1a73e8 13px letter-spacing:3px
 ```
+
+## ⚠️ 花叔排版硬规则（推送前自检）
+
+1. **正文不要标题** — 公众号自带标题，HTML里不从 `<h1>` / 大字标题开始
+2. **正文不要作者署名** — 公众号自带作者字段
+3. **段落间距统一 18px** — `margin-bottom:18px`，不要用 20px/24px 混搭
+4. **插图位用简单一行** — `（插图：描述）`，不要用大框占位
+5. **结尾不要互动引导框** — 花叔文章不收"你怎么看"/"欢迎评论"尾巴
+6. **参考信息紧凑化** — 一行一个 `·`，小字灰色，不套引用框
+7. **分隔线用品牌色块** — `36px×4px #1a73e8`，不用细灰线
+8. **分隔处加段落号** — `01`-`06`，13px蓝色字在分隔栏下方
+9. **优先色块引用框** — 金句/总结用 `#f7f8fa` 背景+左侧色条，不用纯文字
+10. **关键词着色** — 术语/数据用 `#1a73e8`，强调/判断用 `#ff6b35`
 
 ## 排版模块模板
 
-### 1. 标题区
+### 1. 标题区（⚠️ 花叔推文不要标题区）
 ```html
-<section style="text-align:center;margin-bottom:20px;">
-  <span style="font-size:24px;font-weight:bold;color:#1a73e8;line-height:1.4;">文章标题</span>
-</section>
-<section style="text-align:center;margin-bottom:30px;">
-  <span style="font-size:14px;color:#999999;">作者 · 日期</span>
-</section>
+<!-- 公众号已有标题，正文直接从内容开始 -->
 ```
 
 ### 2. 小标题
@@ -68,7 +76,14 @@
 <strong style="color:#1a73e8;">数据/术语</strong>
 ```
 
-### 6. 图片 + 图注
+### 6. 图片占位（未上传实图时）
+```html
+<section style="margin-bottom:18px;">
+  <span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">（插图：描述）</span>
+</section>
+```
+
+### 6b. 图片 + 图注（实图上传后）
 ```html
 <section style="margin:25px 0;text-align:center;">
   <img src="微信图片URL" style="width:100%;border-radius:6px;"/>
@@ -76,11 +91,9 @@
 </section>
 ```
 
-### 7. 互动引导框
+### 7. 互动引导框（⚠️ 花叔文章不用这个）
 ```html
-<section style="margin-top:30px;padding:20px;background-color:#e8f0fe;border-radius:8px;text-align:center;">
-  <span style="font-size:16px;color:#1a73e8;font-weight:bold;line-height:1.8;">互动引导语</span>
-</section>
+<!-- 花叔文章不设互动引导区，直接收尾 -->
 ```
 
 ### 8. 卡片式链接
@@ -96,7 +109,32 @@
 </section>
 ```
 
-### 9. 数据卡片
+### 9. 参考信息（花叔结尾格式）
+```html
+<section style="margin-bottom:6px;">
+  <span style="font-size:13px;color:#999999;line-height:1.8;">· 参考条目一</span>
+</section>
+<section style="margin-bottom:6px;">
+  <span style="font-size:13px;color:#999999;line-height:1.8;">· 参考条目二</span>
+</section>
+```
+
+### 10. 品牌色块分隔 + 段落号
+```html
+<section style="text-align:center;margin:24px 0;">
+  <span style="display:inline-block;width:36px;height:4px;background-color:#1a73e8;border-radius:2px;margin-bottom:6px;"></span>
+  <span style="display:block;font-size:13px;color:#1a73e8;letter-spacing:3px;">01</span>
+</section>
+```
+
+### 11. 章节小标题（带段落号前置）
+```html
+<section style="margin-top:32px;margin-bottom:16px;padding-left:12px;border-left:3px solid #1a73e8;">
+  <span style="font-size:18px;font-weight:bold;color:#333333;line-height:1.6;"><span style="font-size:13px;color:#1a73e8;margin-right:10px;letter-spacing:2px;">01</span>小标题文字</span>
+</section>
+```
+
+### 12. 数据卡片
 ```html
 <section style="padding:16px;background-color:#f7f8fa;border-radius:6px;margin:15px 0;text-align:center;">
   <span style="font-size:28px;font-weight:bold;color:#1a73e8;">87%</span><br/>
