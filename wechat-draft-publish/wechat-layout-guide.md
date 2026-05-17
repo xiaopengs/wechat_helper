@@ -119,18 +119,18 @@
 </section>
 ```
 
-### 10. 品牌色块分隔 + 段落号
+### 10. 品牌色块分隔 + 段落号（左右结构）
 ```html
 <section style="text-align:center;margin:24px 0;">
-  <span style="display:inline-block;width:36px;height:4px;background-color:#1a73e8;border-radius:2px;margin-bottom:6px;"></span>
-  <span style="display:block;font-size:13px;color:#1a73e8;letter-spacing:3px;">01</span>
+  <span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:2px;margin-right:10px;">01</span>
+  <span style="display:inline-block;vertical-align:middle;width:42px;height:3px;background-color:#1a73e8;border-radius:2px;"></span>
 </section>
 ```
 
-### 11. 章节小标题（带段落号前置）
+### 11. 章节小标题（无编号，编号已放在上方分隔线）
 ```html
 <section style="margin-top:32px;margin-bottom:16px;padding-left:12px;border-left:3px solid #1a73e8;">
-  <span style="font-size:18px;font-weight:bold;color:#333333;line-height:1.6;"><span style="font-size:13px;color:#1a73e8;margin-right:10px;letter-spacing:2px;">01</span>小标题文字</span>
+  <span style="font-size:18px;font-weight:bold;color:#333333;line-height:1.6;">小标题文字</span>
 </section>
 ```
 
