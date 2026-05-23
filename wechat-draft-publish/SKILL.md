@@ -48,7 +48,7 @@ dependency:
 requests==2.31.0
 ```
 
-## 🧾 推送前自检清单（花叔推文专用）
+## 🧾 推送前自检清单（jerry推文专用）
 
 在调用 `create_draft` 之前，必须逐条确认：
 

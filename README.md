@@ -37,7 +37,7 @@
 
 ### ✍️ wechat-creation
 
-**公众号全流程创作技能（基于花叔公众号风格）**
+**公众号全流程创作技能（基于jerry公众号风格）**
 
 从选题讨论→信息搜索→内容创作→三遍审校→爆款优化→配图标注→长文转X，覆盖公众号内容创作完整链路。
 
@@ -113,7 +113,7 @@ wechat_helper/
 │       └── content-review-standards.md   # 六维审核标准原文
 ├── wechat-creation/
 │   ├── SKILL.md                          # 创作技能定义 + 工作流
-│   ├── assets/                           # 花叔历史文章参考
+│   ├── assets/                           # jerry历史文章参考
 │   └── references/
 │       ├── style-guide.md                # 风格规范（10做+10不做）
 │       └── templates.md                  # 各类模板
