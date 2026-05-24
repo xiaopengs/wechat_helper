@@ -1,0 +1,523 @@
+{
+  "version": "1.0",
+  "updatedAt": "2026-05-24T02:38:00.000Z",
+  "topics": [
+    {
+      "id": "topic-20260514-001",
+      "title": "AI开始自己挖漏洞了——一场你没有注意到的安全军备竞赛",
+      "angle": "从Microsoft MDASH一天发现16个CVE切入，对比Anthropic Mythos和GPT-5.5在漏洞挖掘上的进展，讨论AI从「工具」到「攻击者」的质变",
+      "outline": [
+        "开头：上周微软Patch Tuesday更新，16个漏洞是AI发现的",
+        "展开：MDASH是什么？多模型Agent协作的安全系统",
+        "对比：Mythos和GPT-5.5在AISI评测上的表现",
+        "深挖：为什么这件事很重要——AI安全能力的「涌现」",
+        "思考：作为开发者，这意味着什么",
+        "升华：安全不再是人的专利，AI正在重新定义攻防边界"
+      ],
+      "source": "follow-builders + theverge",
+      "difficulty": "⭐⭐⭐",
+      "status": "published",
+      "createdAt": "2026-05-14T00:35:00.000Z",
+      "selectedAt": "2026-05-15T00:50:00.000Z",
+      "publishedAt": "2026-05-15T01:03:00.000Z",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQvPGj3VK-zk3dR-g_LrtK7pUnPCHjGp9MQu-9DwxL8RX"
+    },
+    {
+      "id": "topic-20260514-002",
+      "title": "Agent Skill框架正在吃掉软件开发——mattpocock一个仓库7万8千星说明了什么",
+      "angle": "从mattpocock/skills (78K⭐) 和 obra/superpowers两大框架切入，探讨Agent Skills正在成为AI时代的新「npm」",
+      "outline": [
+        "开头：mattpocock/skills一天涨3392颗星",
+        "不只pocock，obra/superpowers、agentmemory都在爆发",
+        "背后逻辑：Agent Skills为什么成了风口？",
+        "类比：这和2015年的npm生态有几分相似",
+        "个人体验：作为AI Native Coder，我在用什么skills",
+        "展望：Skills as a Service？标准化的Agent能力市场"
+      ],
+      "source": "github-trending + follow-builders",
+      "difficulty": "⭐⭐",
+      "status": "published",
+      "createdAt": "2026-05-14T00:35:00.000Z",
+      "selectedAt": "2026-05-14T00:35:00.000Z",
+      "publishedAt": "2026-05-14T00:48:00.000Z"
+    },
+    {
+      "id": "topic-20260515-001",
+      "title": "Grok Build来了——Musk在庭审中途发布了一个Coding Agent，这很Musk",
+      "angle": "xAI在Musk缺席庭审当天发布agentic coding CLI，从产品层面认真评测：Grok Build在Coding Agent赛道里能打吗？",
+      "outline": [
+        "开头：Musk在北京陪Trump，xAI在硅谷发了Grok Build",
+        "Grok Build是啥：agentic coding CLI，SuperGrok Heavy订阅专用",
+        "对比竞品：Cursor、Copilot、Claude Code、Aider",
+        "Grok的差异化在哪？「反OpenAI」叙事能否转化为产品优势",
+        "xAI的挑战：人才动荡，deepfake官司缠身",
+        "个人判断：又是一次「先发布再追赶」",
+        "升华：Coding Agent赛道的终局——不是工具之争，是生态之争"
+      ],
+      "source": "theverge",
+      "difficulty": "⭐⭐",
+      "status": "published",
+      "createdAt": "2026-05-15T00:00:00.000Z",
+      "selectedAt": "2026-05-15T00:00:00.000Z",
+      "publishedAt": "2026-05-15T02:10:00.000Z",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQgP9z9OeT0BNNQ0kAG51jo8EKtZu23AWLWReumXLKDdX"
+    },
+    {
+      "id": "topic-20260515-002",
+      "title": "一个会「看你工作」的AI，一天拿了3300颗星——openhuman想做什么？",
+      "angle": "从openhuman单日3,329⭐领跑GitHub切入，深度剖析「个人AI超级智能」的产品范式和可行性",
+      "outline": [
+        "开头：小团队做的桌面AI agent，单日3300⭐",
+        "openhuman是什么：UI-first桌面agent，118+集成",
+        "关键设计：Memory Tree + TokenJuice压缩 + 20分钟自动fetch",
+        "对比：Hermes、OpenClaw、ChatGPT Desktop",
+        "疑虑：超级智能标签是否过重？",
+        "升华：个人AI agent的终局——「懂你的操作系统」"
+      ],
+      "source": "github-trending",
+      "difficulty": "⭐⭐",
+      "status": "selected",
+      "createdAt": "2026-05-15T00:00:00.000Z",
+      "selectedAt": "2026-05-15T00:00:00.000Z",
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260515-003",
+      "title": "当spec能被AI写的时候，值钱的是你的「意图」",
+      "angle": "github/spec-kit逼近10万星，SDD成为GitHub官方推动的开发范式——spec的未来到底是人写还是AI写？",
+      "outline": [
+        "开头：github/spec-kit 99K星，SDD从实验变官方标准",
+        "SDD是什么：先写spec再让AI实现",
+        "但spec谁写？PM？Engineer？还是AI自己？",
+        "深度矛盾：人写质量参差，AI写缺乏上下文",
+        "我的实践：「人定方向+AI细化+人确认」",
+        "展望：Spec-Driven可能是过渡态，下一代是Intent-Driven"
+      ],
+      "source": "github-trending",
+      "difficulty": "⭐⭐⭐",
+      "status": "published",
+      "createdAt": "2026-05-15T00:00:00.000Z",
+      "selectedAt": null,
+      "publishedAt": "2026-05-15T02:32:00.000Z",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQsMQlYsoEty5H1mEgavY2TdF8pM2aCglEyxbxcRAg8rZ"
+    },
+    {
+      "id": "topic-20260515-004",
+      "title": "OpenAI要起诉Apple了——当AI公司开始互相起诉，合作时代的终结？",
+      "angle": "OpenAI考虑对Apple采取法律行动（合作仅一年就破裂），以小见大看AI商业化中「合作→竞争→诉讼」的必然路径",
+      "outline": [
+        "开头：Gurman爆料OpenAI考虑起诉Apple",
+        "回顾：Apple Intelligence集成ChatGPT——被认为是双赢",
+        "裂痕在哪：分成谈不拢还是Apple偷偷自研？",
+        "更大图景：Musk v Altman、OpenAI v Apple——AI进入「诉讼密集期」",
+        "对开发者的影响：API依赖第三方AI公司的稳定性风险",
+        "结尾：合作时代的终结——不是AI的问题，是商业的宿命"
+      ],
+      "source": "theverge",
+      "difficulty": "⭐⭐",
+      "status": "draft",
+      "createdAt": "2026-05-15T00:00:00.000Z",
+      "selectedAt": null,
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260516-002",
+      "title": "Replit回来了——Vibe Coding和Apple的4个月监管拉锯战，谁赢了？",
+      "angle": "从Replit被Apple封杀4个月后和解回归切入，解剖「AI生成代码 vs 平台审核」的结构性矛盾",
+      "outline": [
+        "开头：Replit CEO周五宣布iOS更新恢复",
+        "回顾：3月Apple封杀vibe coding类app",
+        "博弈逻辑：平台控制权之争",
+        "深层矛盾：AI生成代码算「用户创作」还是「平台责任」？",
+        "对比：Web端vibe coding为什么不受影响",
+        "对AI Native Coder的影响",
+        "升华：任何AI生成内容都会撞上平台审核的墙"
+      ],
+      "source": "theverge",
+      "difficulty": "⭐⭐",
+      "status": "selected",
+      "createdAt": "2026-05-16T00:00:00.000Z",
+      "selectedAt": "2026-05-16T00:10:00.000Z",
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260516-003",
+      "title": "n8n-mcp悄悄突破2万星——MCP正在成为AI工具的「USB-C接口」",
+      "angle": "从n8n-mcp (20,889⭐) 切入，讨论MCP协议从「Claude专属」到「AI通用接口」的演变，以及这对AI Native Coder工作流的深远影响",
+      "outline": [
+        "开头：n8n-mcp突破2万星",
+        "MCP是什么：从Anthropic的小众协议到AI工具标准接口",
+        "n8n-mcp做了什么：自然语言描述→生成工作流→自动化一切",
+        "生态图谱：MCP生态正在形成HTTP级别的标准化",
+        "对比：Agent Skills vs MCP——互补而非竞争",
+        "展望：当MCP成为标准，AI Native Coder工具链彻底重组"
+      ],
+      "source": "github-trending",
+      "difficulty": "⭐⭐⭐",
+      "status": "draft",
+      "createdAt": "2026-05-16T00:00:00.000Z",
+      "selectedAt": null,
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260516-004",
+      "title": "Anthropic带着skills从天而降——Agent Skills生态的三足鼎立时代",
+      "angle": "Anthropic官方skills仓库上线GitHub Trending，mattpocock/skills逼近85K星，obra/superpowers持续在榜——Agent Skills正在复刻2013-2015年的npm生态路径",
+      "outline": [
+        "开头：Anthropic官方skills悄然上线",
+        "三足鼎立：mattpocock vs obra vs anthropics",
+        "时间线：3天内从78K到85K，增速没放缓",
+        "为什么Anthropic现在入场",
+        "风险点：官方入场会不会扼杀社区创新？",
+        "升华：Agent Skills是AI时代第一个应用层标准"
+      ],
+      "source": "github-trending",
+      "difficulty": "⭐⭐",
+      "status": "selected",
+      "createdAt": "2026-05-16T00:00:00.000Z",
+      "selectedAt": "2026-05-16T00:10:00.000Z",
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260516-005",
+      "title": "\"Godless whores\"——AI内容为什么在同一天惹毛了音乐人、NFL和新闻业",
+      "angle": "Jack Antonoff怒斥、NFL AI slop被群嘲、Florida AI新闻站丑闻——同一天三个独立事件，AI内容信任危机达到临界点",
+      "outline": [
+        "开头：Antonoff骂AI用户「Godless whores」，三件事同时炸了",
+        "事件一：Antonoff vs AI艺术",
+        "事件二：NFL Cardinals AI slop被群嘲",
+        "事件三：Florida AI新闻站丑闻",
+        "为什么是现在：受众容忍度到了临界点",
+        "对AI Native Coder的反思：工具使用 vs 内容冒充的边界",
+        "升华：AI内容的草莽时代结束了"
+      ],
+      "source": "theverge",
+      "difficulty": "⭐",
+      "status": "draft",
+      "createdAt": "2026-05-16T00:00:00.000Z",
+      "selectedAt": null,
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260517-001",
+      "title": "他一个人跑着100个AI Agent，然后公布了账单——Steipete的自动化帝国给AI Native Coder的启示",
+      "angle": "从Peter Steinberger自曝AI支出和100+Codex实例全流程切入，展开AI Native开发的全自动化图景",
+      "outline": [
+        "开头：一条推文3727赞——OpenClaw创始人自曝月花几十万美元AI费用",
+        "全流程解剖：100+Codex同时在做什么？",
+        "这不是烧钱，是效率革命",
+        "AI DevOps vs 传统CI/CD：从「跑脚本」到「做决策」",
+        "对AI Native Coder的启示",
+        "风险提示：经济模型可持续吗？",
+        "升华：当AI Native进入量产阶段，个人开发者工作方式被彻底重塑"
+      ],
+      "source": "follow-builders",
+      "difficulty": "⭐⭐",
+      "status": "selected",
+      "createdAt": "2026-05-17T00:00:00.000Z",
+      "selectedAt": "2026-05-17T00:10:00.000Z",
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260517-002",
+      "title": "产品经理的deadline从1年缩到了1周——AI正在让「做产品」这件事彻底重写",
+      "angle": "从Matt Turck roadmap观察（1年→1周）和Madhu的「PM必须成为发明家」切入，讨论AI Native开发如何从写代码延伸到做产品",
+      "outline": [
+        "开头：Matt Turck一条推文被转了330次——产品roadmap从1年到1周",
+        "这不是段子：Nikunj的/goal跑了2小时完成一个团队一周的工作",
+        "当AI能写代码，你的价值在哪？Madhu的回答：PM必须变成发明家",
+        "产品周期压缩意味着：试错成本趋零，判断力价值上升",
+        "对AI Native Coder：纯接需求写代码的岗位正在消失",
+        "我的实践：用AI做产品探索——从idea到prototype到user test一天一个闭环",
+        "升华：AI让「想清楚要做什么」变得前所未有的重要"
+      ],
+      "source": "follow-builders",
+      "difficulty": "⭐⭐",
+      "status": "published",
+      "createdAt": "2026-05-17T00:00:00.000Z",
+      "selectedAt": "2026-05-18T00:10:00.000Z",
+      "publishedAt": "2026-05-19T16:20:14.000Z",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQkpn4_q-RKxd5y-hip5I4z3l9c004glvzCfOm-4llrLR"
+    },
+    {
+      "id": "topic-20260517-003",
+      "title": "一个75MB的文件，让Claude Code少用了80%的token——CodeGraph和Context工程的静默革命",
+      "angle": "从colbymchenry/codegraph（pre-indexed code knowledge graph, 100%本地）切入，讨论「代码理解不再靠LLM推理，而是靠预计算知识图谱」这一被低估的范式转变",
+      "outline": [
+        "开头：一个2.5K星项目，名字很朴素——codegraph",
+        "它做了什么：项目代码预索引成知识图谱，token消耗降80%+",
+        "为什么重要：AI写代码最大瓶颈不是不会写，是不知道项目里有什么",
+        "技术原理：LightRAG + 语义聚类 → 静态分析 → 按需检索",
+        "对比：Context7 vs Greptile vs CodeGraph——三代方案进化",
+        "对AI Native Coder：Context工程可能是AI时代最重要的开发技能",
+        "升华：与其等模型窗口变大，不如优化context——这是工程智慧"
+      ],
+      "source": "github-trending",
+      "difficulty": "⭐⭐⭐",
+      "status": "selected",
+      "createdAt": "2026-05-17T00:00:00.000Z",
+      "selectedAt": "2026-05-17T00:10:00.000Z",
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260517-004",
+      "title": "开源AI视频生成，没有内容审查——14K星的Open-Generative-AI正在引爆「自由vs责任」的文化战争",
+      "angle": "从Open-Generative-AI (14K⭐, 200+模型, MIT协议, 无内容过滤) 切入，结合Antonoff怒斥和NFL AI slop事件，讨论开源AI工具的「无审查」特性正在引发的社会张力",
+      "outline": [
+        "开头：MIT协议AI视频平台，描述里写「No content filters」",
+        "是什么：200+模型，自托管，Flux/Midjourney/Kling/Sora/Veo全接入",
+        "为什么「无审查」是卖点也是火药桶",
+        "同日三个事件不是巧合：开源AI上线↔NFL slop被嘲↔音乐人怒斥",
+        "更深层：当AI生成门槛降到零，内容质量底线在哪？",
+        "对比：Midjourney有政策，OpenAI有对齐——但开源不需要",
+        "升华：开源AI的无审查特性制造了伦理真空——谁都不管，等于谁都要负责"
+      ],
+      "source": "github-trending + theverge",
+      "difficulty": "⭐⭐",
+      "status": "draft",
+      "createdAt": "2026-05-17T00:00:00.000Z",
+      "selectedAt": null,
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260517-005",
+      "title": "一个6MB的AI模型，在iPhone上实现了超低延迟多语言TTS——端侧AI正在发生的「无声」革命",
+      "angle": "从supertone-inc/supertonic (6.8K⭐, ONNX原生, 设备端运行) 切入，结合Bun 91K⭐的极速革命，讨论AI从「云端巨型模型」向「本地微型高性能」分叉的大趋势",
+      "outline": [
+        "开头：GitHub Trending同时挂着Bun和Supertonic——一个极速JS，一个设备端AI",
+        "Supertonic做了什么：Swift + ONNX，6MB多语言TTS",
+        "为什么端侧AI现在爆发：ONNX/WebGPU/MLX成熟 + Apple Silicon + 隐私",
+        "Bun的并行叙事：极速JS说明性能和体积是新竞争维度",
+        "端侧vs云端：不是替代，是分叉——云端思考，边缘感知",
+        "对AI Native Coder：未来app架构=端侧AI+云端AI",
+        "升华：AI下阶段不是更大模型，而是更智慧的部署策略"
+      ],
+      "source": "github-trending",
+      "difficulty": "⭐⭐",
+      "status": "draft",
+      "createdAt": "2026-05-17T00:00:00.000Z",
+      "selectedAt": null,
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260518-001",
+      "title": "CLI-Anything：当所有命令行工具都能被AI直接操控，编程的边界消失了",
+      "angle": "从HKUDS/CLI-Anything（让所有CLI软件变成Agent-Native）和CLI-Hub市场切入，讨论软件世界正在被「Agent化改造」——这不是做新工具，而是在给所有现有软件打Agent补丁",
+      "outline": [
+        "开头：GitHub上冒出一个项目，口号是「Making ALL Software Agent-Native」——口气不小",
+        "做了什么：一个中间适配层，任何CLI工具都能被AI Agent直接调用",
+        "CLI-Hub市场：类似npm/brew，但是给Agent用的——这是新物种",
+        "为什么重要：当前AI Agent接工具靠逐个MCP/skill接入，CLI-Anything想做统一层",
+        "对比：MCP（通信协议）vs Skills（运行时能力）vs CLI-Anything（工具适配层）——三层Agent生态架构",
+        "对AI Native Coder：如果每个CLI都是agent-native，自动化边界大幅扩展",
+        "升华：Agent-native software不是未来——有人在给所有现存软件「打补丁」"
+      ],
+      "source": "github-trending (HKUDS/CLI-Anything)",
+      "difficulty": "⭐⭐",
+      "status": "selected",
+      "createdAt": "2026-05-18T00:10:00.000Z",
+      "selectedAt": "2026-05-18T00:10:00.000Z",
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260518-002",
+      "title": "Shadowbroker：一个开源项目，让你像情报机构一样监控全球",
+      "angle": "从BigBodyCobain/Shadowbroker (7K⭐)切入，这是一个追踪私人飞机、间谍卫星、地震数据的OSINT平台，挂上AI Agent就能发现隐藏关联——情报能力从国家专属变成了开源项目",
+      "outline": [
+        "开头：7K星开源项目，能追踪私人飞机轨迹、间谍卫星、地震事件——统一界面",
+        "Shadowbroker是什么：OSINT聚合器+AI分析层，发现隐藏关联",
+        "为什么火了：信息一直存在，但「聚合+AI分析」的能力以前只有政府有",
+        "技术栈：Python + AI Agent集成——门槛低到令人不安",
+        "伦理问题：情报民主化的边界在哪？私人飞机追踪是否越界？",
+        "对开发者启示：AI+公开数据=新维度产品可能性",
+        "升华：我们进入「没有秘密」的时代——技术中性，使用者决定工具还是武器"
+      ],
+      "source": "github-trending (BigBodyCobain/Shadowbroker)",
+      "difficulty": "⭐⭐",
+      "status": "draft",
+      "createdAt": "2026-05-18T00:10:00.000Z",
+      "selectedAt": null,
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260518-003",
+      "title": "\"No cloud, no subscriptions\"——当AI全家桶能完全本地跑，SaaS的护城河还剩什么",
+      "angle": "从DreamServer（本地AI全家桶：LLM+语音+Agent+RAG+图像，1.1K⭐）切入，串联Supertonic、Ollama等端侧AI趋势，讨论「AI去云化」运动对SaaS商业模式的根本性质疑",
+      "outline": [
+        "开头：DreamServer的README写了句「No cloud, no subscriptions」——SaaS公司看了可能睡不着",
+        "DreamServer能做什么：LLM推理+聊天UI+语音+Agent+工作流+RAG+图像生成——all in one，本地跑",
+        "「去云化」不是孤立事件：Supertonic（端侧TTS）+ Ollama（本地LLM）+ DreamServer（全家桶）=一条线",
+        "为什么现在能跑：ONNX/WebGPU/llama.cpp成熟 + Apple Silicon算力够用",
+        "对SaaS的冲击：如果AI能力本地化，按月付费的AI SaaS还有什么护城河？",
+        "对AI Native Coder的实操意义：零延迟+零隐私风险的工具链",
+        "升华：AI去云化不是反SaaS，是把选择权还给了用户——开源精神的AI时代表达"
+      ],
+      "source": "github-trending (Light-Heart-Labs/DreamServer)",
+      "difficulty": "⭐⭐",
+      "status": "published",
+      "createdAt": "2026-05-18T00:10:00.000Z",
+      "selectedAt": "2026-05-24T01:06:00.000Z",
+      "publishedAt": "2026-05-24T02:36:00.000Z",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQjsd6zkgcsIhR46bs1ee5nDfwJcgr70ESgGwI3n-EHX3"
+    },
+    {
+      "id": "topic-20260520-001",
+      "title": "Karpathy加入Anthropic了——这不是跳槽，是AI人才地图的一次板块运动",
+      "angle": "从Andrej Karpathy（OpenAI创始团队、前Tesla AI负责人、AI教育布道者）加入Anthropic这一天大新闻切入，探讨AI顶级人才流动背后的行业结构性变化：为什么是现在？为什么是Anthropic？这对AI Native Coder使用的工具意味着什么？",
+      "outline": [
+        "开头：今天最炸的AI新闻——Karpathy加入Anthropic做R&D",
+        "Karpathy是谁：OpenAI创始→Tesla AI负责人→AI Native教育→Anthropic",
+        "Anthropic的人才版图：从安全研究者到顶级工程师到Karpathy这样的布道者",
+        "为什么是现在：Anthropic从「安全的AI公司」变成「开发者平台」的转型",
+        "Karpathy的「AI教育」执念：他说还会回归教育——在Anthropic做什么R&D？",
+        "对AI Native Coder的意义：你用的Claude/Cursor背后的公司，正在网罗最懂「教AI」的人",
+        "升华：AI人才流动不再是公司之争，是「谁能定义开发者体验」之争"
+      ],
+      "source": "theverge (2026-05-20 头条)",
+      "difficulty": "⭐⭐",
+      "status": "selected",
+      "createdAt": "2026-05-20T00:10:00.000Z",
+      "selectedAt": "2026-05-20T00:10:00.000Z",
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260520-002",
+      "title": "\"12-Factor Agents\"突破2万星——Agent软件终于有了自己的工程宪法",
+      "angle": "从humanlayer/12-factor-agents（21K⭐，单日736⭐）登榜切入，这是一套「构建真正能上生产的LLM软件的原则」，类比2011年12-Factor App对云原生的奠基作用——Agent开发正在从「能跑就行」进入「工程化」阶段。结合今天同榜的agentmemory、codegraph、rtk，讨论Agent工程化的四根支柱。",
+      "outline": [
+        "开头：12-Factor App定义了云原生十年——12-Factor Agents正在定义Agent十年",
+        "12-Factor Agents是什么：为LLM软件制定的生产级架构原则",
+        "四根支柱同天登榜：架构原则(12-factor) + 记忆(agentmemory) + 上下文(codegraph) + 效率(rtk)",
+        "对比：2011 cloud-native vs 2026 agent-native——历史在押韵",
+        "具体看几条原则：Agent状态管理、工具集成边界、可观测性——每一项都击中当前Agent开发的痛点",
+        "对AI Native Coder：这不是又一个「新工具」，是「怎么做Agent软件」的工程共识",
+        "升华：Agent软件从草莽时代的「魔法」走向工程化的「科学」——谁先掌握这些原则，谁就有复利优势"
+      ],
+      "source": "github-trending (humanlayer/12-factor-agents)",
+      "difficulty": "⭐⭐",
+      "status": "selected",
+      "createdAt": "2026-05-20T00:10:00.000Z",
+      "selectedAt": "2026-05-20T00:10:00.000Z",
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260520-003",
+      "title": "Google AI从$250砍到$100——AI模型定价正在经历「宽带时刻」",
+      "angle": "Google AI Ultra计划从$249.99/月降至$100/月，OpenAI Pro也分$100/$200两档。同时Google发布Project Genie世界模型（Street View→交互体验）。两个信号叠加：AI能力在爆发，价格在崩盘——这像极了1990年代宽带从T1专线变成家庭套餐的时刻。",
+      "outline": [
+        "开头：Google AI Ultra一夜降价60%——$250到$100",
+        "不是孤例：OpenAI Pro同样推出$100/$200双档",
+        "为什么降价：模型推理成本下降 + 用户增长进入价格敏感区",
+        "同时发布：Project Genie世界模型——从「对话AI」到「体验AI」",
+        "类比：1998年宽带从$500/月降到$50/月，带来了YouTube和Netflix",
+        "对AI Native Coder：token成本不再是瓶颈，AI「随时可用」成为默认假设",
+        "升华：当AI像宽带一样便宜且无处不在，竞争从「谁能用AI」变成「谁能用AI做出什么」"
+      ],
+      "source": "theverge (Google I/O 后续报道)",
+      "difficulty": "⭐⭐",
+      "status": "draft",
+      "createdAt": "2026-05-20T00:10:00.000Z",
+      "selectedAt": null,
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260520-004",
+      "title": "CloakBrowser连过30项反bot检测——AI Agent的隐身斗篷来了",
+      "angle": "从CloakHQ/CloakBrowser（16.5K⭐，今日+1,463⭐，隐身Chromium通过30/30项bot检测，可替换Playwright）切入，讨论AI Agent与Web之间的「反反爬」军备竞赛：当Agent需要替你浏览网页、抓数据、操作界面，隐身能力成为基础设施。",
+      "outline": [
+        "开头：一个Chromium fork，30项反bot检测全部通过——CloakBrowser",
+        "为什么重要：当前AI Agent最大的落地障碍之一——网站反爬虫挡住了自动化",
+        "技术原理：源码级指纹补丁，对标Playwright的替换方案",
+        "对比：puppeteer-extra、playwright-stealth——CloakBrowser的不同路线",
+        "更大的图景：Agent自动化 vs 平台防御——这是一场不对称战争",
+        "伦理边界：隐身浏览是工具还是武器？同样技术可被用于恶意爬取",
+        "升华：当AI Agent需要「看」Web世界，隐身能力不再可选——它是基础设施建设"
+      ],
+      "source": "github-trending (CloakHQ/CloakBrowser)",
+      "difficulty": "⭐⭐",
+      "status": "draft",
+      "createdAt": "2026-05-20T00:10:00.000Z",
+      "selectedAt": null,
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260523-001",
+      "title": "GPT-5.5的核心不是更强的模型，是「靠谱的模型」——OpenAI Yann Dubois内部分享",
+      "angle": "从Yann Dubois（OpenAI post-training co-lead）在MAD Podcast的深度访谈切入，揭示GPT-5.5背后的RL范式迁移：从竞赛数学题到真实世界coding，从「能做什么」到「能可靠地做什么」",
+      "outline": [
+        "开头：OpenAI post-training负责人说「我们刚跨过可靠性门槛」",
+        "RL的迁移：从「有标准答案」到「处理真实世界的模糊任务」",
+        "效率2X：5.5不是更强了，是同样性能只用一半思考时间",
+        "回应质疑：Pre-training没碰壁——「更大的模型实际上给你更高的效率」",
+        "对AI Native Coder意味着什么：你用的coding agent，RL训练的不是竞赛题是你的代码",
+        "升华：从「模型能力」到「模型可靠性」——AI从实验室到产线的质变"
+      ],
+      "source": "follow-builders (MAD Podcast with Matt Turck, May 21)",
+      "difficulty": "⭐⭐⭐",
+      "status": "selected",
+      "createdAt": "2026-05-23T00:06:40.000Z",
+      "selectedAt": "2026-05-23T00:06:40.000Z",
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260523-002",
+      "title": "Anthropic把自己的安全武器库打开了——Glasswing开源CVE仪表盘的信号",
+      "angle": "Anthropic向'合格客户'开放Project Glasswing内部安全工具（skills/Claude harness/威胁建模器）+ 发布Mythos Preview发现的公开CVE dashboard——AI安全从内部能力变成可交付产品",
+      "outline": [
+        "开头：Anthropic今天宣布开放内部安全工具套件",
+        "Project Glasswing是什么：给Claude用的安全能力——skills、harness、威胁建模器",
+        "Mythos Preview CVE dashboard：AI发现的真实漏洞，公开发布",
+        "为什么重要：AI公司第一次把「AI找漏洞」产品化",
+        "对开发者：未来用AI安全扫描可能像用GitHub Code Scanning一样普适",
+        "风险：安全工具的双刃剑——开放给白帽，也开放给黑帽",
+        "升华：AI安全从公司内部能力到外部产品——安全行业的哥白尼时刻"
+      ],
+      "source": "theverge (May 23, Anthropic Project Glasswing update)",
+      "difficulty": "⭐⭐",
+      "status": "selected",
+      "createdAt": "2026-05-23T00:06:40.000Z",
+      "selectedAt": "2026-05-23T00:06:40.000Z",
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260523-003",
+      "title": "Intuit裁掉3000人给AI让路——第一批「AI重组」大型样本出来了",
+      "angle": "Intuit裁掉17%员工（~3000人），CEO明确说不是降本而是「聚焦AI」。这不是传统裁员，是AI Native企业重组的第一个规模化案例，从中可以看到什么岗位最先被AI代替。",
+      "outline": [
+        "开头：Intuit裁了3000人——CEO的理由是「聚焦AI」，不是降本",
+        "数据拆解：17%员工、哪些部门被裁、AI投入方向",
+        "对比：之前AI「辅助」工作 vs 现在AI「替代」职能——门槛已跨过",
+        "什么岗位风险最高：从Intuit案例推测的岗位风险光谱",
+        "对AI Native Coder的信号：什么技能在AI Native公司里最安全？",
+        "风险：Intuit会不会裁错？历史上技术转型裁员的成败回顾",
+        "升华：不是AI抢饭碗的故事，是「不被AI重组的人应该具备什么特质」"
+      ],
+      "source": "theverge (May 20, Intuit layoffs)",
+      "difficulty": "⭐",
+      "status": "draft",
+      "createdAt": "2026-05-23T00:06:40.000Z",
+      "selectedAt": null,
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260523-004",
+      "title": "Anthropic租了微软的Maia 200芯片——AI公司的算力独立梦正在破灭",
+      "angle": "即使从SpaceX拿$15B/年算力合同，Anthropic还在跟微软谈Maia 200芯片。Nvidia Q1数据中心收入+92%。AI公司的芯片策略从'摆脱NVIDIA'变成'谁有芯片用谁的'。",
+      "outline": [
+        "开头：SpaceX $15B/年deal不够用——Anthropic在谈微软Maia 200",
+        "Anthropic算力版图：SpaceX Colossus + Azure + Maia 200",
+        "Nvidia Q1数据：数据中心$75.2B（+92%）——算力天花板在哪？",
+        "Maia 200定位：推理芯片，不是训练——微软想从NVIDIA分走推理蛋糕",
+        "对AI Native Coder：模型API背后的算力供应链——理解它才能理解限流和定价",
+        "更大的图景：芯片依赖从NVIDIA转移到微软——不是独立，是换了依赖对象",
+        "升华：AI基础设施的「去中心化」只是个美好幻想——依赖关系在横向转移而非消除"
+      ],
+      "source": "theverge (May 21, Anthropic Microsoft Maia chips)",
+      "difficulty": "⭐⭐",
+      "status": "draft",
+      "createdAt": "2026-05-23T00:06:40.000Z",
+      "selectedAt": null,
+      "publishedAt": null
+    }
+  ]
+}
