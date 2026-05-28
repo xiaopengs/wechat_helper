@@ -2,17 +2,85 @@
 
 > 微信公众号内容创作与分析工具集 — OpenClaw Skill
 
-专注于公众号/视频号的全流程内容创作、爆款分析与优化。从选题→创作→审校→排版→发布，让 AI 贯穿每一个环节。
+专注于公众号的全流程内容创作、配图、排版发布与爆款分析。
+
+---
+
+## 🚀 标准流水线（已验证，2026-05-28）
+
+从一篇 Markdown 草稿到公众号后台草稿箱：
+
+```
+选题讨论 → 初稿写作 → 三遍审校 → 配图生成 → HTML排版 → 图片上传 → 草稿推送
+   │            │          │          │           │          │          │
+ 创作技能    创作技能   创作技能   配图技能    发布技能   发布技能   发布技能
+```
+
+**已验证的技术栈**：
+
+| 环节 | 工具/模型 | 备注 |
+|------|-----------|------|
+| 配图生图 | gpt-image-2 via TokenRouter | 2K 分辨率，~2分钟/张 |
+| 配图风格 | 马卡龙风格 | 柔和粉/薄荷绿/薰衣草，奶白底 |
+| 图片压缩 | PIL → JPEG 85% | 原图 1.5MB → 95KB，微信正文限 1MB |
+| HTML 排版 | jerry 规范（内联样式） | 品牌色块分隔、段落号、关键词着色 |
+| 图片上传 | 微信 uploadimg API | 必须 mmbiz.qpic.cn 域名 |
+| 草稿创建 | 微信 draft/add API | 封面 media_id + HTML content |
+
+**即开即用口令**：
+> "给这篇配图，马卡龙风格" → "排版推送到公众号"
 
 ---
 
 ## 技能列表
 
-### 🔥 wechat-explosive-analyzer
+### ✍️ wechat-creation — 内容创作
 
-**公众号/视频号爆款内容六维审核分析器**
+**公众号全流程创作技能（基于黑爪爪风格）**
 
-对公众号文章或视频号内容进行结构化审核，打分 + 诊断 + 可落地修改方案。
+从选题讨论→信息搜索→内容创作→三遍审校→爆款优化→配图标注。
+
+| 能力 | 说明 |
+|------|------|
+| 选题讨论 | 3-4个方向 + 大纲 + 优劣势分析 |
+| 信息搜索 | 写前必搜，确保内容有据 |
+| 内容创作 | 初稿撰写 + 三遍审校（基本错误→表达优化→风格检查） |
+| 爆款优化 | 5种爆文公式 + 完读率检查 |
+| 配图标注 | 推荐5-8张配图位 |
+
+---
+
+### 🎨 long-article-illustration — 长文配图
+
+**读取文章 → 拆段 → 生成配图提示词 → 调用生图模型**
+
+| 能力 | 说明 |
+|------|------|
+| 架构图 prompt | 必须描述具体组件/层级/流向，禁止抽象概念 |
+| 马卡龙风格 | 柔和粉彩、奶白底、2K 分辨率 |
+| 生图引擎 | gpt-image-2 via TokenRouter（国内直连超时） |
+| 图片压缩 | 自动转 JPEG <1MB，适配微信限制 |
+
+**风格预设库**：扁平插画 / 科技感 / 马卡龙 / 水彩 / 极简线条 / 国风水墨
+
+---
+
+### 📤 wechat-draft-publish — 排版发布
+
+**Markdown → jerry风格 HTML → 图片上传 → 草稿创建 → 发布**
+
+| 能力 | 说明 |
+|------|------|
+| HTML 排版 | jerry规范：内联样式、品牌色块分隔、段落号、关键词着色 |
+| 正文图上传 | 自动上传到微信 mmbiz.qpic.cn 域名 |
+| 封面上传 | 获取永久素材 media_id |
+| 一键发布 | 图片处理→封面上传→草稿创建，一步到位 |
+
+---
+
+### 🔥 wechat-explosive-analyzer — 爆款分析
+
+**六维审核评分 + 可落地修改方案**
 
 | 维度 | 权重 |
 |------|------|
@@ -23,83 +91,7 @@
 | 社交货币 | 10% |
 | 算法适配 | — |
 
-**触发方式**：
-- 提供公众号文章链接（`mp.weixin.qq.com`）
-- 提供视频号链接（`weixin.qq.com/sph`）
-- 直接粘贴文章草稿或视频脚本
-- 要求对比两篇内容（已知爆款 vs 目标内容）
-
-**输出**：爆款潜力判定 / 核心瓶颈 / 六维评分 / 可落地修改方案 / 选题替代方案
-
-→ [查看详情](wechat-explosive-analyzer/)
-
----
-
-### ✍️ wechat-creation
-
-**公众号全流程创作技能（基于jerry公众号风格）**
-
-从选题讨论→信息搜索→内容创作→三遍审校→爆款优化→配图标注→长文转X，覆盖公众号内容创作完整链路。
-
-**核心能力**：
-- 选题讨论：3-4个方向 + 大纲 + 优劣势分析
-- 信息搜索：写前必搜，确保内容有据
-- 内容创作：初稿撰写 + 三遍审校（基本错误→表达优化→风格检查）
-- 爆款优化：5种爆文公式 + 完读率关键检查
-- 配图标注：推荐5-8张配图位
-- 长文转X：200-500字/1000字+两种格式
-
-**触发方式**：
-- 提供创作主题，进入选题讨论
-- 提供已有草稿，进入审校优化
-- 提供长文章，进入转X流程
-
-**输出**：选题方向 / 初稿 / 审校稿 / 爆款优化稿 / 配图建议 / X平台版本
-
-→ [查看详情](wechat-creation/)
-
----
-
-### 📤 wechat-draft-publish
-
-**公众号草稿发布技能**
-
-将排版好的HTML文章一键发布到公众号草稿箱，支持封面图上传、正文图片上传、草稿创建、草稿发布全流程。
-
-**核心能力**：
-- Access Token 获取与管理
-- 正文图片上传（外部URL→微信URL，避免被过滤）
-- 封面图上传（获取永久素材 media_id）
-- 一键发布：图片处理→封面上传→草稿创建，一步到位
-- 草稿管理：查询/更新/删除草稿
-- 发布管理：提交发布+状态查询
-
-**使用方式**：
-- 一键发布：提供HTML文件+封面图路径，自动完成全流程
-- 分步执行：逐步上传图片→创建草稿→发布
-
-**前置条件**：
-- 已认证的服务号/订阅号（个人公众号无API权限）
-- AppID + AppSecret
-- 服务器IP白名单配置
-
-→ [查看详情](wechat-draft-publish/)
-
----
-
-## 安装方式
-
-从本地安装 skill 文件：
-
-```bash
-clawhub install ./wechat-explosive-analyzer.skill
-```
-
-从 GitHub 安装：
-
-```bash
-clawhub install xiaopengs/agent-skills/wechat-explosive-analyzer
-```
+触发：提供公众号文章链接 / 粘贴草稿 / 要求爆款诊断 → 输出评分+瓶颈+修改方案
 
 ---
 
@@ -107,32 +99,38 @@ clawhub install xiaopengs/agent-skills/wechat-explosive-analyzer
 
 ```
 wechat_helper/
-├── wechat-explosive-analyzer/
-│   ├── SKILL.md                          # 技能定义 + 工作流
+├── wechat-creation/                      # 内容创作技能
+│   ├── SKILL.md
+│   └── references/ (style-guide, templates)
+├── long-article-illustration/            # 长文配图技能
+│   ├── SKILL.md
+│   └── references/ (style-presets, prompt-templates)
+├── wechat-draft-publish/                 # 排版发布技能
+│   ├── SKILL.md
+│   └── scripts/wechat_api.py
+├── wechat-explosive-analyzer/            # 爆款分析技能
+│   ├── SKILL.md
 │   └── references/
-│       └── content-review-standards.md   # 六维审核标准原文
-├── wechat-creation/
-│   ├── SKILL.md                          # 创作技能定义 + 工作流
-│   ├── assets/                           # jerry历史文章参考
-│   └── references/
-│       ├── style-guide.md                # 风格规范（10做+10不做）
-│       └── templates.md                  # 各类模板
-├── wechat-draft-publish/
-│   ├── SKILL.md                          # 发布技能定义 + 工作流
-│   ├── wechat_api.py                     # 微信API调用脚本
-│   ├── wechat-api-reference.md           # API完整参考
-│   └── wechat-layout-guide.md            # 排版兼容规范
-└── README.md
+├── README.md
+└── 草稿/                                 # 文章草稿存档
 ```
 
 ---
 
-## 持续更新
+## 第四次文章发布纪实（2026-05-28）
 
-更多技能正在路上：
-- 爆款标题批量生成器
-- 选题热度追踪器
-- 视频号脚本结构模板
-- 小红书/微博爆款分析
+标题：《一天4700颗星——Understand-Anything证明「代码理解」正在从阅读变成导航》
 
-欢迎 issue 提出需求或贡献 skill。
+**流水线实录**：
+1. 数据收集 → 7款代码理解工具横评
+2. 初稿写作 → ~3700字
+3. 配图生成 → gpt-image-2 马卡龙风格 4 张（TokenRouter 中转）
+4. 图片压缩 → 1.5MB PNG → 95KB JPEG
+5. HTML 排版 → jerry 规范，6 段章节 + 产品矩阵
+6. 图片上传 → 4 张正文图 + 1 张封面
+7. 草稿推送 → 公众号后台草稿箱 ✅
+
+**关键教训**：
+- gpt-image-2 国内必须走 TokenRouter，直连 OpenAI 超时
+- 架构图 prompt 必须描述具体组件/层级/流向，纯抽象概念出图无信息量
+- 微信正文图片限 1MB，gpt-image-2 出图 ~1.5MB 需 JPEG 压缩
