@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updatedAt": "2026-05-24T02:38:00.000Z",
+  "updatedAt": "2026-05-27T14:26:00.000Z",
   "topics": [
     {
       "id": "topic-20260514-001",
@@ -516,6 +516,108 @@
       "difficulty": "⭐⭐",
       "status": "draft",
       "createdAt": "2026-05-23T00:06:40.000Z",
+      "selectedAt": null,
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260527-001",
+      "title": "「让AI有品味」不是空话——taste-skill 21K星和 stop-slop 5K星同时登榜，AI的「品质革命」来了",
+      "angle": "两个关于AI输出品质的项目同天登上GitHub Trending，这不是巧合——从「能不能生成」到「能不能生成好」，AI发展正式进入品质阶段。对AI Native Coder来说，会筛选AI输出正在变成比会用AI更重要的能力。",
+      "outline": [
+        "开头：taste-skill 21K星+stop-slop 5K星同天登榜，两个关于AI品质的项目",
+        "taste-skill做了什么：给AI输出打分，教它什么是好品味",
+        "stop-slop做了什么：识别并移除AI文本中的AI味儿——那些identifiable的pattern",
+        "为什么是现在：AI slop泛滥的临界点——信息流被AI内容污染，受众容忍度归零",
+        "深度：这解决了什么问题？AI能力过剩但AI品质严重不足",
+        "对AI Native Coder的实践意义：你的竞争力不再是会用AI，而是知道什么是好的AI输出",
+        "升华：AI的品位将成为区别好工程师和普通工程师的分水岭——品味即护城河"
+      ],
+      "source": "github-trending",
+      "difficulty": "⭐⭐",
+      "status": "published",
+      "createdAt": "2026-05-27T00:10:00.000Z",
+      "selectedAt": "2026-05-27T00:10:00.000Z",
+      "publishedAt": "2026-05-27",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQnuY0i58k1ohiEAtpsMhayrHsMPAIvE1e4hsBOtSx6tM",
+      "updatedAt": "2026-05-27T00:35:00.000Z"
+    },
+    {
+      "id": "topic-20260527-002",
+      "title": "一天4700颗星——Understand-Anything证明「代码理解」正在从阅读变成导航",
+      "angle": "35K星、单日+4,697星，Understand-Anything将代码预计算为可交互知识图谱。结合之前的CodeGraph和Context7，代码理解正在经历一次范式转移：不是让AI更聪明地读代码，而是把代码变成可以探索的地图。",
+      "outline": [
+        "开头：Understand-Anything 35K星，单日4,697星——这不是一个普通项目，是一个信号",
+        "它做了什么：任何代码库→交互式知识图谱→你可以搜索、探索、提问",
+        "技术对比：CodeGraph（项目级预索引）vs Understand-Anything（可视化知识图谱）vs claude-mem（会话记忆）——Context Engineering的三条路径",
+        "为什么这很重要：AI写代码的最大瓶颈不是模型能力，是模型不知道项目里有什么",
+        "范式转移：从AI读代码（被动消费）到AI构建代码地图（主动建模）",
+        "对AI Native Coder：代码理解不再靠LLM实时推理，而是靠预计算的语义结构——这意味着理解质量的飞跃",
+        "升华：代码理解不是让AI更像人，而是让代码本身变得更可理解——这是编码哲学的变化"
+      ],
+      "source": "github-trending",
+      "difficulty": "⭐⭐⭐",
+      "status": "selected",
+      "createdAt": "2026-05-27T00:10:00.000Z",
+      "selectedAt": "2026-05-27T00:10:00.000Z",
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260527-003",
+      "title": "Anthropic给知识工作者做了一套插件——Claude从编码器到「全栈知识伙伴」的转型",
+      "angle": "anthropics/knowledge-work-plugins 16K星，这是Anthropic第一次用开源插件包明确瞄准知识工作者而非开发者。结合claude-mem 78K星，Anthropic正在把Claude从coding tool变成覆盖知识工作者全场景的AI伙伴。",
+      "outline": [
+        "开头：knowledge-work-plugins 16K星，Anthropic官方出品",
+        "这套插件做了什么：面向知识工作者的生产力和创作工具",
+        "为什么Anthropic要这么做：Claude的用户画像从dev扩展到knowledge worker",
+        "对比：Cursor/GitHub Copilot专注coding vs Claude Cowork覆盖知识工作全场景",
+        "对AI Native Coder的信号：你的AI工具不会只帮你写代码——它帮你做调研、写文档、做决策",
+        "深层逻辑：Agent Skills生态的B面——不只是让Agent能写代码，是让Agent能工作",
+        "升华：Coding Agent → Knowledge Agent → 全栈AI伙伴，Anthropic在下一盘比Copilot更大的棋"
+      ],
+      "source": "github-trending",
+      "difficulty": "⭐⭐",
+      "status": "draft",
+      "createdAt": "2026-05-27T00:10:00.000Z",
+      "selectedAt": null,
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260527-004",
+      "title": "Aleksander Madry也走了——OpenAI安全高管的最后一个人离开了大楼",
+      "angle": "Madry是OpenAI安全核心人物（曾任preparedness负责人），去年夏天被降权后现在正式离职。从Ilya到Jan Leike到Madry，OpenAI安全领导层已全员离职——这对AI Native Coder每天在用的模型意味着什么？",
+      "outline": [
+        "开头：Madry宣布离职，要去研究AI对经济的影响",
+        "安全高管离职时间线：Ilya → Jan Leike → Lilian Weng → Madry——安全核心人物全员流失",
+        "原因分析：被边缘化（Madry去年夏天被降权）→ 安全与商业化的结构性矛盾",
+        "OpenAI现在的安全团队由谁主导：已经不是创立时的那批人",
+        "对行业的影响：AI安全治理的去中心化——不再是一家公司的事",
+        "对AI Native Coder：你用的GPT背后，安全把关人已经换了好几批——这意味着模型越强，安全责任越分散",
+        "升华：当AI公司的安全高管全员离开，安全的守护链从公司责任变成了用户责任——每个人都要自己做安全判断"
+      ],
+      "source": "theverge",
+      "difficulty": "⭐⭐",
+      "status": "draft",
+      "createdAt": "2026-05-27T00:10:00.000Z",
+      "selectedAt": null,
+      "publishedAt": null
+    },
+    {
+      "id": "topic-20260527-005",
+      "title": "同时发生：白宫要B给CIA买芯片、环保主义者在画数据中心地图、Nvidia涨了92%——AI基建的「三角冲突」",
+      "angle": "白宫要求B给间谍机构买AI芯片（国家安全），Erin Brockovich用地图追踪数据中心对社区的影响（环境正义），Nvidia Q1数据中心收入+92%（资本狂欢）——三条线在同一天交汇，AI基础设施正在形成国家安全、环境正义、资本回报的三角张力。",
+      "outline": [
+        "开头：三条新闻同一天出现——这不是巧合，是AI基建到达了社会可见的规模",
+        "线1：白宫B——CIA/NSA对AI芯片的饥饿，国家安全层面的AI竞赛",
+        "线2：Erin Brockovich地图——数据中心对社区的资源挤压，环境正义的反击",
+        "线3：Nvidia +92%——数据中心5.2B收入，资本市场的AI狂欢",
+        "三角冲突：国家安全要更多 → 环境要更少 → 资本要更快——三条线互相拉扯",
+        "对AI Native Coder的切身影响：你每次API调用的背后是真实的物理基础设施和地缘政治",
+        "升华：AI不再只是代码问题——它是土地、水、电、芯片、就业和战争的综合命题"
+      ],
+      "source": "theverge",
+      "difficulty": "⭐⭐",
+      "status": "draft",
+      "createdAt": "2026-05-27T00:10:00.000Z",
       "selectedAt": null,
       "publishedAt": null
     }
