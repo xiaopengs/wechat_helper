@@ -147,6 +147,20 @@
 背景:  #FAFAFA → #F5F5F5（渐变）
 ```
 
+### 方案 6：AI 科技蓝紫（技术科普/SaaS/开发者工具）⭐
+```
+主色:  #4F6BFF → #7A4DFF（渐变）
+辅色:  #F8F9FC
+强调:  #3CCF91 / #FF6B6B / #FFB84D
+文字:  #222222 / #666666 / #FFFFFF
+背景:  #FFFFFF → #F8F9FC（纯白底色）
+
+字体: HarmonyOS Sans SC Heavy / OPPOSans Heavy / MiSans Heavy
+插画: 3D Isometric + Clay Render + Glassmorphism
+```
+
+> 📖 完整风格拆解见 [references/style-ai-tech.md](style-ai-tech.md) — 含版式模板、通用 Prompt、OpenClaw 专用 Prompt
+
 ---
 
 ## 四、AI 生图 Prompt 模板
