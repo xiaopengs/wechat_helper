@@ -30,6 +30,38 @@ except ImportError:
 WECHAT_API_BASE = "https://api.weixin.qq.com"
 
 # ============================================================
+# 凭证安全加载（从 OpenClaw secrets 或环境变量）
+# ============================================================
+
+SECRETS_FILE = os.path.expanduser("~/.openclaw/wechat-secrets.json")
+
+
+def load_credentials():
+    """
+    按优先级加载微信凭证：
+    1. 环境变量 WECHAT_APPID / WECHAT_APPSECRET
+    2. ~/.openclaw/wechat-secrets.json（OpenClaw secrets file provider）
+    """
+    appid = os.environ.get("WECHAT_APPID")
+    secret = os.environ.get("WECHAT_APPSECRET")
+    if appid and secret:
+        return appid, secret
+
+    if os.path.isfile(SECRETS_FILE):
+        try:
+            with open(SECRETS_FILE, "r") as f:
+                data = json.load(f)
+            appid = data.get("WECHAT_APPID") or data.get("appid")
+            secret = data.get("WECHAT_APPSECRET") or data.get("appsecret")
+            if appid and secret:
+                return appid, secret
+        except (json.JSONDecodeError, IOError):
+            pass
+
+    return None, None
+
+
+# ============================================================
 # Token 管理
 # ============================================================
 
@@ -328,10 +360,12 @@ def main():
     parser = argparse.ArgumentParser(description="微信公众号草稿发布工具")
     subparsers = parser.add_subparsers(dest="command", help="可用命令")
 
+    # 全局参数：凭证可从 secrets 自动加载
+    parser.add_argument("--appid", default=None, help="公众号 AppID（可选，未提供则从 ~/.openclaw/wechat-secrets.json 读取）")
+    parser.add_argument("--secret", default=None, help="公众号 AppSecret（可选，同 appid）")
+
     # get_token
     p = subparsers.add_parser("get_token", help="获取 access_token")
-    p.add_argument("--appid", required=True, help="公众号 AppID")
-    p.add_argument("--secret", required=True, help="公众号 AppSecret")
 
     # upload_content_image
     p = subparsers.add_parser("upload_content_image", help="上传正文图片")
@@ -383,8 +417,6 @@ def main():
 
     # one_click_publish
     p = subparsers.add_parser("one_click_publish", help="一键发布到草稿箱")
-    p.add_argument("--appid", required=True, help="公众号 AppID")
-    p.add_argument("--secret", required=True, help="公众号 AppSecret")
     p.add_argument("--title", required=True, help="文章标题")
     p.add_argument("--html_file", required=True, help="排版HTML文件路径")
     p.add_argument("--cover_image", required=True, help="封面图文件路径")
@@ -396,6 +428,13 @@ def main():
     if not args.command:
         parser.print_help()
         return
+
+    # 自动加载凭证（优先级：命令行参数 > 环境变量 > secrets 文件）
+    if not args.appid or not args.secret:
+        auto_appid, auto_secret = load_credentials()
+        if auto_appid and auto_secret:
+            args.appid = args.appid or auto_appid
+            args.secret = args.secret or auto_secret
 
     result = None
 
