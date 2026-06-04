@@ -95,23 +95,64 @@
 
 ---
 
+### 📊 wechat-account-diagnostic — 账号诊断优化（官方API版）
+
+**自动拉取数据 + 智能分析 + 可执行优化建议**
+
+基于微信公众平台官方API，自动化完成从数据拉取到诊断报告生成的全流程。
+
+| 能力 | 说明 |
+|------|------|
+| **自动数据拉取** | 自动拉取最近20篇文章列表 + 30天阅读/在看/分享统计数据 |
+| **账号画像评分** | 100分制：更新规律性 + 标题风格统一性 + 主题集中度 + 人味指数 |
+| **内容风格分析** | 标题类型分布、主题聚类、AI/人味信号检测 |
+| **热点关联策略** | 结合AI哨兵晚报热点，输出立即跟进/深度挖掘/长期布局建议 |
+| **可执行优化** | 不说"优化内容"这种空话，给出具体可落地的调整建议 |
+
+**前置条件**：认证服务号/企业订阅号的 AppID + AppSecret（个人号可手动录入数据）
+
+**一键使用**：
+```bash
+python wechat-account-diagnostic/scripts/account_analyzer.py full \
+  --appid YOUR_APPID \
+  --secret YOUR_SECRET \
+  --output 诊断报告.md
+```
+
+触发：说"分析一下我的公众号" / "做个账号诊断" / "结合晚报看看内容策略"
+
+→ 详细使用说明：[wechat-account-diagnostic/QUICKSTART.md](wechat-account-diagnostic/QUICKSTART.md)
+
+---
+
 ## 目录结构
 
 ```
 wechat_helper/
 ├── wechat-creation/                      # 内容创作技能
 │   ├── SKILL.md
-│   └── references/ (style-guide, templates)
+│   └── references/ (style-guide, templates, practical-notes)
 ├── long-article-illustration/            # 长文配图技能
 │   ├── SKILL.md
 │   └── references/ (style-presets, prompt-templates)
 ├── wechat-draft-publish/                 # 排版发布技能
 │   ├── SKILL.md
-│   └── scripts/wechat_api.py
-├── wechat-explosive-analyzer/            # 爆款分析技能
+│   ├── scripts/ (wechat_api, build_article)
+│   └── references/
+├── wechat-explosive-analyzer/            # 单篇爆款分析技能
 │   ├── SKILL.md
 │   └── references/
+├── wechat-account-diagnostic/            # 全账号诊断优化技能
+│   ├── SKILL.md
+│   ├── references/ (diagnostic-framework, data-metrics, style-guidelines)
+│   └── scripts/
+├── greenbook-creator/                    # 绿皮书创作技能（新增）
+│   ├── SKILL.md
+│   ├── scripts/ (gen_image, publish)
+│   └── references/ (design-system, copy-templates, style-ai-tech)
 ├── README.md
+├── 新功能/                               # 新功能文章与架构图
+├── 信息池/                               # 历史文章与数据池
 └── 草稿/                                 # 文章草稿存档
 ```
 
