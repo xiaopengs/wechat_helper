@@ -10,9 +10,9 @@
 #   tech-light  – 浅色科技风（架构图/流程图）
 set -u
 
-API_KEY=***
+API_KEY=sk-NVOucxpKXF8yCRQjumHRqEOKplvS97HeJPN6x3Hj3BwvHmRR
 BASE_URL="https://www.tokenrouter.tech/v1"
-MODEL="gpt-5.5"
+MODEL="gpt-image-2"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 STYLE_DIR="$SCRIPT_DIR/styles"
 
