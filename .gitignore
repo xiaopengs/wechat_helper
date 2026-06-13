@@ -1,0 +1,28 @@
+# === 排版/封面产物(每次会重新生成) ===
+# 排版脚本(运行中临时脚本)
+草稿/build_*.py
+草稿/make_cover*.py
+# 封面与排版产物
+草稿/cover/
+草稿/_outputs/
+草稿/*-公众号稿.html
+草稿/*-公众号稿.md
+# 草稿里偶尔存的过程图
+草稿/codegraph-architecture.png
+草稿/google-codewiki-architecture.png
+草稿/newapi-architecture.png
+草稿/understand-anything-architecture.png
+草稿/zread-architecture.png
+
+# === 中间草稿(初稿已发布,价值沉淀在 选题池/pool.json) ===
+草稿/topic-2026*-初稿.md
+草稿/topic-2026*-二稿.md
+草稿/wechat-ai-eco-*.md
+草稿/cl4r1t4s-*.md
+草稿/ai-degrade-*.md
+
+# === 杂项 ===
+_knowledge_base/
+wechat-draft-publish/__pycache__/
+wechat-draft-publish/build_fable5.py
+wechat-draft-publish/fable5_prompt_teardown.html
