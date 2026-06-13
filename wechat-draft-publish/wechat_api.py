@@ -76,6 +76,7 @@ def get_token(appid, secret):
         "secret": secret
     }
     resp = requests.get(url, params=params, timeout=10)
+    resp.encoding = "utf-8"  # 微信 content-type 没 charset,requests 默认 ISO-8859-1 会乱码
     data = resp.json()
     if "access_token" not in data:
         print(json.dumps({"success": False, "error": data}, ensure_ascii=False))
@@ -109,6 +110,7 @@ def upload_content_image(token, image_path):
     with open(image_path, "rb") as f:
         files = {"media": (os.path.basename(image_path), f)}
         resp = requests.post(url, params=params, files=files, timeout=30)
+    resp.encoding = "utf-8"
     data = resp.json()
     if "url" not in data:
         return {"success": False, "error": data}
@@ -124,6 +126,7 @@ def upload_cover(token, image_path):
     with open(image_path, "rb") as f:
         files = {"media": (os.path.basename(image_path), f)}
         resp = requests.post(url, params=params, files=files, timeout=30)
+    resp.encoding = "utf-8"
     data = resp.json()
     if "media_id" not in data:
         return {"success": False, "error": data}
@@ -159,6 +162,7 @@ def create_draft(token, title, content, thumb_media_id, author="", digest="",
     # 使用 ensure_ascii=False 避免中文被转义成 \uXXXX
     resp = requests.post(url, params=params, data=json.dumps(body, ensure_ascii=False).encode("utf-8"), 
                          headers={"Content-Type": "application/json; charset=utf-8"}, timeout=30)
+    resp.encoding = "utf-8"
     data = resp.json()
     if "media_id" not in data:
         return {"success": False, "error": data}
@@ -171,6 +175,7 @@ def list_drafts(token, offset=0, count=20):
     params = {"access_token": token}
     body = {"offset": offset, "count": count, "no_content": 1}
     resp = requests.post(url, params=params, json=body, timeout=30)
+    resp.encoding = "utf-8"
     data = resp.json()
     if "item" not in data:
         return {"success": False, "error": data}
@@ -183,6 +188,7 @@ def get_draft(token, media_id):
     params = {"access_token": token}
     body = {"media_id": media_id}
     resp = requests.post(url, params=params, json=body, timeout=30)
+    resp.encoding = "utf-8"
     data = resp.json()
     if "news_item" not in data:
         return {"success": False, "error": data}
@@ -195,6 +201,7 @@ def delete_draft(token, media_id):
     params = {"access_token": token}
     body = {"media_id": media_id}
     resp = requests.post(url, params=params, json=body, timeout=30)
+    resp.encoding = "utf-8"
     data = resp.json()
     return {"success": data.get("errcode", -1) == 0, "errmsg": data.get("errmsg", "")}
 
@@ -221,6 +228,7 @@ def update_draft(token, media_id, index, title, content, thumb_media_id, author=
     # 使用 ensure_ascii=False 避免中文被转义成 \uXXXX
     resp = requests.post(url, params=params, data=json.dumps(body, ensure_ascii=False).encode("utf-8"),
                          headers={"Content-Type": "application/json; charset=utf-8"}, timeout=30)
+    resp.encoding = "utf-8"
     data = resp.json()
     return {"success": data.get("errcode", -1) == 0, "errmsg": data.get("errmsg", "")}
 
@@ -234,6 +242,7 @@ def publish_draft(token, media_id):
     params = {"access_token": token}
     body = {"media_id": media_id}
     resp = requests.post(url, params=params, json=body, timeout=30)
+    resp.encoding = "utf-8"
     data = resp.json()
     if data.get("errcode", 0) != 0:
         return {"success": False, "error": data}
@@ -246,6 +255,7 @@ def check_publish(token, publish_id):
     params = {"access_token": token}
     body = {"publish_id": publish_id}
     resp = requests.post(url, params=params, json=body, timeout=30)
+    resp.encoding = "utf-8"
     data = resp.json()
     return {"success": True, "data": data}
 
