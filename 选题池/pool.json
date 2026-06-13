@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updatedAt": "2026-06-09T00:03:50+08:00",
+  "updatedAt": "2026-06-13T20:51:32+08:00",
   "topics": [
     {
       "id": "topic-20260514-001",
@@ -640,6 +640,49 @@
       "selectedAt": "2026-06-08T22:25:00+08:00",
       "publishedAt": "2026-06-09T00:03:50+08:00",
       "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQk21BwHcU3oXXr_gvsWaGrsmdFIqluUaQeqYY2r06Qfi"
+    },
+    {
+      "id": "topic-20260613-001",
+      "title": "Fable 5 三日封杀:AI 史上最狠的一次政府叫停,五场看点全开打",
+      "angle": "2026-06-12 上线 72 小时被美国政府一纸出口管制令按停;Anthropic 正面硬刚,称\"按这标准以后所有前沿模型都别上线了\"。这是 AI 史上第一次有商用前沿大模型的公开访问被政府直接叫停。拆五个看点:罪证成不成立 / 订阅窗口值不值 / 外籍员工歧视 / Cursor 真不受影响吗 / 监管范式转移。",
+      "outline": [
+        "时间线 72h 全记录 (04 月 Preview → 06/09 上线 → 06/12 17:21 禁令 → 06/13 响应)",
+        "看点 1:被封的\"罪证\"到底成不成立?Anthropic 复现反驳 + 拉 GPT-5.5 下水",
+        "看点 2:订阅窗口的 token 燃烧值不值?3 天白嫖 vs 9 天用完 MAX",
+        "看点 3:连自家外籍员工都禁 — 对科研人员的国籍歧视讽刺",
+        "看点 4:Cursor 真的没受影响吗?— 状态页未列 ≠ 不受影响",
+        "看点 5:这是 AI 监管的转折点吗?— 监管逻辑从\"更安全\"转向\"根本不能用\"",
+        "三件还没说清的事 + 如果只能记一件事"
+      ],
+      "source": "Jerry 提供原始线索 + 黑爪爪深挖 12 个信源",
+      "difficulty": "⭐⭐",
+      "status": "published",
+      "createdAt": "2026-06-13T13:30:00+08:00",
+      "selectedAt": "2026-06-13T13:30:00+08:00",
+      "publishedAt": "2026-06-13T20:46:00+08:00",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQvioSU0oSEew2NY-l9RuZNTS93w5EYhDzQZcozcX_xm6"
+    },
+    {
+      "id": "topic-20260613-002",
+      "title": "微软连发三款 AI Agent 工程化工具(SkillOpt + Agent-EvalKit + ASSERT)",
+      "angle": "2026-06-12 微软一天三开源,把 Coding Agent 从\"能跑\"补到\"能上生产\"。三件套精准命中 Agent 上生产的三大工程瓶颈:技能调优(SkillOpt,GPT-5.5 上 +23.5% / 小模型翻倍)/ 行为审计(Agent-EvalKit,忠实性·工具参数·回复质量三维度)/ 规约测试(ASSERT,瞄准 Gartner 99% 企业无 Agent 评估的痛点)。微软把\"Agent 治理\"上升到与模型能力同等重要的工程层。",
+      "outline": [
+        "01 发生了什么:2026-06-12 三件套并排(SkillOpt 蓝 / Agent-EvalKit 紫 / ASSERT 橙)",
+        "SkillOpt · 性能数据:+23.5% / 小模型 ≈2×,借鉴学习率+动量处理 Skill 文档",
+        "Agent-EvalKit · 三维度:忠实性 / 工具参数准确度 / 回复质量",
+        "ASSERT · 行业空白:MIT 协议,瞄准 Gartner 99% 企业无 Agent 评估",
+        "02 为什么重要:技能调优→行为审计→规约测试的工程化闭环",
+        "SkillOpt 借鉴深度学习优化范式是范式创新 + 微软把 Agent 治理上升工程层",
+        "03 三款工具的官方信息(GitHub + 官方项目页 / 官方文档页 / 官方博文)",
+        "如果只能记一件事:99% 痛点终于有了开源解法"
+      ],
+      "source": "Jerry 提供原始素材 + 3 条官方权威链接(github + 微软项目页 / 文档页 / commandline 博文)",
+      "difficulty": "⭐",
+      "status": "published",
+      "createdAt": "2026-06-13T20:30:00+08:00",
+      "selectedAt": "2026-06-13T20:30:00+08:00",
+      "publishedAt": "2026-06-13T20:48:00+08:00",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQvkrCGo9AB0V4480ejPA1nBmr-BUZKJ4t50bLdhub7ai"
     }
   ]
 }
