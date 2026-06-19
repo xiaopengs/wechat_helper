@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1080, initial-scale=1.0" />
+  <title>OpenRouter 知识图解 · 一个 Key 接住 300+ 模型</title>
+  <meta name="description" content="OpenRouter 接入任意 Coding Agent 的 12 页知识图解 · 3:4 竖屏" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <main class="deck">
+
+    <!-- ============================================== -->
+    <!-- 第 1 页 / 共 12 页 - 封面                       -->
+    <!-- ============================================== -->
+    <section class="slide slide--black slide--hero">
+      <div class="watermark">OPENROUTER</div>
+
+      <div class="content">
+        <div class="kicker">KNOWLEDGE · 12 PAGES · 3:4</div>
+        <div class="cat-label" style="background: var(--bg-yellow);">第 01 章 · 引子</div>
+      </div>
+
+      <div class="hero-center">
+        <div class="hero-accent"></div>
+        <div class="hero-bg-num">300+</div>
+        <h1 class="hero-title">
+          一把 Key，<br />接住 300+ 模型
+        </h1>
+        <p class="hero-sub">
+          OpenRouter · 60+ Provider · 1 个端点<br />
+          工具可以换，Key 不用换
+        </p>
+      </div>
+
+      <div class="content" style="display:flex; justify-content:space-between; align-items:flex-end;">
+        <div class="foot">OpenRouter × Coding Agents · 拆解</div>
+        <div class="foot" style="color: var(--text-muted-inv);">@knowledge-visual-cartographer</div>
+      </div>
+
+      <div class="page-num">01 / 12</div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 第 2 页 / 共 12 页 - 痛点                      -->
+    <!-- ============================================== -->
+    <section class="slide">
+      <div class="watermark">PAIN</div>
+      <div class="content content--spread">
+        <div>
+          <div class="kicker">第 02 章 · 痛点</div>
+          <h2 class="h2">多工具多模型的<br />「钥匙噩梦」</h2>
+          <p class="lead" style="margin-bottom: 0;">
+            工具一多,光配环境就耗掉半天。
+          </p>
+        </div>
+
+        <div class="stack-lg">
+          <div class="block-black" style="display: flex; align-items: center; gap: 32px;">
+            <div class="big-num">01</div>
+            <div>
+              <h3 class="h3" style="color:#fff; margin-bottom: 8px;">钥匙散落</h3>
+              <p class="body" style="color: rgba(255,255,255,0.75);">
+                Claude 一把、OpenAI 一把、Gemini 又一把。每个供应商各一套。
+              </p>
+            </div>
+          </div>
+
+          <div class="block-black" style="display: flex; align-items: center; gap: 32px;">
+            <div class="big-num">02</div>
+            <div>
+              <h3 class="h3" style="color:#fff; margin-bottom: 8px;">计费迷宫</h3>
+              <p class="body" style="color: rgba(255,255,255,0.75);">
+                四个 Dashboard,四张账单,谁花的算不清。
+              </p>
+            </div>
+          </div>
+
+          <div class="block-black" style="display: flex; align-items: center; gap: 32px;">
+            <div class="big-num">03</div>
+            <div>
+              <h3 class="h3" style="color:#fff; margin-bottom: 8px;">配置碎片</h3>
+              <p class="body" style="color: rgba(255,255,255,0.75);">
+                环境变量、配置文件、设置面板各一套。每接一个工具重写一次。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-num">02 / 12</div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 第 3 页 / 共 12 页 - 定义                      -->
+    <!-- ============================================== -->
+    <section class="slide">
+      <div class="watermark">DEFINE</div>
+      <div class="content content--spread">
+        <div>
+          <div class="kicker">第 03 章 · 界定</div>
+          <h2 class="h2">OpenRouter 是什么 /<br />不是什么</h2>
+          <p class="lead" style="margin-bottom: 0;">
+            先把"是什么 vs 不是什么"拆清楚。
+          </p>
+        </div>
+
+        <div class="stack">
+          <div class="block-black" style="display:flex; align-items:flex-start; gap: 24px;">
+            <div style="font-size: 56px; line-height: 1; color: var(--bg-yellow);">+</div>
+            <div>
+              <h3 class="h3" style="color:#fff; margin-bottom: 8px;">是 · 统一 API 路由层</h3>
+              <p class="body" style="color: rgba(255,255,255,0.75);">
+                夹在「你的工具」与「模型供应商」之间,一个端点分发到 60+ Provider。
+              </p>
+            </div>
+          </div>
+
+          <div class="block-black" style="display:flex; align-items:flex-start; gap: 24px;">
+            <div style="font-size: 56px; line-height: 1; color: var(--bg-yellow);">+</div>
+            <div>
+              <h3 class="h3" style="color:#fff; margin-bottom: 8px;">是 · OpenAI Chat Completions 兼容</h3>
+              <p class="body" style="color: rgba(255,255,255,0.75);">
+                官方 OpenAI SDK 换 base_url 即可直连,业务代码零改动。
+              </p>
+            </div>
+          </div>
+
+          <div class="block-yellow" style="display:flex; align-items:flex-start; gap: 24px;">
+            <div style="font-size: 56px; line-height: 1; color: var(--text-black);">-</div>
+            <div>
+              <h3 class="h3" style="color:var(--text-black); margin-bottom: 8px;">不是 · 模型本身</h3>
+              <p class="body" style="color: rgba(0,0,0,0.75);">
+                它不训模型也不持有权重,只是把请求转给上游。
+              </p>
+            </div>
+          </div>
+
+          <div class="block-yellow" style="display:flex; align-items:flex-start; gap: 24px;">
+            <div style="font-size: 56px; line-height: 1; color: var(--text-black);">-</div>
+            <div>
+              <h3 class="h3" style="color:var(--text-black); margin-bottom: 8px;">不是 · 加价中间商</h3>
+              <p class="body" style="color: rgba(0,0,0,0.75);">
+                按 token 原价计费(0% inference 加价),只收 5.5% 信用费。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-num">03 / 12</div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 第 4 页 / 共 12 页 - 价值                      -->
+    <!-- ============================================== -->
+    <section class="slide">
+      <div class="watermark">VALUE</div>
+      <div class="content content--spread">
+        <div>
+          <div class="kicker">第 04 章 · 价值</div>
+          <h2 class="h2">一把钥匙<br />一个 URL<br />一个 Slug</h2>
+          <p class="lead" style="margin-bottom: 0;">
+            配置一次,切模型只改一个字符串。
+          </p>
+        </div>
+
+        <div class="stack">
+          <div class="block-black" style="display:flex; align-items:center; gap: 32px;">
+            <div class="big-num">01</div>
+            <div>
+              <h3 class="h3" style="color:#fff; margin-bottom: 6px;">Key</h3>
+              <p class="body" style="color: rgba(255,255,255,0.75);">
+                <code style="font-family: 'SF Mono', monospace; color: var(--bg-yellow);">sk-or-...</code> 一把,所有工具通用
+              </p>
+            </div>
+          </div>
+
+          <div class="block-black" style="display:flex; align-items:center; gap: 32px;">
+            <div class="big-num">02</div>
+            <div>
+              <h3 class="h3" style="color:#fff; margin-bottom: 6px;">URL</h3>
+              <p class="body" style="color: rgba(255,255,255,0.75);">
+                <code style="font-family: 'SF Mono', monospace; color: var(--bg-yellow);">https://openrouter.ai/api/v1</code>
+              </p>
+            </div>
+          </div>
+
+          <div class="block-black" style="display:flex; align-items:center; gap: 32px;">
+            <div class="big-num">03</div>
+            <div>
+              <h3 class="h3" style="color:#fff; margin-bottom: 6px;">Slug</h3>
+              <p class="body" style="color: rgba(255,255,255,0.75);">
+                <code style="font-family: 'SF Mono', monospace; color: var(--bg-yellow);">openai/gpt-4o</code> ·
+                <code style="font-family: 'SF Mono', monospace; color: var(--bg-yellow);">anthropic/claude-sonnet-4</code>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 56px; padding: 20px 24px; border-left: 4px solid var(--bg-black);">
+          <p class="body" style="font-weight: 600;">
+            → 换模型 = 改一个字符串
+          </p>
+        </div>
+      </div>
+      <div class="page-num">04 / 12</div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 第 5 页 / 共 12 页 - 三步配置法                 -->
+    <!-- ============================================== -->
+    <section class="slide">
+      <div class="watermark">SETUP</div>
+      <div class="content content--spread">
+        <div>
+          <div class="kicker">第 05 章 · 三步配置</div>
+          <h2 class="h2">三步接好 OpenRouter</h2>
+          <p class="lead" style="margin-bottom: 0;">
+            任何工具都跑同一套流程。
+          </p>
+        </div>
+
+        <div class="stack-lg">
+          <!-- 步骤 1 -->
+          <div>
+            <div style="display:flex; align-items:baseline; gap: 24px; margin-bottom: 12px;">
+              <span class="step-num">01</span>
+              <h3 class="h3">去 openrouter.ai/keys 生成 sk-or-... Key</h3>
+            </div>
+            <div class="code"><span class="code-comment"># 把 Key 放到环境变量,别写进源码</span>
+<span class="code-key">export</span> OPENROUTER_API_KEY=sk-or-v1-...</div>
+          </div>
+
+          <hr class="divider" />
+
+          <!-- 步骤 2 -->
+          <div>
+            <div style="display:flex; align-items:baseline; gap: 24px; margin-bottom: 12px;">
+              <span class="step-num">02</span>
+              <h3 class="h3">base URL 指向统一端点</h3>
+            </div>
+            <div class="code"><span class="code-comment"># Python · OpenAI SDK</span>
+client = OpenAI(
+  base_url=<span class="code-string">"https://openrouter.ai/api/v1"</span>,
+  api_key=os.environ[<span class="code-string">"OPENROUTER_API_KEY"</span>],
+)</div>
+          </div>
+
+          <hr class="divider" />
+
+          <!-- 步骤 3 -->
+          <div>
+            <div style="display:flex; align-items:baseline; gap: 24px; margin-bottom: 12px;">
+              <span class="step-num">03</span>
+              <h3 class="h3">用 provider/model 格式挑一个 Slug</h3>
+            </div>
+            <div class="code"><span class="code-comment"># 切模型 = 改一个字符串</span>
+model = <span class="code-string">"anthropic/claude-sonnet-4"</span>
+<span class="code-comment">#   ↑ 改成 openai/gpt-4o / google/gemini-... 都可以</span></div>
+          </div>
+        </div>
+
+        <div style="margin-top: 48px; padding: 16px 24px; background: var(--bg-yellow); border-radius: 4px;">
+          <p class="body" style="font-weight: 700;">⚠ Key 放环境变量,别写进源码 · 推送到 git 之前先 gitignore</p>
+        </div>
+      </div>
+      <div class="page-num">05 / 12</div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 第 6 页 / 共 12 页 - 三种写法                   -->
+    <!-- ============================================== -->
+    <section class="slide">
+      <div class="watermark">CODE</div>
+      <div class="content content--spread">
+        <div>
+          <div class="kicker">第 06 章 · 同一调用 三种写法</div>
+          <h2 class="h2">curl / Python / TypeScript</h2>
+          <p class="lead" style="margin-bottom: 0;">
+            官方 OpenAI SDK 直接复用,业务代码零改动。
+          </p>
+        </div>
+
+        <div class="stack">
+          <!-- curl -->
+          <div>
+            <div class="cat-label">curl</div>
+            <div class="code">curl https://openrouter.ai/api/v1/chat/completions \
+  -H <span class="code-string">"Authorization: Bearer $OPENROUTER_API_KEY"</span> \
+  -H <span class="code-string">"Content-Type: application/json"</span> \
+  -d <span class="code-string">'
+{ "model": "anthropic/claude-sonnet-4",
+  "messages": [{"role":"user","content":"Refactor this function."}] }'</span></div>
+          </div>
+
+          <hr class="divider" />
+
+          <!-- Python -->
+          <div>
+            <div class="cat-label">Python</div>
+            <div class="code"><span class="code-key">import</span> os
+<span class="code-key">from</span> openai <span class="code-key">import</span> OpenAI
+
+client = OpenAI(
+  base_url=<span class="code-string">"https://openrouter.ai/api/v1"</span>,
+  api_key=os.environ[<span class="code-string">"OPENROUTER_API_KEY"</span>],
+)
+
+resp = client.chat.completions.create(
+  model=<span class="code-string">"openai/gpt-4o"</span>,
+  messages=[{<span class="code-string">"role"</span>:<span class="code-string">"user"</span>,<span class="code-string">"content"</span>:<span class="code-string">"Refactor this function."</span>}],
+)</div>
+          </div>
+
+          <hr class="divider" />
+
+          <!-- TypeScript -->
+          <div>
+            <div class="cat-label">TypeScript</div>
+            <div class="code"><span class="code-key">import</span> OpenAI <span class="code-key">from</span> <span class="code-string">"openai"</span>;
+
+<span class="code-key">const</span> client = <span class="code-key">new</span> OpenAI({
+  baseURL: <span class="code-string">"https://openrouter.ai/api/v1"</span>,
+  apiKey: process.env.OPENROUTER_API_KEY,
+});
+
+<span class="code-key">const</span> resp = <span class="code-key">await</span> client.chat.completions.create({
+  model: <span class="code-string">"anthropic/claude-sonnet-4"</span>,
+  messages: [{ role: <span class="code-string">"user"</span>, content: <span class="code-string">"Refactor this function."</span> }],
+});</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 40px; padding: 20px 24px; border-left: 4px solid var(--bg-black);">
+          <p class="body" style="font-weight: 600;">
+            官方 OpenAI SDK 直接复用 · OpenRouter 也有自家 SDK(openrouter / @openrouter/sdk)
+          </p>
+        </div>
+      </div>
+      <div class="page-num">06 / 12</div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 第 7 页 / 共 12 页 - 工具地图                   -->
+    <!-- ============================================== -->
+    <section class="slide">
+      <div class="watermark">TOOLS</div>
+      <div class="content content--spread">
+        <div>
+          <div class="kicker">第 07 章 · 落地工具</div>
+          <h2 class="h2">一把 Key 通吃的<br />工具地图</h2>
+          <p class="lead" style="margin-bottom: 0;">
+            终端 Agent / 编辑器 / 扩展 / 前端 / 协议层,全部用同一把 Key。
+          </p>
+        </div>
+
+        <div class="stack-lg">
+          <div>
+            <div class="cat-label">终端 Agent</div>
+            <div class="tool-row"><span class="tool-name">Claude Code</span><span class="tool-path">环境变量 · Anthropic 兼容端点</span></div>
+            <div class="tool-row"><span class="tool-name">Codex CLI</span><span class="tool-path">~/.codex/config.toml</span></div>
+            <div class="tool-row"><span class="tool-name">OpenClaw</span><span class="tool-path">~/.openclaw/openclaw.json · 或 OPENROUTER_API_KEY</span></div>
+            <div class="tool-row"><span class="tool-name">Hermes</span><span class="tool-path">~/.hermes/config.yaml · ~/.hermes/.env</span></div>
+          </div>
+
+          <div>
+            <div class="cat-label">编辑器 / IDE</div>
+            <div class="tool-row"><span class="tool-name">Cursor</span><span class="tool-path">应用内设置 · 自定义 OpenAI base URL</span></div>
+          </div>
+
+          <div>
+            <div class="cat-label">VS Code 扩展</div>
+            <div class="tool-row"><span class="tool-name">Cline</span><span class="tool-path">扩展设置 · OpenRouter provider</span></div>
+            <div class="tool-row"><span class="tool-name">Kilo Code</span><span class="tool-path">扩展设置 · OpenRouter provider</span></div>
+          </div>
+
+          <div>
+            <div class="cat-label">前端 / 协议层</div>
+            <div class="tool-row"><span class="tool-name">SillyTavern</span><span class="tool-path">连接设置 · OpenRouter API</span></div>
+            <div class="tool-row"><span class="tool-name">Claude Desktop</span><span class="tool-path">Anthropic 兼容端点</span></div>
+            <div class="tool-row"><span class="tool-name">Junie · OpenCode · MCP servers</span><span class="tool-path">OpenRouter cookbook 接入</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="page-num">07 / 12</div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 第 8 页 / 共 12 页 - 路由双保险                 -->
+    <!-- ============================================== -->
+    <section class="slide">
+      <div class="watermark">ROUTING</div>
+      <div class="content content--spread">
+        <div>
+          <div class="kicker">第 08 章 · 路由</div>
+          <h2 class="h2">让 Agent 永不掉线</h2>
+          <p class="lead" style="margin-bottom: 0;">
+            一次失败请求 Agent 还好接住,多步任务里 Provider 抖一下就半路断电 - 路由双保险就是为这个准备的。
+          </p>
+        </div>
+
+        <div class="stack">
+          <div class="block-black">
+            <div class="cat-label" style="background: var(--bg-yellow); color: var(--text-black);">第一层 · 自动 provider failover</div>
+            <h3 class="h3" style="color:#fff; margin: 16px 0 12px 0;">同一模型,多 Provider 自动切换</h3>
+            <ul class="list" style="color: rgba(255,255,255,0.75);">
+              <li>挂了或被限流 → 自动路由到另一家 Provider</li>
+              <li>零配置,开箱即用</li>
+              <li>你只为成功的那一次付费</li>
+            </ul>
+          </div>
+
+          <div class="block-black">
+            <div class="cat-label" style="background: var(--bg-yellow); color: var(--text-black);">第二层 · 手动 model fallback</div>
+            <h3 class="h3" style="color:#fff; margin: 16px 0 12px 0;">主备模型按序试</h3>
+            <ul class="list" style="color: rgba(255,255,255,0.75);">
+              <li>传 models 数组(OpenAI SDK 走 extra_body={"models":[...]})</li>
+              <li>覆盖「模型只有一家 provider」的盲区</li>
+              <li>响应里 model 字段告诉你最终跑了哪个</li>
+            </ul>
+          </div>
+
+          <div class="block-yellow">
+            <div class="cat-label" style="background: var(--bg-black); color: var(--bg-yellow);">兜底 · Auto Router</div>
+            <h3 class="h3" style="color:var(--text-black); margin: 16px 0 12px 0;">openrouter/auto</h3>
+            <ul class="list">
+              <li>按 prompt 难度自动选模型</li>
+              <li>简单的派给便宜模型,难的派给强模型</li>
+              <li>不加收 routing 费 · 原价计费</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="page-num">08 / 12</div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 第 9 页 / 共 12 页 - SDK 选型                   -->
+    <!-- ============================================== -->
+    <section class="slide">
+      <div class="watermark">SDK</div>
+      <div class="content content--spread">
+        <div>
+          <div class="kicker">第 09 章 · SDK 选型</div>
+          <h2 class="h2">Client SDK vs<br />Agent SDK</h2>
+          <p class="lead" style="margin-bottom: 0;">
+            接现有工具用 OpenAI SDK 就行,自建 Agent 才需要 Agent SDK。
+          </p>
+        </div>
+
+        <div class="stack-lg">
+          <div class="block-yellow">
+            <div class="cat-label" style="background: var(--bg-black); color: var(--bg-yellow);">Client SDK · 轻量</div>
+            <h3 class="h3" style="color:var(--text-black); margin: 16px 0 12px 0;">薄封装 REST + 类型推导</h3>
+            <ul class="list">
+              <li>Python · openrouter 包</li>
+              <li>TypeScript · @openrouter/sdk</li>
+              <li>适用:已有 OpenAI SDK 经验,需要可控 HTTP</li>
+            </ul>
+          </div>
+
+          <div class="block-black">
+            <div class="cat-label">Agent SDK · 重量</div>
+            <h3 class="h3" style="color:#fff; margin: 16px 0 12px 0;">替你跑循环</h3>
+            <ul class="list" style="color: rgba(255,255,255,0.75);">
+              <li>多轮对话 + 工具执行 + 状态管理 · 一站式</li>
+              <li>关键能力:同一 loop 内不同 turn 切不同模型</li>
+              <li>读文件用便宜模型,生成代码用强模型</li>
+              <li>callModel 原语 · 一个调用跑完整个工具循环</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="page-num">09 / 12</div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 第 10 页 / 共 12 页 - 成本地图                  -->
+    <!-- ============================================== -->
+    <section class="slide">
+      <div class="watermark">COST</div>
+      <div class="content content--spread">
+        <div>
+          <div class="kicker">第 10 章 · 成本</div>
+          <h2 class="h2">三档成本地图</h2>
+          <p class="lead" style="margin-bottom: 0;">
+            0% inference 加价 · 只在充钱时收一笔小额信用费。
+          </p>
+        </div>
+
+        <div class="stack-lg">
+          <div class="tier tier-free">
+            <div class="tier-label">免费档</div>
+            <div class="tier-num">$0</div>
+            <p class="tier-desc">
+              20+ 模型永久免费 · 50 次/天 → 充 $10 提到 1000 次/天
+            </p>
+            <p class="body-sm" style="color: rgba(0,0,0,0.6); margin-top: 12px;">
+              够跑通端到端,生产慎用 · 失败请求也算配额
+            </p>
+          </div>
+
+          <div class="tier tier-paid">
+            <div class="tier-label" style="color: var(--text-muted-inv);">付费档</div>
+            <div class="tier-num" style="color: var(--bg-yellow);">0%</div>
+            <p class="tier-desc">
+              inference 加价 · 按 token 原价计费 · 不抽成
+            </p>
+            <p class="body-sm" style="color: rgba(255,255,255,0.6); margin-top: 12px;">
+              模型目录价 = 你付的价
+            </p>
+          </div>
+
+          <div class="tier tier-fee">
+            <div class="tier-label">信用费</div>
+            <div class="tier-num">5.5%</div>
+            <p class="tier-desc">
+              充钱时一次性收 · 最低 $0.80
+            </p>
+            <p class="body-sm" style="color: rgba(0,0,0,0.6); margin-top: 12px;">
+              详见 openrouter.ai/pricing · 实时账单看 Activity dashboard
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="page-num">10 / 12</div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 第 11 页 / 共 12 页 - FAQ                       -->
+    <!-- ============================================== -->
+    <section class="slide">
+      <div class="watermark">FAQ</div>
+      <div class="content content--spread">
+        <div>
+          <div class="kicker">第 11 章 · FAQ</div>
+          <h2 class="h2">你最常踩的 5 个坑</h2>
+          <p class="lead" style="margin-bottom: 0;">
+            一次讲完,别再回头翻文档。
+          </p>
+        </div>
+
+        <div class="stack">
+          <div>
+            <div class="qa-q">Q · 每个工具要单独 Key 吗?</div>
+            <div class="qa-a">A · 不。一把 sk-or-... 全通,Claude Code / Codex / Cursor 都能复用。</div>
+          </div>
+
+          <div>
+            <div class="qa-q">Q · OpenAI SDK 能直接用吗?</div>
+            <div class="qa-a">A · 能。base_url 指向 https://openrouter.ai/api/v1 即可,业务代码零改动。</div>
+          </div>
+
+          <div>
+            <div class="qa-q">Q · 免费档稳定吗?</div>
+            <div class="qa-a">A · 够跑通端到端原型。生产慎用 - 高峰期上游可能限流,失败请求也算配额。</div>
+          </div>
+
+          <div>
+            <div class="qa-q">Q · Slug 格式是什么?</div>
+            <div class="qa-a">A · provider/model,例如 openai/gpt-4o。加 ~ 前缀可锁家族最新版(~anthropic/claude-sonnet-latest)。</div>
+          </div>
+
+          <div>
+            <div class="qa-q">Q · 会上传我的代码 / 提示吗?</div>
+            <div class="qa-a">A · 默认不上,即使请求报错也保留本地。需要日志换折扣?需手动 opt-in,见 Privacy Policy。</div>
+          </div>
+        </div>
+      </div>
+      <div class="page-num">11 / 12</div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 第 12 页 / 共 12 页 - 金句总结                  -->
+    <!-- ============================================== -->
+    <section class="slide slide--black slide--hero">
+      <div class="watermark">END</div>
+
+      <div class="content">
+        <div class="kicker">第 12 章 · 收束</div>
+        <div class="cat-label">FIN</div>
+      </div>
+
+      <div class="hero-center">
+        <div class="hero-accent"></div>
+        <div class="hero-bg-num">∞</div>
+        <h1 class="hero-title" style="text-align: left;">
+          一个端点<br />
+          一把钥匙<br />
+          一份账单
+        </h1>
+        <p class="hero-sub" style="margin-top: 40px;">
+          模型是日用品，路由才是基础设施。<br /><br />
+          今天的 Claude → 明天的 GPT → 后天的 Gemini<br />
+          — 都走同一根管。
+        </p>
+      </div>
+
+      <div class="content" style="display:flex; justify-content:space-between; align-items:flex-end;">
+        <div class="foot" style="color: var(--text-muted-inv);">@knowledge-visual-cartographer</div>
+        <div class="foot" style="color: var(--text-muted-inv);">DONE · 12 / 12</div>
+      </div>
+
+      <div class="page-num">12 / 12</div>
+    </section>
+
+  </main>
+</body>
+</html>

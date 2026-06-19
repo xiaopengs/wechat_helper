@@ -18,6 +18,10 @@
 
 **renwei 改稿说明**：「人味改稿」是默认开启的中间步骤，植入《人味儿写作心法》(renwei-writing)，原则是**少动 / 毛边是手迹 / 不写金句 / 上限是隐形**。每处改动都会交代理由；作者/黑爪爪可逐处回滚。详见 `INTEGRATION-renwei.md` 与 `renwei-writing/SKILL.md`。
 
+**文章结构硬规则（2026-06-16 沉淀）**：
+- **不带「本稿的 renwei 改稿实录」段落** —— 改稿是发布前内部工序，不上正文（仅 renwei skill 本身的教学性拆解文可保留作为演示）。
+- **主语默认是「我」** —— 避免「Jerry 给/让/说/要求/丢来」这种把 Jerry 推到台前的破第四面墙写法。例：开篇「Jerry 给了我一个测试题」改写为「我拿来一个题」或直接进入演示。
+
 **已验证的技术栈**：
 
 | 环节 | 工具/模型 | 备注 |
@@ -149,6 +153,51 @@ python wechat-account-diagnostic/scripts/account_analyzer.py full \
 
 ---
 
+### 🗺️ knowledge-visual-cartographer — 知识视觉化排版方案（2026-06-18 集成 / 2026-06-19 重大更新）
+
+**把一段知识拆成 N 页统一视觉风格的可视化幻灯片方案,支持三种渲染模式,页数动态根据字数算出**。
+
+吃「主题 + 知识背景(1 句话补充也能跑)」,页数按 `核心字数 / 150` 算法 4-12 页自适应,产出 `[总览] + [逐页细节]` 结构化文本。
+
+**三种渲染模式(用户选择)**:
+
+| 模式 | 产出 | 适用 |
+|------|------|------|
+| **A · 纯文本合同**(原版) | `[总览] + [逐页细节]` | Gamma / Tome / PPT 手动渲染 |
+| **B · HTML + Playwright**(默认) | 12 张 1080×1440 PNG | **公众号/小红书长图文**(推荐) |
+| **C · greenbook 模板** | `gen_media.sh --style cartographer` | 封面 / 单页概念图 |
+
+**模块架构**(5 必选 + 6 扩展,扩展页数动态命中):
+- 必选:M1 封面 / M2 痛点 / M3 定义 / M4 价值 / M5 金句(无论密度必出)
+- 扩展:M6 代码结构 / M7 代码示例 / M8 设计原则 / M9 落地样包 / M10 概念图谱 / M11 Q&A(按特征触发)
+- 统一视觉:`#FCF6E0` 米黄底 + `#1A1A1A` 黑块 + `#FFD700` 黄块,全左对齐无衬线
+- 画布:默认 3:4 (1080×1440);9:16 / 方形 / 手机长图按 `canvas-specs.md` 缩放
+
+**页数控制**(2026-06-19 新增动态算法):
+
+| 知识背景字数 | 总页数 |
+|----|----|
+| < 80 字 | 4 页(纯骨架) |
+| 80-150 字 | 5 页(加痛点) |
+| 150-300 字 | 6 页 |
+| 300-600 字 | 7-8 页 |
+| 600-1200 字 | 9-10 页 |
+| 1200-2000 字 | 11-12 页 |
+| ≥ 2000 字 | 12 页 + 提示拆套 |
+
+**与 greenbook-creator / long-article-illustration 互补场景**:
+- greenbook-creator:7-9 张短图文(单图独立成卡,小绿书/公众号轮播)
+- long-article-illustration:1 张配图/段(长文逐段插图)
+- **cartographer**:4-12 页讲解型长图(多页连贯叙事,讲清一个概念/方法论/复盘)
+
+**触发**:用户说「做个长图讲解 X」「出一套信息图」「做幻灯片讲清楚 X」「可视化拆解」「画个思维导图式的图」「出个 12 页长图文讲 X」,或给一段资料要求「做成图示/排版方案」。
+
+**当前状态**:**独立工具类**,不接入主流水线(用户决定"先不接")。需要时手动触发。模式 B 配套 HTML + Playwright 管线详见 `references/pipeline-html-playwright.md`;模式 B/C 模板复用 `greenbook-creator/references/cartographer-template/`。
+
+详见 `knowledge-visual-cartographer/SKILL.md` 与 `INTEGRATION-cartographer.md`。
+
+---
+
 ## 目录结构
 
 ```
@@ -177,8 +226,12 @@ wechat_helper/
 ├── renwei-writing/                       # 人味改稿技能 (2026-06-13 集成)
 │   ├── SKILL.md
 │   └── references/ (post-edit-checklist, case-study)
+├── knowledge-visual-cartographer/        # 知识视觉化排版方案 (2026-06-18 集成)
+│   ├── SKILL.md
+│   └── references/ (module-catalog, style-spec, canvas-specs)
 ├── README.md
 ├── INTEGRATION-renwei.md                 # renwei 接入说明
+├── INTEGRATION-cartographer.md           # cartographer 接入说明
 ├── 新功能/                               # 新功能文章与架构图
 ├── 信息池/                               # 历史文章与数据池
 └── 草稿/                                 # 文章草稿存档

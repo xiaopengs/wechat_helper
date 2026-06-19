@@ -1,0 +1,441 @@
+/* ========================================
+   OpenRouter 知识图解 — 3:4 视觉样式
+   规格:1080×1440 / 米黄 #FCF6E0 + 黑 #1A1A1A + 芥末黄 #FFD700
+   派生自 knowledge-visual-cartographer + frontend-dev
+   ======================================== */
+
+:root {
+  --bg-cream: #FCF6E0;
+  --bg-black: #1A1A1A;
+  --bg-yellow: #FFD700;
+  --text-white: #FFFFFF;
+  --text-black: #1A1A1A;
+  --text-muted: rgba(26, 26, 26, 0.55);
+  --text-muted-inv: rgba(255, 255, 255, 0.55);
+  --divider: rgba(26, 26, 26, 0.12);
+  --divider-inv: rgba(255, 255, 255, 0.15);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: #2a2a2a;
+  color: var(--text-black);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+               "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.deck {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 40px 0;
+}
+
+.slide {
+  width: 1080px;
+  height: 1440px;             /* 3:4 固定高度,溢出裁剪 */
+  padding: 60px 60px;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-cream);
+  color: var(--text-black);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 黑底/黄底变体 */
+.slide--black {
+  background: var(--bg-black);
+  color: var(--text-white);
+}
+
+/* 水印 */
+.watermark {
+  position: absolute;
+  top: 36px;
+  right: 48px;
+  font-size: 140px;
+  font-weight: 900;
+  letter-spacing: -8px;
+  color: rgba(26, 26, 26, 0.06);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  line-height: 1;
+}
+.slide--black .watermark {
+  color: rgba(255, 255, 255, 0.06);
+}
+
+/* 页码 */
+.page-num {
+  position: absolute;
+  bottom: 28px;
+  right: 56px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.slide--black .page-num {
+  color: var(--text-muted-inv);
+}
+
+/* kicker 顶部小字 */
+.kicker {
+  font-size: 14px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+.slide--black .kicker {
+  color: var(--text-muted-inv);
+}
+
+/* 标题层级 - 3:4 整体上提 20-30% */
+.h1 {
+  font-size: 92px;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -3px;
+  margin-bottom: 24px;
+}
+.h2 {
+  font-size: 56px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  margin-bottom: 24px;
+}
+.h3 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+/* 正文 - 关键:可读性 + 紧凑 */
+.lead {
+  font-size: 32px;
+  line-height: 1.4;
+  font-weight: 500;
+  margin-bottom: 32px;
+}
+.body {
+  font-size: 24px;
+  line-height: 1.45;
+  font-weight: 400;
+}
+.body-sm {
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+.slide--black .body-sm {
+  color: var(--text-muted-inv);
+}
+
+/* 块:黑底/黄底 */
+.block-black {
+  background: var(--bg-black);
+  color: var(--text-white);
+  padding: 22px 26px;
+  border-radius: 4px;
+}
+.block-yellow {
+  background: var(--bg-yellow);
+  color: var(--text-black);
+  padding: 22px 26px;
+  border-radius: 4px;
+}
+
+/* 代码块 - 关键紧凑 */
+.code {
+  font-family: "SF Mono", "Monaco", "Cascadia Code", "Consolas", "Roboto Mono", monospace;
+  font-size: 18px;
+  line-height: 1.55;
+  background: var(--bg-black);
+  color: #f0f0f0;
+  padding: 18px 22px;
+  border-radius: 4px;
+  white-space: pre;
+  overflow-x: auto;
+}
+.code-comment { color: #6a6a6a; }
+.code-string  { color: #FFD700; }
+.code-key     { color: #88c0d0; }
+
+/* 标签 chip */
+.chip {
+  display: inline-block;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: var(--bg-yellow);
+  color: var(--text-black);
+}
+
+/* 分割线 */
+.divider {
+  height: 1px;
+  background: var(--divider);
+  margin: 18px 0;
+  border: 0;
+}
+.divider-inv {
+  background: var(--divider-inv);
+}
+
+/* 列表 */
+.list {
+  list-style: none;
+  padding: 0;
+}
+.list li {
+  position: relative;
+  padding-left: 28px;
+  font-size: 24px;
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+.list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--text-muted);
+}
+.slide--black .list li::before {
+  color: var(--text-muted-inv);
+}
+
+/* 工具卡片 */
+.tool-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--divider);
+}
+.tool-row:last-child { border-bottom: 0; }
+.tool-name {
+  font-size: 26px;
+  font-weight: 700;
+  flex-shrink: 0;
+  min-width: 180px;
+}
+.tool-path {
+  font-family: "SF Mono", "Monaco", "Consolas", monospace;
+  font-size: 18px;
+  color: var(--text-muted);
+}
+.slide--black .tool-path { color: var(--text-muted-inv); }
+
+/* 大数字 - 收紧 */
+.big-num {
+  font-size: 120px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--bg-yellow);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -4px;
+}
+
+/* footer note */
+.foot {
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.slide--black .foot {
+  color: var(--text-muted-inv);
+}
+
+/* 间距工具 - 紧凑 */
+.stack > * + * { margin-top: 20px; }
+.stack-lg > * + * { margin-top: 32px; }
+.stack-xl > * + * { margin-top: 40px; }
+.stack-sm > * + * { margin-top: 10px; }
+
+/* 让主要内容不被水印压住,占满整张 slide */
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* 内容页:让所有子元素均分到全屏高度(替代默认 flex-start) */
+.content--spread {
+  justify-content: space-between;
+}
+
+/* 内容页:让主要块(gap group)在垂直方向均分,适应 1440 高 */
+.content--grow > .stack,
+.content--grow > .stack-lg,
+.content--grow > .stack-xl,
+.content--spread > .stack,
+.content--spread > .stack-lg,
+.content--spread > .stack-xl {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* 封面/金句页:顶/中/底按 space-between 自然分布到全屏 */
+.slide--hero {
+  justify-content: space-between;
+}
+
+.slide--hero .hero-center {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.slide--hero .content {
+  flex: 0 0 auto;
+}
+
+/* 封面/金句页中心装饰:一条贯穿的细黄线 + 巨大背景数字 */
+.hero-center {
+  position: relative;
+}
+
+.hero-accent {
+  position: absolute;
+  left: -16px;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  background: var(--bg-yellow);
+}
+
+.hero-bg-num {
+  position: absolute;
+  right: -40px;
+  bottom: -80px;
+  font-size: 380px;
+  font-weight: 900;
+  color: rgba(255, 215, 0, 0.08);
+  line-height: 1;
+  letter-spacing: -16px;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.slide--black .hero-bg-num {
+  color: rgba(255, 215, 0, 0.06);
+}
+
+.hero-center > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-title {
+  font-size: 104px;
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -3px;
+}
+.hero-sub {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 0;
+  opacity: 0.85;
+  margin-top: 24px;
+  line-height: 1.4;
+}
+
+/* 步骤序号 */
+.step-num {
+  font-size: 72px;
+  font-weight: 900;
+  color: var(--bg-yellow);
+  line-height: 1;
+  letter-spacing: -2px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Q&A 块 */
+.qa-q {
+  background: var(--bg-yellow);
+  color: var(--text-black);
+  padding: 14px 20px;
+  font-size: 24px;
+  font-weight: 700;
+  border-radius: 4px 4px 0 0;
+  line-height: 1.35;
+}
+.qa-a {
+  background: var(--bg-black);
+  color: var(--text-white);
+  padding: 14px 20px;
+  font-size: 20px;
+  font-weight: 500;
+  border-radius: 0 0 4px 4px;
+  margin-bottom: 14px;
+  line-height: 1.45;
+}
+
+/* 工具分类标题 */
+.cat-label {
+  display: inline-block;
+  background: var(--bg-yellow);
+  color: var(--text-black);
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* 成本档位卡 */
+.tier {
+  padding: 20px 26px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tier-free { background: var(--bg-yellow); color: var(--text-black); }
+.tier-paid { background: var(--bg-black); color: var(--text-white); }
+.tier-fee  { background: #fff7d6; color: var(--text-black); border: 2px solid var(--bg-black); }
+
+.tier-num {
+  font-size: 80px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -3px;
+  font-variant-numeric: tabular-nums;
+}
+.tier-label {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.tier-desc {
+  font-size: 20px;
+  line-height: 1.4;
+  margin-top: 6px;
+}
