@@ -294,6 +294,20 @@ html, body {
   justify-content: space-between;
 }
 
+/* 内容页:扩展开自定义容器,撑满中间区(2026-06-19 ai-anxiety 踩坑后补)
+   默认只对 .stack* 生效. .loop-grid / .process-grid / .cure-list / .quote-bar
+   都是项目自定义的,需要显式声明 flex: 1 1 auto; min-height: 0;
+   ⚠️ 切勿用 align-self: flex-end 推底部(在 column flex 里是"水平靠右")
+   ⚠️ 切勿把 grid 容器改成 flex column(会毁掉 grid 布局) */
+.content--spread > .timeline,
+.content--spread > .loop-grid,
+.content--spread > .process-grid,
+.content--spread > .cure-list,
+.content--spread > .quote-bar {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
 /* 封面/金句页:顶/中/底按 space-between 自然分布到全屏 */
 .slide--hero {
   justify-content: space-between;

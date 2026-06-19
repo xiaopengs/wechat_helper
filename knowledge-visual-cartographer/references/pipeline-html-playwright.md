@@ -213,6 +213,83 @@ print(await page.viewport_size())  # 应该是 {'width': 1080, 'height': 1440}
 症状:QQ 服务端拒收 base64 上传
 **解决**:改用公网 URL 形式,见 Step 6
 
+### Q9: `.content--spread` 下的自定义容器上半空下半满(2026-06-19,ai-anxiety-cartographer 6 页)
+
+**症状**:slide-02 时间线下面、两个 block 卡片之间、各 cure-item 之间出现夸张大空隙,内容堆在顶部。
+
+**根因**(三连陷阱,逐层触发):
+
+1. **`.content--spread` 默认只对 `.stack/.stack-lg/.stack-xl` 触发 fill**(`styles.css` 里的 selector)。自定义容器(`.timeline`/`.loop-grid`/`.process-grid`/`.cure-list`/`.quote-bar`)默认是 `display: block`,**不撑满垂直空间**,内容堆顶部。
+
+2. **过度修复 #1**:把所有自定义容器改成 `display: flex; flex-direction: column; justify-content: space-between;` → **毁了原本的 grid 布局**。`.loop-grid`(4 列 grid)变成 1 列 7 行堆栈、`.process-grid`(2 列 7 行)变成 1 列 7 行堆栈。
+
+3. **过度修复 #2**:保留 `space-between` 让内容均分 → **stack 内 block 之间的 32px margin-top + spread 的 space-between = 200-300px 夸张空隙**;`.quote-bar` 用 `align-self: flex-end` 在 column flex 里是"水平靠右"不是"垂直靠下",**quote-bar 横跳到右下角**。
+
+**正确做法**(逐类容器分类处理):
+
+```css
+/* 第一步:都加 flex: 1 1 auto; min-height: 0; 撑满垂直空间 */
+.content--spread > .timeline,
+.content--spread > .loop-grid,
+.content--spread > .process-grid,
+.content--spread > .cure-list,
+.content--spread > .quote-bar,
+.content--spread > .stack {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* 第二步:column-flex 容器保留 column flex,不用 space-between */
+.content--spread > .timeline {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* 时间线垂直居中 */
+}
+.content--spread > .cure-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;  /* 紧凑 gap,不要靠 space-between 撑 */
+}
+.content--spread > .stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;  /* 控住块间距 */
+}
+
+/* 第三步:grid 容器保留 grid,行高由 grid-template-rows 决定 */
+.content--spread > .loop-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);  /* 强制 2 行均分 */
+  gap: 10px;
+}
+.content--spread > .process-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: min-content;  /* 行高由内容决定 */
+  gap: 10px;
+}
+
+/* 第四步:卡片撑满 grid cell */
+.loop-card, .process-row {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* 第五步:quote-bar 用 margin-top: auto 推到底,不要用 align-self: flex-end */
+.content--spread > .quote-bar {
+  width: 100%;
+  margin-top: auto;
+}
+```
+
+**速查表**:遇到"上下空中间满"或"卡片之间大空隙",99% 是这两条错了:
+- ❌ 用 `space-between` 推内容(会让 N 个 block 之间出现大空隙)
+- ❌ 把 grid 容器改成 `display: flex; flex-direction: column;`(毁 grid 布局)
+- ✅ 用 `flex: 1 1 auto; min-height: 0;` + 保留各自 display
+- ✅ block 之间用 `gap: 16-20px` 显式控制
+- ✅ 靠底部用 `margin-top: auto`,**不要用 `align-self: flex-end`**
+
 ## 性能参考(VM-16-11 ubuntu)
 
 - 12 张 1080×1440 PNG 截图耗时:**~15 秒**

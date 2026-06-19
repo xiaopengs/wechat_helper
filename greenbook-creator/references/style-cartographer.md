@@ -282,4 +282,7 @@ done
 | 字号小看不清 | 缩略图 375px 宽 | body 至少 24px，big-num 至少 80px |
 | 风格断裂 | 12 页换了不同底色/字体 | 严格用同一份 `styles.css`，禁止 inline 改 |
 | 段落被截 | 1440 高度不够，content 溢出 | 调 padding（60→40）或压字距 |
+| 上下空中间满 | `content--spread` 下自定义容器（`.loop-grid`/`.process-grid`/`.cure-list`/`.quote-bar`）默认 `display: block` 不撑满 | 加 `flex: 1 1 auto; min-height: 0;` 扩 spread 作用域 |
+| 卡片间大空隙（200-300px） | `.stack` 内部 `> * + *` 有 32px margin-top，叠加 spread 的 `space-between` | `.stack` 改用 `gap: 16-18px` 显式控制，别用 `space-between` |
+| quote-bar 横跳右下角 | `align-self: flex-end` 在 column flex 里是"水平靠右"不是"垂直靠下" | 靠下用 `margin-top: auto`，加上 `width: 100%` 防缩 |
 | AI 生图臆造 | 用 AI 生 12 页长图 | 长图文改用 HTML+Playwright |

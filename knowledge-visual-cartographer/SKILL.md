@@ -168,6 +168,12 @@ sudo apt install libatk1.0-0 libatk-bridge2.0-0 libcups2 libxcomposite1 libxdama
 - 总页数 4-12 之间?
 - 文案短句化?(任何一条超过 1 行就改)
 - **模式 B/C 必须验证**:部署到公网 → curl 验 200 → 实际发送一张到 QQ/微信确认能正常显示
+- **模式 B 的 spread 陷阱快速检查**(详见 `references/pipeline-html-playwright.md` Q9):
+  - [ ] 自定义容器(`.loop-grid` / `.process-grid` / `.cure-list` / `.quote-bar` / `.timeline`)都有 `flex: 1 1 auto; min-height: 0;`
+  - [ ] 没用 `space-between` 推 stack / cure-list 内部 block(改用 `gap: 16-20px`)
+  - [ ] grid 容器保留 `display: grid`,没被改成 `flex column`
+  - [ ] quote-bar 靠下用 `margin-top: auto`,**不是** `align-self: flex-end`
+  - [ ] 卡片(`.loop-card` / `.process-row`)有 `height: 100%; box-sizing: border-box;` 撑满 grid cell
 
 ## Output contract
 
