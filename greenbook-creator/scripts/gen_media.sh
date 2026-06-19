@@ -12,6 +12,12 @@
 #   1) env TOKENROUTER_API_KEY  /  OPENAI_API_KEY
 #   2) ~/.openclaw/provider-auth.json → tokenrouter.api_key
 #
+# Special routing:
+#   --model gpt-image-2 (default for image gen/edit) is delegated to the
+#   image-provider-constraint skill (~/.openclaw/workspace/skills/image-provider-constraint)
+#   which uses a dedicated JUAPI key, bypassing TokenRouter group routing.
+#   All other models (gemini-*, doubao-seedance-*) still go through TokenRouter.
+#
 # Compatible with `wechat_helper/greenbook-creator/scripts/gen_image.sh` via thin wrapper.
 set -u
 
@@ -28,6 +34,11 @@ LLM_MODEL="deepseek/deepseek-v4-flash"
 DEFAULT_MODEL_IMG="gpt-image-2"
 DEFAULT_MODEL_VID="doubao-seedance-2.0-fast"
 
+# gpt-image-2 is delegated to the image-provider-constraint skill (dedicated
+# JUAPI key, independent of TokenRouter group routing). The skill's wrapper
+# handles prompt / edit / size / n / output / dry-run / force end-to-end.
+IMAGE_PROVIDER_CONSTRAINT_HOME="${IMAGE_PROVIDER_CONSTRAINT_HOME:-$HOME/.openclaw/workspace/skills/image-provider-constraint}"
+
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # Model registry (synced with /api/pricing; hardcoded as fallback)
 #   model:                model name to call
@@ -38,7 +49,7 @@ DEFAULT_MODEL_VID="doubao-seedance-2.0-fast"
 #   note:                 human note
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 MODEL_REGISTRY='[
-  {"model":"gpt-image-2","type":"image","group_base_price":1,"group":"GPT-image-2","sizes":["1024x1024","1024x1536","1536x1024","auto"],"note":"OpenAI 图像,0.2 元/张(在 GPT-image-2 组)"},
+  {"model":"gpt-image-2","type":"image","group_base_price":1,"group":"skill:image-provider-constraint","sizes":["1024x1024","1024x1536","1536x1024","auto"],"note":"OpenAI 图像,走 image-provider-constraint skill(独立 JUAPI 凭证)"},
   {"model":"gemini-2.5-flash-image","type":"image","group_base_price":0.2,"group":"Gemini","sizes":["1024x1024"],"note":"Google 图像,需 Gemini 组 key"},
   {"model":"gemini-3.1-flash-image-preview","type":"image","group_base_price":0.3,"group":"Gemini","sizes":["1024x1024"],"note":"Google 图像,需 Gemini 组 key"},
   {"model":"gemini-3-pro-image-preview","type":"image","group_base_price":0.5,"group":"Gemini","sizes":["1024x1024","2K","4K"],"note":"Google 图像,最高质量,需 Gemini 组 key"},
@@ -304,6 +315,9 @@ do_generate() {
   info "n:      $n"
   info "style:  $style"
 
+  # Route gpt-image-2 to image-provider-constraint skill (JUAPI)
+  if delegate_to_skill_if_gpt_image_2; then return 0; fi
+
   # Build JSON body
   json_body=$(json_object \
     "model" "$model" \
@@ -382,6 +396,11 @@ do_edit() {
   info "model: $model"
   info "out:   $out"
   info "size:  $size"
+
+  # For the skill delegation path, do not apply style preset (style is generate-only)
+  full_prompt="$base_prompt"
+  # Route gpt-image-2 to image-provider-constraint skill (JUAPI)
+  if delegate_to_skill_if_gpt_image_2; then return 0; fi
 
   if [ "$dry_run" = "1" ]; then
     echo "[DRY-RUN] multipart POST to $BASE_URL/images/edits"
@@ -546,45 +565,97 @@ save_media_response() {
 
   # Image post-process: WeChat compression
   if [ "$kind" = "image" ]; then
-    if command -v python3 >/dev/null 2>&1; then
-      python3 -c "from PIL import Image; i=Image.open('$out'); print(f'  Dimensions: {i.size[0]}x{i.size[1]}')" 2>/dev/null || true
-      size_bytes=$(wc -c < "$out")
-      if [ "$size_bytes" -gt 950000 ]; then
-        info "size ${size_bytes} bytes > 950KB, optimizing..."
-        python3 -c "
+    postprocess_image_file "$out"
+  fi
+
+  info "done: $out"
+}
+
+# WeChat < 1MB inline image compression (PNG optimize → quantize 256c → JPEG q92)
+postprocess_image_file() {
+  file=$1
+  [ -f "$file" ] || return 0
+  command -v python3 >/dev/null 2>&1 || return 0
+  python3 -c "from PIL import Image; i=Image.open('$file'); print(f'  Dimensions: {i.size[0]}x{i.size[1]}')" 2>/dev/null || true
+  size_bytes=$(wc -c < "$file")
+  [ "$size_bytes" -le 950000 ] && return 0
+  info "size ${size_bytes} bytes > 950KB, optimizing..."
+  POSTPROC_FILE="$file" python3 -c "
 from PIL import Image
 import os
-img = Image.open('$out')
-orig = os.path.getsize('$out')
+fp = os.environ['POSTPROC_FILE']
+img = Image.open(fp)
+orig = os.path.getsize(fp)
 m = img.mode if img.mode in ('RGB','RGBA','P') else 'RGB'
-if m == 'RGBA': img.save('$out','PNG',optimize=True)
-else: img.save('$out','PNG',optimize=True)
-new_sz = os.path.getsize('$out')
+if m == 'RGBA': img.save(fp,'PNG',optimize=True)
+else: img.save(fp,'PNG',optimize=True)
+new_sz = os.path.getsize(fp)
 print(f'  PNG optimize: {orig//1024}KB -> {new_sz//1024}KB')
 if new_sz > 950000:
-  img = Image.open('$out')
+  img = Image.open(fp)
   if img.mode == 'RGBA':
     img = img.quantize(colors=256, method=Image.Quantize.MEDIANCUT)
   elif img.mode == 'RGB':
     img = img.quantize(colors=256, method=Image.Quantize.MEDIANCUT)
-  img.save('$out','PNG',optimize=True)
-  final = os.path.getsize('$out')
+  img.save(fp,'PNG',optimize=True)
+  final = os.path.getsize(fp)
   print(f'  Quantize 256c: {new_sz//1024}KB -> {final//1024}KB')
   if final > 950000:
-    img = Image.open('$out')
+    img = Image.open(fp)
     if img.mode == 'RGBA':
       bg = Image.new('RGB', img.size, (255,255,255))
       bg.paste(img, mask=img.split()[3])
       img = bg
-    img.save('$out','JPEG',quality=92,optimize=True)
-    final2 = os.path.getsize('$out')
+    img.save(fp,'JPEG',quality=92,optimize=True)
+    final2 = os.path.getsize(fp)
     print(f'  JPEG q92: {final//1024}KB -> {final2//1024}KB')
 " 2>/dev/null
-      fi
-    fi
+}
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Skill delegation: gpt-image-2 → image-provider-constraint (JUAPI)
+# Returns 0 if request was handled by the skill (caller should `return` immediately).
+# Returns 1 if request should proceed via TokenRouter.
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+delegate_to_skill_if_gpt_image_2() {
+  if [ "$model" != "gpt-image-2" ]; then
+    return 1
+  fi
+  skill_sh="$IMAGE_PROVIDER_CONSTRAINT_HOME/scripts/gpt_image_2.sh"
+  if [ ! -x "$skill_sh" ]; then
+    die "gpt-image-2 needs image-provider-constraint skill, but $skill_sh not found/executable. Set IMAGE_PROVIDER_CONSTRAINT_HOME or chmod +x the script."
   fi
 
-  info "done: $out"
+  info "model:  gpt-image-2  (via image-provider-constraint skill / JUAPI)"
+  info "skill:  $IMAGE_PROVIDER_CONSTRAINT_HOME"
+
+  set -- "$skill_sh" "$command_name" --prompt "$full_prompt" --out "$out" --size "$size" --n "$n" --output-format png
+  [ "$force" = "1" ]  && set -- "$@" --force
+  [ "$dry_run" = "1" ] && set -- "$@" --dry-run
+  [ -n "$quality" ]   && set -- "$@" --quality "$quality"
+  if [ "$command_name" = "edit" ]; then
+    for img in $images; do
+      [ -f "$img" ] || die "image not found: $img"
+      set -- "$@" --image "$img"
+    done
+    [ -n "$mask" ] && [ -f "$mask" ] && set -- "$@" --mask "$mask"
+  fi
+
+  if [ "$dry_run" = "1" ]; then
+    echo "[DRY-RUN] delegating to image-provider-constraint skill:"
+  fi
+  "$@"
+  rc=$?
+  if [ $rc -ne 0 ]; then
+    die "image-provider-constraint skill failed (exit $rc)"
+  fi
+
+  # WeChat compression
+  if [ "$dry_run" != "1" ] && [ -f "$out" ]; then
+    postprocess_image_file "$out"
+    info "done: $out"
+  fi
+  return 0
 }
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
