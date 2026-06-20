@@ -1,0 +1,64 @@
+{
+  "account": "AI知识体系札记",
+  "week_range": "2026-05-18~2026-05-24",
+  "week_label": "2026-W21",
+  "report_source": "创作者周报",
+  "extracted_at": "2026-06-20T10:35:00+08:00",
+  "raw_image": "report.jpg",
+  "output": {
+    "total_posts": 3,
+    "original_articles": 2,
+    "image_posts": 0
+  },
+  "traffic": {
+    "total_views": 13000,
+    "wow_change_views": 12000,
+    "source_breakdown": {
+      "recommend": { "views": 12493, "pct": 96.1 },
+      "chat_session": { "views": 299, "pct": 2.3 },
+      "subscription_msg": { "views": 130, "pct": 1.0 },
+      "friend_share": { "views": 104, "pct": 0.8 },
+      "search": { "views": null, "pct": null },
+      "profile": { "views": null, "pct": null },
+      "other": { "views": null, "pct": null }
+    }
+  },
+  "top_articles": [
+    {
+      "rank": 1,
+      "title": "Agent Skill 框架正在吃掉软件开发",
+      "total_views": 13000,
+      "recommend_views": 12000,
+      "shares": 1048
+    },
+    {
+      "rank": 2,
+      "title": "Anthropic 把 skills 从实用库—Agent Skills 生态的",
+      "total_views": 81,
+      "recommend_views": 44,
+      "shares": null
+    },
+    {
+      "rank": 3,
+      "title": "产品经理的 deadline 从 1 年缩短到了 1 周—AI 正在让",
+      "total_views": 39,
+      "recommend_views": 19,
+      "shares": null
+    }
+  ],
+  "shares": {
+    "total": 1065,
+    "top_article_shares": 1048
+  },
+  "followers": {
+    "total": 259,
+    "net_change": 203,
+    "wow_change_pct": null,
+    "top_interests": ["职场", "科技", "财经", "美女", "科学"]
+  },
+  "comments": {
+    "reserved_count": 6,
+    "hot_topics": ["太过神化，其实就是前置提示词工程罢了?"]
+  },
+  "notes": "算法一次性爆款奖励窗口期，Agent Skill 框架级选题命中。账号名与 6 月周报不一致（札记 vs 礼记），待用户确认是否改名。"
+}

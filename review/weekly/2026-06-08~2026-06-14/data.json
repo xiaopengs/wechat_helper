@@ -1,0 +1,57 @@
+{
+  "account": "AI知识体系礼记",
+  "week_range": "2026-06-08~2026-06-14",
+  "week_label": "2026-W23",
+  "report_source": "创作者周报",
+  "extracted_at": "2026-06-20T10:35:00+08:00",
+  "raw_image": "report.jpg",
+  "output": {
+    "total_posts": 7,
+    "original_articles": 3,
+    "image_posts": 1
+  },
+  "traffic": {
+    "total_views": 241,
+    "wow_change_views": null,
+    "source_breakdown": {
+      "recommend": { "views": null, "pct": 11.6 },
+      "search": { "views": 89, "pct": 36.9 },
+      "chat_session": { "views": null, "pct": 29.5 },
+      "subscription_msg": { "views": null, "pct": 11.6 },
+      "friend_share": { "views": null, "pct": null },
+      "profile": { "views": null, "pct": null },
+      "other": { "views": 14.1, "pct": null }
+    }
+  },
+  "top_articles": [
+    {
+      "rank": 1,
+      "title": "Fable 5 三日封杀: AI史上最狠的一次政府叫停",
+      "total_views": null,
+      "search_views": 46,
+      "shares": 14
+    },
+    {
+      "rank": 2,
+      "title": "1500 行字字千金: Claude Fable 5 系统提示词全拆解",
+      "total_views": null,
+      "search_views": 15,
+      "shares": null
+    }
+  ],
+  "shares": {
+    "total": 27,
+    "top_article_shares": 14
+  },
+  "followers": {
+    "total": 345,
+    "net_change": 4,
+    "wow_change_pct": null,
+    "top_interests": ["科技", "财经", "职场", "科学", "房产"]
+  },
+  "comments": {
+    "reserved_count": null,
+    "hot_topics": []
+  },
+  "notes": "搜索依赖明显（36.9%），推荐仅 11.6%——算法已大幅降权。账号名与 5 月周报差异（礼记 vs 札记）需确认。"
+}

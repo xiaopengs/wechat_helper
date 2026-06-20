@@ -1,0 +1,50 @@
+{
+  "account": "AI知识体系札记",
+  "week_range": "2026-06-01~2026-06-07",
+  "week_label": "2026-W22",
+  "report_source": "创作者周报",
+  "extracted_at": "2026-06-20T10:35:00+08:00",
+  "raw_image": "report.jpg",
+  "output": {
+    "total_posts": 10,
+    "original_articles": 5,
+    "image_posts": 5
+  },
+  "traffic": {
+    "total_views": 701,
+    "wow_change_views": null,
+    "source_breakdown": {
+      "recommend": { "views": 478, "pct": 68.2 },
+      "search": { "views": null, "pct": null },
+      "chat_session": { "views": null, "pct": null },
+      "subscription_msg": { "views": null, "pct": null },
+      "friend_share": { "views": null, "pct": null },
+      "profile": { "views": null, "pct": null },
+      "other": { "views": null, "pct": 31.8 }
+    }
+  },
+  "top_articles": [
+    {
+      "rank": 1,
+      "title": "英伟达 Polar 开源项目",
+      "total_views": 373,
+      "recommend_views": null,
+      "shares": 50
+    }
+  ],
+  "shares": {
+    "total": null,
+    "top_article_shares": 50
+  },
+  "followers": {
+    "total": 341,
+    "net_change": 14,
+    "wow_change_pct": null,
+    "top_interests": ["科技", "财经", "科学"]
+  },
+  "comments": {
+    "reserved_count": null,
+    "hot_topics": []
+  },
+  "notes": "截图顶部为英文 'AI Knowledge System Notes'，可能改名/翻译展示。10 篇产出但流量分散，平均 70/篇。"
+}
