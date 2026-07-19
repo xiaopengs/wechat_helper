@@ -46,6 +46,14 @@ def p(text, bottom=18):
 </section>'''
 
 
+def paras(*items):
+    """合并多段为单 section(<br/><br/> 分隔,省 wrapper 字节) — build_fable5.py 紧凑版"""
+    inner = '<br/><br/>'.join(items)
+    return f'''<section style="margin-bottom:14px;">
+<span style="font-size:15px;color:{text_c};line-height:1.85;letter-spacing:0.2px;">{inner}</span>
+</section>'''
+
+
 def p_small(text):
     """次要文字"""
     return f'''<section style="margin-bottom:12px;">
@@ -72,6 +80,45 @@ def ref_item(text):
     return f'''<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid {primary};">
 <span style="font-size:14px;color:{secondary};line-height:1.7;">{text}</span>
 </section>'''
+
+
+def divider_with_num(num):
+    """章节分隔线 + 段落号(02d 格式:01/02/03) — fusion-article 实际版"""
+    n = f'{num:02d}'
+    return f'''<section style="text-align:center;margin:24px 0 14px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:13px;color:{primary};letter-spacing:3px;margin-right:10px;">{n}</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:{primary};border-radius:2px;"></span>
+</section>'''
+
+
+def img_section(src, caption):
+    """实图 + 图注(图片宽度100%,图注12px灰色emoji开头)"""
+    return f'''<section style="margin:20px 0;text-align:center;">
+<img src="{src}" style="width:100%;border-radius:6px;"/>
+<p style="font-size:12px;color:{muted};margin-top:6px;">{caption}</p>
+</section>'''
+
+
+def ref_line(text):
+    """参考条目(单行 · 列表,灰色小字)"""
+    return f'''<section style="margin-bottom:4px;"><span style="font-size:13px;color:{muted};line-height:1.7;">· {text}</span></section>'''
+
+
+def ref_section_header():
+    """参考文档区头(顶部浅灰分割线 + 小标签) — fusion-article 风格"""
+    return f'''<section style="margin-top:22px;padding-top:10px;border-top:1px solid #eeeeee;"><span style="font-size:13px;color:{secondary};font-weight:bold;letter-spacing:1px;">参考文档</span></section>'''
+
+
+def ref_item_dual(desc, url):
+    """参考条目(描述 + 蓝色URL双行,左侧2px蓝竖条)"""
+    return f'''<section style="margin-bottom:3px;padding:3px 0 3px 10px;border-left:2px solid {primary};font-size:12px;line-height:1.7;">
+<span style="color:{secondary};">{desc} </span><a href="{url}" style="color:{primary};text-decoration:underline;word-break:break-all;">{url}</a></section>'''
+
+
+def pre_block(code_text):
+    """代码块(<pre>,浅灰底圆角,12px Menlo/Consolas)"""
+    return f'''<section style="margin:10px 0;padding:10px 14px;background-color:{bg_quote};border-radius:6px;overflow-x:auto;">
+<pre style="font-size:12px;color:{text_c};line-height:1.6;margin:0;font-family:Menlo,Consolas,monospace;">{code_text}</pre></section>'''
 
 
 def bold_blue(text):
