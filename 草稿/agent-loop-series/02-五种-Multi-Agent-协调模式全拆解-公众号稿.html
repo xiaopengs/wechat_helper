@@ -1,0 +1,470 @@
+<section style="text-align:center;margin:8px 0 18px 0;">
+<span style="display:inline-block;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="font-size:15px;color:#333333;line-height:1.8;font-style:italic;"><strong style="color:#1a73e8;">「workflow 到 loop 拆解与实战」系列目录</strong><br/>01 综述·从自研到大厂默认<br/>02 五种 Multi-Agent 协调模式全拆解 <span style="color:#ff6b35;">← 你在这里</span><br/>03 一行 Bash 循环里的工程哲学:Ralph Loop 拆解<br/>04 Context Window 是编排与循环的第一性约束<br/>05 Cursor Subagent 完整使用手册<br/>06 Claude Code Agent Teams + Outcomes + Dreaming<br/>07 OpenAI Codex /goal:目标驱动的 Agent 循环<br/>08 收官 · 我们的工作流如何被大厂磨平 + 自留地清单<br/><br/>本文是 <strong style="color:#1a73e8;">第 02 篇</strong>。<br/>上一篇:01 综述·从自研到大厂默认<br/>下一篇:03 一行 Bash 循环里的工程哲学:Ralph Loop 拆解</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">00</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="font-size:15px;color:#333333;line-height:1.8;font-style:italic;">01 综述里那张「5 种模式实现成本从 2024 到 2026 断崖式下降」的表,02 篇展开:<strong style="color:#1a73e8;">每种模式给经典实现、对应大厂工具、我们该选它的具体信号</strong>。这五种不是 Anthropic 创造的,是 LLM 出现之前就存在的工程范式;Anthropic 4/10 那篇多智能体协调模式博客,干的事是给它们一个 LLM 时代的命名 + 边界。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">读懂这五种,你就能看懂三厂(Anthropic / OpenAI / Cursor)为什么对"多智能体编排"给出完全不同的答案——它们其实是在不同场景里选不同模式。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">01</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Anthropic 在 4/10 的官博里,把多智能体协调拆成五种 workflow 模式。这五种覆盖了 <strong style="color:#ff6b35;">"所有"多 LLM 协作"的可能"</strong>:</span>
+</section>
+<section style="margin:18px 0;overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden;">
+<thead><tr><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">模式</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">一句话</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">经典类比</th></tr></thead>
+<tbody><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><strong>Prompt chaining</strong></td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">上一步输出是下一步输入</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Unix 管道 <code>a | b | c</code></td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;"><strong>Routing</strong></td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">先分类,再分流到专门 prompt</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">客服工单系统派单</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><strong>Parallelization</strong></td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">同输入多分片,各跑各的,合结果</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Celery / MapReduce</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;"><strong>Orchestrator-workers</strong></td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">中央调度,动态拆任务给 worker</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">主编给记者派选题</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><strong>Evaluator-optimizer</strong></td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">生成-评估-迭代,直到达标</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">编辑-作者校稿循环</td></tr></tbody>
+</table>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>为什么不只三种</strong>:任何多 agent 系统,任务粒度、依赖关系、并发度、质量要求,在这五个维度上各选一个位置,就构成了你的系统骨架。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>为什么不是七种</strong>:再往上加,要么是这五种组合(如 Orchestrator + Routing),要么不是"协调模式"而是"架构风格"(如 Hierarchical 是拓扑,不是流程)。06 篇会讲 Agent Teams / Hierarchical / Network 这些"另一套分类"。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">02</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>核心机制</strong>:把任务拆成有序的 N 步,每步的输出是下步的输入,整条链路上一个 agent。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">经典实现:LangChain Expression Language(LCEL)</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;">from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+from langchain_core.output_parsers import StrOutputParser
+
+step1 = ChatPromptTemplate.from_template("把下面这段话改写得更正式:{input}")
+step2 = ChatPromptTemplate.from_template("从下面这段话里提取三个关键词:{input}")
+step3 = ChatPromptTemplate.from_template("用这三个关键词写一首五言绝句:{input}")
+
+chain = (
+    step1 | ChatOpenAI(model="gpt-4o") | StrOutputParser()
+  | step2 | ChatOpenAI(model="gpt-4o") | StrOutputParser()
+  | step3 | ChatOpenAI(model="gpt-4o") | StrOutputParser()
+)
+
+print(chain.invoke({"input": "今天天气不错,适合出门散步"}))</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><code>|</code> 就是 chain。每一步的输出直接喂给下一步。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">三厂对应</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· <strong>Claude Code 计划模式</strong>:<code>Shift+Tab</code> 进入 plan mode,Claude 自动把任务拆成 3-7 步,逐步执行,每步展示给用户看<br/>· <strong>Codex /goal multi-step</strong>:<code>/goal</code> 内置 step progression,每完成一步需要 verification<br/>· <strong>OpenAI 内部:OpenAI Agents SDK 的 handoffs</strong> 本质是链式</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">选它的具体信号</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· 每步输出 <strong>强依赖</strong> 前一步(不能并行)<br/>· 步骤数稳定在 <strong>3-7 步</strong>,超过 7 步说明该拆成 Orchestrator-workers 了<br/>· 错误有明确"在哪一步崩"的诊断,能重试单步</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>我们的踩坑</strong>:LangGraph 文档里"为什么 supervisor 比 chain 更通用"那节我们当时没读——把 chain 模式堆到 12 步,中间任何一步 API 限流整条链就卡住。后来才改 supervisor。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">03</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>核心机制</strong>:进来一个输入,先用 classifier 分类(关键词 / 意图 / embedding),根据分类结果路由到对应的专门 prompt 处理。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">经典实现:客服工单派单 → LLM 时代</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">LLM 之前的版本:</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;">def route_ticket(ticket):
+    category = svm_classifier.predict(ticket.text)  # "billing" / "tech" / "general"
+    return handler_table[category](ticket)</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">LLM 时代,把 classifier 换成意图识别 prompt:</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;">def route(user_query: str) -> str:
+    intent = llm.invoke(
+        f"从下面用户输入里识别意图(账单/技术/其他),只回一个词:{user_query}"
+    ).strip()
+    handlers = {
+        "账单": billing_agent,
+        "技术": tech_agent,
+        "其他": general_agent,
+    }
+    return handlers[intent](user_query)</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">三厂对应</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· <strong>Cursor Subagent 文件</strong>:<code>.cursor/agents/billing.md</code>、<code>tech.md</code>、<code>general.md</code>,frontmatter 里的 <code>description:</code> 字段就是"什么场景触发这个 subagent"<br/>· <strong>Claude Code Skills</strong>:跟 Cursor Subagent 同源思路,通过 description 字段自动触发<br/>· <strong>Codex /goal</strong>:可以指定多个 subagent 文件,运行时按 description 匹配</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>为什么"description 字段"是 Routing 模式</strong>:LLM 看到主 agent 上下文,根据 description 决定"我该不该把这个子任务交给它"——这就是 routing 决策。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">选它的具体信号</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· 输入类别 <strong>稳定</strong>(≤ 10 个),不会动态新增<br/>· 每个类别有 <strong>专门工具集</strong> 或 <strong>专门 prompt</strong> 才处理得好<br/>· 分类错误代价不大(兜底走 general)</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>我们的踩坑</strong>:我们 IM agent 第一版 routing 是硬编码关键词表。用户说"我的订单有问题"被分到"账单",因为"订单"命中关键词。后来改成 LLM 路由——但 LLM 路由在"用户输入含敏感词"时会拒识,导致 routing 失败。<strong style="color:#ff6b35;">最终方案是 LLM 路由 + 关键词兜底,两路并行</strong>。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">04</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>核心机制</strong>:把同一个任务切成 N 个独立分片,N 个 worker 并行处理,最后 merge。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">经典实现:MapReduce / Celery</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">LLM 之前:</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;">import asyncio
+from celery import group
+
+# 同步版(Celery)
+job = group(process_chunk.s(chunk) for chunk in chunks)
+result = job.apply_async().get()
+final = merge_results(result)</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">LLM 时代(<code>asyncio.gather</code>):</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;">async def parallel_summarize(docs: list[str]) -> list[str]:
+    tasks = [summarize_one(d) for d in docs]
+    return await asyncio.gather(*tasks)</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">三厂对应</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· <strong>Cursor /multitask</strong>:把大任务显式拆成多个 subagent 并行跑,<strong style="color:#1a73e8;">8 个上限</strong><br/>· <strong>Claude Code Parallel tool calls</strong>:主 agent 在一个 turn 里发出多个独立 tool call,SDK 内部并行执行<br/>· <strong>Codex /goal</strong>:同 prompt 可以 spawn 多个 subagent 并行</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">选它的具体信号</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· 任务 <strong>可分片</strong>(分片之间无依赖)<br/>· 分片数 <strong>4-8 个</strong>,再往上 LLM 单 turn 装不下<br/>· merge 函数 <strong>简单</strong>(concat / 投票 / 简单 LLM 总结)</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">投票变体:sectioning + voting</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Parallelization 还有两种变体:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· <strong>Sectioning(分片)</strong>:拆 input,各跑各的,合结果(如批量文档摘要)<br/>· <strong>Voting(投票)</strong>:同 input 跑多次,投票决定(增加稳定性,降低 hallucination)</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;"># 投票变体
+async def vote_5_times(prompt: str) -> str:
+    results = await asyncio.gather(*[llm.invoke(prompt) for _ in range(5)])
+    return most_common(results)  # 简单多数</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><code>/best-of-n</code>(Cursor)就是 voting 变体的产品化。</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>我们的踩坑</strong>:第一批并行 subagent 我们用 <code>multiprocessing.Pool</code> 跑——子进程之间不共享 LLM client 连接,每次 fork 都重新建立 HTTPS 连接,<strong style="color:#ff6b35;">慢 5 倍</strong>。改 asyncio + 共享 client 之后速度从 23 秒降到 4 秒。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">05</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>核心机制</strong>:一个 orchestrator agent 持有全局状态和策略,运行时把任务拆给多个 worker agent,worker 完成后把结果返回 orchestrator,orchestrator 决定下一步。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">经典实现:LangGraph supervisor 模式</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;">from langgraph.graph import StateGraph, END
+from typing import TypedDict, Literal
+
+class State(TypedDict):
+    task: str
+    worker_outputs: list[str]
+    done: bool
+
+def orchestrator(state: State) -> Literal["worker_a", "worker_b", END]:
+    if len(state["worker_outputs"]) >= 3:
+        return END
+    if "research" in state["task"]:
+        return "worker_a"  # 研究员
+    return "worker_b"  # 写手
+
+def worker_a(state: State) -> State:
+    output = research_agent.invoke(state["task"])
+    return {"worker_outputs": state["worker_outputs"] + [output]}
+
+workflow = StateGraph(State)
+workflow.add_node("orchestrator", orchestrator)
+workflow.add_node("worker_a", worker_a)
+workflow.add_node("worker_b", worker_b)
+workflow.set_entry_point("orchestrator")
+workflow.add_conditional_edges("orchestrator", orchestrator)
+workflow.add_edge("worker_a", "orchestrator")
+workflow.add_edge("worker_b", "orchestrator")
+graph = workflow.compile()</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">三厂对应</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· <strong>Anthropic Managed Agents(5/6)</strong>:Lead Agent + 最多 20 subagent,深度 <strong>刻意限制 1 层</strong>(subagent 不能 spawn 子 subagent)<br/>· <strong>Cursor /orchestrate(5/7)</strong>:中央 orchestrator + 8 个并行 worker,深度可递归但有限制<br/>· <strong>Codex /goal</strong>:主 agent 动态委派给 subagent,无深度限制</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">选它的具体信号</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· 任务 <strong>动态变化</strong>(事先无法穷举所有步骤)<br/>· worker 类型 <strong>≥ 3</strong>,每个有专门能力<br/>· <strong>中央协调是关键</strong>(没有 orchestrator,workers 不知道下一步该谁上)<br/>· 上下文需要 <strong>全局视角</strong>(orchestrator 持有全状态,workers 只看到自己那段)</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">Anthropic 限制深度 1 的真实理由</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong style="color:#ff6b35;">不是技术限制,是产品决策</strong>。Anthropic 工程团队在 AMA 里说过:深度 1 是"足够覆盖 95% 用例 + 把递归失控的概率压到 0"的折中。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>递归失控的真实案例</strong>:2025 年 Q3 某用户跑 LangGraph supervisor,worker 写了一个工具会触发自身递归,跑了 18 小时消耗 $12,000 API 费,只在 context window 撑爆后停。Anthropic 显然知道这件事——所以宁可限制深度,也不要让用户重蹈覆辙。</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>我们的踩坑</strong>:我们 supervisor 模式第一版没限制递归深度,踩了 Anthropic 提到的那类坑:worker 在某次任务里误判"这个任务需要再拆",递归 4 层,context 32 万 token 撑爆 LLM 端点。后来 <strong>加了一层硬限制:orchestrator 调 worker 最多 3 次/任务</strong>。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">06</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>核心机制</strong>:generator 出一个结果,evaluator 给评分和反馈,不达标就带着反馈再调 generator,直到达标或 N 轮上限。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">经典实现:Reflexion 论文(2023)</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;">def evaluator_optimizer(input: str, max_rounds: int = 5) -> str:
+    output = generator.invoke(input)
+    for round in range(max_rounds):
+        score, feedback = evaluator.invoke(output)
+        if score >= 0.8:
+            return output
+        output = generator.invoke(f"{input}\n\n上轮反馈:{feedback}")
+    return output  # 5 轮没达标也返回</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">三厂对应</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· <strong>Codex /goal + verification subagent</strong>:Goal 文本同时充当"起始指令 + 完成审计",verification subagent 独立评估<br/>· <strong>Claude Code Outcomes(5/6 同发)</strong>:开发者定义成功标准,独立评分器评估输出,不达标提示修订<br/>· <strong>Cursor /best-of-n</strong>:投票变体(同 prompt 跑 N 次,选最好)</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">选它的具体信号</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· 输出有 <strong>明确好坏标准</strong>(代码能不能跑 / 文章字数 / 评分 ≥ 阈值)<br/>· 生成一次 <strong>不够稳定</strong>(LLM 第一次输出经常跑偏)<br/>· 评估函数 <strong>比生成函数便宜</strong>(否则成本爆炸)</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">评估函数 vs 生成函数的成本反讽</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Reflexion 论文里"evaluator 是个独立 LLM"——但这意味着 <strong>每次评估 = 一次完整 LLM 调用</strong>,5 轮迭代 = 5 次生成 + 5 次评估 = 10 次 LLM 调用。如果生成任务本身是 30 秒,evaluator 也 30 秒,5 轮 = 5 分钟。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><code>/goal</code> 设计的巧妙之处:evaluator 可以用 <strong>比 generator 更小、更快、更便宜</strong> 的模型(比如 generator 用 o3,evaluator 用 gpt-4o-mini)。<strong style="color:#ff6b35;">评估函数的成本必须是生成的 1/5 以下</strong>,否则这个模式不划算。</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>我们的踩坑</strong>:第一版 Evaluator-optimizer,我们 evaluator 用了和 generator 一样的模型。跑"代码生成 + 自评"任务,一轮 30 秒,5 轮 150 秒,成本跟 generator 一样——<strong style="color:#ff6b35;">等于付了 5 倍价格换稳定性</strong>。后来 evaluator 换成 gpt-4o-mini,成本压到 1/3,稳定性反而更好(因为 evaluator 和 generator 不同模型,blindness 更彻底)。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">07</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><code>Coding Agent 三连</code> 报告 §一.② 给的另一套 5 种分类(Generator-Verifier / Orchestrator-Subagent / Agent Teams / Hierarchical / Network),其实是 <strong>从"架构拓扑"维度</strong> 看的,跟 02 篇主线 5 种(从"workflow 模式"维度看) <strong>不冲突</strong>:</span>
+</section>
+<section style="margin:18px 0;overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden;">
+<thead><tr><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">维度 A:workflow 模式(02 篇主线)</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">维度 B:架构风格(脚注)</th></tr></thead>
+<tbody><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Prompt chaining</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">单 agent / Network(无中央)</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">Routing</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">单 agent + 多个 handler</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Parallelization</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">多 agent peer(临时)</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">Orchestrator-workers</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">Orchestrator-Subagent(中央) / Hierarchical(多层中央)</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Evaluator-optimizer</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Generator-Verifier(双 agent)</td></tr></tbody>
+</table>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">06 篇会详解 Agent Teams(角色化拓扑),08 篇对照收官时会拉出"维度 A × 维度 B"的全景表。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">为什么两套分类同时存在</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· Anthropic 4/10(workflow 维度)是为 <strong>开发者选择模式</strong> 用<br/>· Anthropic 5/6 后(架构风格)是为 <strong>产品设计拓扑</strong> 用<br/>· 它们是 <strong>正交</strong> 的:你可以用 Orchestrator-workers 模式,选 Hierarchical 拓扑</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">08</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">01 综述那张对照表给了"是什么",02 篇补"为什么"。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">08.1 为什么 Anthropic 限制 1 层</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>产品定位</strong>:Anthropic 的客户是 <strong>企业</strong>。企业 IT 最怕"agent 在我服务器上跑了 18 小时消耗 $12,000"这种事故。深度 1 = 递归失控 = 0。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>技术代价</strong>:深度 1 限制下,复杂任务(比如"调研 X 主题写报告 + 校对 + 翻译")必须 <strong>显式拆成多个 subagent 文件,每个 subagent 完成一段</strong>,orchestrator 串起来。这要求开发者 <strong>写得更细</strong>,但跑得更可控。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>典型客户场景</strong>:Anthropic 文档里给的例子是"10 份合同批量审阅 + 风险标注"——这个任务 <strong>不会递归</strong>,深度 1 完全够用,反而限制深度让单步可解释、可审计。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">08.2 为什么 OpenAI 不限深度</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>产品定位</strong>:OpenAI Codex /goal 主打 <strong>长时无人值守</strong>(@skirano 18 小时演示)。要跑长任务链,必须允许递归。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>技术代价</strong>:不限深度 = 失控风险 = 需要额外保护机制。Codex 给的保护:Goal 文本 <strong>同时充当起始指令与完成审计</strong>,verification subagent 独立评分,5 轮评估不达标就停。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>典型客户场景</strong>:"把代码库从 React 16 升级到 React 19"——这个任务 <strong>本身会递归</strong>(改一处触发连锁),无限深度才跑得完。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">08.3 为什么 Cursor 卡 8 个</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>产品定位</strong>:Cursor 是 <strong>IDE</strong>。IDE 里的核心限制是"开发者看屏幕看得过来"。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>8 个的来历</strong>:Cursor 文档原话是"8 个并行 agent 的输出在 IDE 面板里能并排展示,超过 8 个开发者就 monitor 不过来了"。<strong style="color:#1a73e8;">这不是技术上限,是人因工程上限</strong>。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>技术代价</strong>:并行度受 IDE 屏幕限制,所以 Cursor 把"长任务链"交给"深度可递归",把"广并行任务"卡在 8 个——<strong>两条腿走路,不押宝一边</strong>。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">08.4 同一题面三种答案的启示</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">三厂答案的差异不是"哪个更好",是 <strong>不同风险偏好 + 不同产品定位</strong>:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· <strong>Anthropic</strong>:企业安全,宁可功能少,不可失控<br/>· <strong>OpenAI</strong>:长任务链,宁可放手,不可半途<br/>· <strong>Cursor</strong>:开发者体验,宁可限制,不可过载</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">我们做自研编排时,其实也在做同样的取舍——只是没明说。08 篇对照收官时,会回头看我们当时的取舍对不对。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">09</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin:18px 0;padding:18px;background-color:#f7f8fa;border-left:3px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="font-size:15px;color:#333333;line-height:1.95;display:block;">
+<strong style="color:#1a73e8;">任务来了怎么选模式?按这个顺序问:</strong><br/><br/>
+<span style="color:#ff6b35;">1.</span> 任务是否可分片且分片间无依赖?<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;├── <strong>是</strong> → 各分片是否需要专门 prompt / 工具?<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;├── <strong>是</strong> → Routing(分类 → 分流)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;└── <strong>否</strong> → Parallelization(分片并行 + merge)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;└── <strong>否</strong> → 任务是否动态变化,需要中央协调?<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <strong>是</strong> → Orchestrator-workers<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <strong>否</strong> → 任务是否有明确好坏标准?<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <strong>是</strong> → Evaluator-optimizer<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <strong>否</strong> → Prompt chaining(几段串行)
+</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">实战口诀</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· <strong>可分片 + 同质</strong> → Parallelization<br/>· <strong>可分片 + 异质</strong> → Routing<br/>· <strong>强依赖</strong> → Prompt chaining(短) / Orchestrator-workers(长)<br/>· <strong>有标准 + 不稳</strong> → Evaluator-optimizer</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">复合场景:真实系统是组合</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">真实系统 <strong>不会只用一种</strong>。我们的 IM agent 编排实际上是:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· <strong>Routing</strong> 把用户输入分到"对话/创作/工具"三类<br/>· <strong>Orchestrator-workers</strong> 在每类里动态拆任务给 subagent<br/>· <strong>Evaluator-optimizer</strong> 在"创作"类里做质量把控<br/>· <strong>Parallelization</strong> 在"工具"类里并行执行多个独立操作</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">四种模式叠加,才是真实系统。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">10</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">02 篇拆解的 5 种 multi-agent 协调模式,不是"5 选 1",是 <strong>5 种积木</strong>:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· <strong>Prompt chaining</strong> 是最朴素的"串行"<br/>· <strong>Routing</strong> 是"分流到专门"<br/>· <strong>Parallelization</strong> 是"广度并行"<br/>· <strong>Orchestrator-workers</strong> 是"深度动态"<br/>· <strong>Evaluator-optimizer</strong> 是"质量循环"</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">真实系统是这五种 <strong>在任务链不同节点上的组合</strong>——04 篇会讲"context window 怎么约束这些模式的可组合性",05/06/07 篇会看三厂怎么用这些模式搭自家产品,08 篇对照收官时拉出"我们自研编排 vs 大厂工具"的全景对照。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">03 篇先回头看一个更原始的问题:<strong>循环本身</strong>——为什么 <code>while :; do cat PROMPT.md | claude-code ; done</code> 这一行 bash,能撑起"目标自转"这个新范式?Ralph Loop 的工程哲学是什么,跟 02 篇这 5 种模式怎么衔接?</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">本篇参考链接</span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Anthropic: Building Effective Agents</strong> · 02 篇主参考<br/><span style="font-size:12px;color:#999999;">anthropic.com/research/building-effective-agents</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Anthropic: Multi-agent Coordination Patterns</strong>(2026-04-10)· 02 篇 5 种 workflow 模式来源<br/><span style="font-size:12px;color:#999999;">claude.com/blog/multi-agent-coordination-patterns</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Anthropic Managed Agents 多智能体编排文档</strong>(2026-05-06)· Orchestrator-Subagent + 深度 1 来源<br/><span style="font-size:12px;color:#999999;">docs.claude.com/en/docs/managed-agents</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">LangGraph supervisor 模式文档</strong> · 经典 Orchestrator-workers 实现<br/><span style="font-size:12px;color:#999999;">langchain-ai.github.io/langgraph/concepts/multi_agent/</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Reflexion 论文 (NeurIPS 2023)</strong> · Evaluator-optimizer 学术源头<br/><span style="font-size:12px;color:#999999;">arxiv.org/abs/2303.11381</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Cursor Subagent 文档</strong> · Routing 模式在 Cursor 的产品化<br/><span style="font-size:12px;color:#999999;">cursor.com/docs/subagents</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Claude Code best practices</strong> · context 资源管理与模式选择<br/><span style="font-size:12px;color:#999999;">code.claude.com/docs/en/best-practices</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Codex /goal 文档</strong> · Evaluator-optimizer 在 Codex 的产品化<br/><span style="font-size:12px;color:#999999;">developers.openai.com/codex/use-cases/follow-goals</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Coding Agent 三连</strong> 报告 §一.②(本地)· 5/6 Anthropic 多智能体编排深度拆解<br/><span style="font-size:12px;color:#999999;">wechat_helper/Coding_Agent_三连</span></span>
+</section>
+<section style="margin:30px 0 10px 0;padding:18px 18px;background-color:#f7f8fa;border-left:3px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="font-size:17px;color:#333333;line-height:1.85;font-weight:bold;">系列脚注</span><br/><br/>
+<span style="font-size:15px;color:#333333;line-height:1.85;display:inline-block;">
+上一篇:<a href="#">01 综述·从自研到大厂默认</a>——三厂同步发布快照 + 8 篇预告
+</span><br/><br/>
+<span style="font-size:15px;color:#333333;line-height:1.85;display:inline-block;">
+下一篇:<a href="#">03 一行 Bash 循环里的工程哲学:Ralph Loop 拆解</a>——<code>while :; do cat PROMPT.md | claude-code ; done</code> 这一行,藏着 2026 年最重要的工程范式转移
+</span>
+</section>

@@ -1,0 +1,63 @@
+# 正文配图 1:15 Hooks 流程图 prompt
+
+## 设计意图
+- 比例:1536×1024(横向,与封面统一)
+- 风格:tech-dark
+- 位置:放在正文「15 个 Hook 详解」段前,作为一图速览
+- 视觉:从左到右 5 列 3 行,共 15 个 Hook 单元,每个单元是一个带编号的小卡片,中央是 15 个 Hook 名称
+
+## 中文 prompt
+
+> 一张技术示意图,横向 1536×1024,深色科技风格。
+> 背景深藏青 #0A1929,霓虹蓝/电光紫/荧光青高亮。
+> 内容:15 个 Hook 检查点可视化,排成 5 列 3 行网格。
+> 每个单元是一个圆角矩形卡片(约 280×300),深色半透明白边,顶部一个圆形序号徽章(01-15,霓虹蓝),中间是 Hook 中文名(2-3 个字,粗体白色),底部一行小字英文 hook 名。
+> 15 个 Hook 名称(顺序):
+> 01 意图识别 / Intent
+> 02 资料调研 / Source
+> 03 灵感混音 / Inspiration
+> 04 故事引擎 / Engine
+> 05 写前访谈 / Interview
+> 06 故事策略 / Strategy
+> 07 故事内核 / Story Hook
+> 08 技法选择 / Technique
+> 09 大纲计划 / Plan
+> 10 草稿生成 / Draft
+> 11 反 AI 味 / Anti-AI
+> 12 质量自检 / Quality
+> 13 反馈分类 / Feedback
+> 14 演化循环 / Evolution
+> 15 验证交付 / Validate
+> 卡片之间用细线连接,形成从上到下/从左到右的流程箭头。
+> 顶部标题:"15 个 Hook · 一个完整小说生成的 15 个检查点" 用白色粗体,左上对齐。
+> 底部右下角小字:"joeseesun/qiaomu-novel-generator"
+> 整体信息密集但不拥挤,卡片可读,序号一目了然,流程方向清晰。
+> 严禁出现:人物、照片、皮肤。
+
+## 英文版
+
+> A technical diagram, horizontal 1536x1024, dark tech style.
+> Background deep navy #0A1929, neon blue/purple/cyan highlights.
+> Content: visualization of 15 Hook checkpoints, arranged in 5 columns × 3 rows grid.
+> Each cell is a rounded rectangle card (~280x300), dark semi-transparent white border, top circular number badge (01-15, neon blue), middle Hook Chinese name (2-3 chars, bold white), bottom small English hook name.
+> 15 Hook names (in order):
+> 01 意图识别 / Intent
+> 02 资料调研 / Source
+> 03 灵感混音 / Inspiration
+> 04 故事引擎 / Engine
+> 05 写前访谈 / Interview
+> 06 故事策略 / Strategy
+> 07 故事内核 / Story Hook
+> 08 技法选择 / Technique
+> 09 大纲计划 / Plan
+> 10 草稿生成 / Draft
+> 11 反 AI 味 / Anti-AI
+> 12 质量自检 / Quality
+> 13 反馈分类 / Feedback
+> 14 演化循环 / Evolution
+> 15 验证交付 / Validate
+> Cards connected with thin lines, forming top-to-bottom/left-to-right flow arrows.
+> Top title: "15 个 Hook · 一个完整小说生成的 15 个检查点" in white bold, top-left aligned.
+> Bottom-right tiny: "joeseesun/qiaomu-novel-generator"
+> Overall information dense but not crowded, cards readable, numbers immediately visible, flow direction clear.
+> Forbidden: human figures, photos, skin.

@@ -1,0 +1,49 @@
+# 封面图 prompt(中文版 · 给你审,英文版在最下)
+
+## 设计意图
+- 比例:1536×1024(横向 1.5:1,贴近公众号头条 1.78:1,主体集中中央 1024×1024,左右 256px 装饰)
+- 风格:tech-dark(深色科技)+ 信息密集
+- 目的:订阅号 feed 流里被裁成方形缩略图时,关键信息(技能名/15 Hooks/0 AI 味)仍能看清
+- 视觉焦点:中央正方形主标题区,两侧不抢戏
+
+## 主体内容
+**中央方形主区(1024×1024 视觉中心):**
+- 顶部小标签:`JOESEE SUN · GITHUB OPEN SOURCE` (项目来源,左对齐)
+- 主标题(大,3 行):`乔木小说` / `qiaomu-novel` / `SKILL`
+- 副标题:中文 `从一句灵感,生成 2500 字钩子短篇`
+- 4 个核心能力 chip(横向 2×2 排布):
+  - `15 个 Hook 检查点`
+  - `0 AI 味 强钩子`
+  - `写前访谈 + 经典桥段`
+  - `2500 字完整小说`
+- 底部一行:`npx skills add joeseesun/qiaomu-novel-generator`
+
+**左侧 256px 装饰条:**
+- 纵向 5 个圆形小标签:`15 · HOOK` / `HOOK 1` / `HOOK 2` / `HOOK 3` / `HOOK 4` ...
+- 模拟"hook 钩子"的物理形态:从上往下是 5 个勾,每个勾的弯钩方向不同
+- 一个竖排序号列:`01 / 02 / 03 / 04 / 05`
+
+**右侧 256px 装饰条:**
+- 一个 3D 等距的小书本 + 钩子符号
+- 极小字:`逆向工程` / `craft signal` / `no copy` 三行标签竖排
+- 数字:`0.2 元/张 0 AI 味 100% 原创`
+
+## 中文 prompt(给 gpt-image-2 喂,加 style 段)
+
+> 一张微信公众号封面图,横向 1536×1024,中央正方形主区 1024×1024,左右各 256px 装饰区。
+> 整体深色背景(深藏青 #0A1929 渐变到 #0D1B2A),霓虹蓝 (#00D4FF)、电光紫 (#B14EFF)、荧光青 (#00FFC2)、暖橙 (#FF6B35) 高亮。
+> 中央正方形主区:顶部小字 "JOESEE SUN · GITHUB OPEN SOURCE",主标题中文"乔木小说" + 英文"qiaomu-novel" + 大字 "SKILL" 纵向叠三行,字大粗体白色,SKILL 字用霓虹蓝。副标题中文"从一句灵感,生成 2500 字钩子短篇"用青绿色细体。正下方 2×2 排布四个能力 chip(圆角矩形,半透明白底,深色描边),内容:"15 个 Hook 检查点"、"0 AI 味 强钩子"、"写前访谈 + 经典桥段"、"2500 字完整小说"。最底部一行小字 "npx skills add joeseesun/qiaomu-novel-generator" 用等宽字体浅灰色。
+> 左侧 256px 装饰条:从上到下 5 个物理"钩子"图形(不同方向弯曲的钩子,荧光青/霓虹蓝/电光紫交替),每个钩子旁注 01/02/03/04/05 序号。竖排小标签 "15 · HOOK CHECKPOINTS"。
+> 右侧 256px 装饰条:一个 3D 等距的半开书本 + 一个钩子交叉的符号。极小竖排三行标签 "逆向工程 / craft signal / no copy"。数字矩阵 "0 AI 味 / 100% 原创 / MIT"。
+> 整体科幻感,深色底色让所有信息像在屏幕中悬浮。构图层次清晰,主标题一眼能看清,芯片标签可读,装饰区不抢主区。
+> 严禁出现:任何作者姓名、任何非项目方引用、任何照片感的人物、任何带皮肤的图像。
+
+## 英文版(给模型更稳)
+
+> A WeChat public account cover image, horizontal 1536x1024, central square focal area 1024x1024, left and right 256px decorative strips.
+> Dark tech background: deep navy (#0A1929) gradient to #0D1B2A. Neon highlights: electric blue (#00D4FF), electric purple (#B14EFF), fluorescent cyan (#00FFC2), warm orange (#FF6B35).
+> Center square focal area: Top small label "JOESEE SUN · GITHUB OPEN SOURCE". Main title: large bold Chinese characters "乔木小说" stacked with English "qiaomu-novel" and big "SKILL" in three rows, "SKILL" in neon blue. Subtitle in Chinese "从一句灵感,生成 2500 字钩子短篇" in cyan thin font. Below: 2x2 grid of 4 capability chips (rounded rectangles, semi-transparent white fill, dark border): "15 个 Hook 检查点", "0 AI 味 强钩子", "写前访谈 + 经典桥段", "2500 字完整小说". Bottom tiny line "npx skills add joeseesun/qiaomu-novel-generator" in monospace light gray.
+> Left 256px strip: top to bottom 5 physical hook shapes (different curve directions, alternating cyan/blue/purple), each with label 01/02/03/04/05. Vertical tiny text "15 · HOOK CHECKPOINTS".
+> Right 256px strip: 3D isometric half-open book + crossed hook symbol. Tiny vertical three-line label "逆向工程 / craft signal / no copy". Number matrix "0 AI 味 / 100% 原创 / MIT".
+> Overall sci-fi feel, dark background makes all info appear to float in the screen. Clear layered composition, main title instantly readable, chips readable, decoration does not steal focus.
+> Forbidden: any author names, any non-project references, any photo-like human figures, any skin-bearing images.

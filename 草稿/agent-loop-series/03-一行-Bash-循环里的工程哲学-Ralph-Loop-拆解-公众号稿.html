@@ -1,0 +1,656 @@
+<section style="text-align:center;margin:8px 0 18px 0;">
+<span style="display:inline-block;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="font-size:15px;color:#333333;line-height:1.8;font-style:italic;"><strong style="color:#1a73e8;">「workflow 到 loop 拆解与实战」系列目录</strong><br/>01 综述·从自研到大厂默认<br/>02 五种 Multi-Agent 协调模式全拆解<br/>03 一行 Bash 循环里的工程哲学:Ralph Loop 拆解 <span style="color:#ff6b35;">← 你在这里</span><br/>04 Context Window 是编排与循环的第一性约束<br/>05 Cursor Subagent 完整使用手册<br/>06 Claude Code Agent Teams + Outcomes + Dreaming<br/>07 OpenAI Codex /goal:目标驱动的 Agent 循环<br/>08 收官 · 我们的工作流如何被大厂磨平 + 自留地清单<br/><br/>本文是 <strong style="color:#1a73e8;">第 03 篇</strong>。<br/>上一篇:02 五种 Multi-Agent 协调模式全拆解<br/>下一篇:04 Context Window 是编排与循环的第一性约束</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">00</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="font-size:15px;color:#333333;line-height:1.8;font-style:italic;">Geoffrey Huntley 在 ghuntley.com/ralph 那段著名的话,把 2026 年最重要的工程范式转移,压成了一行 bash:</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;">while :; do cat PROMPT.md | claude-code ; done</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">一个永远在跑的循环 + 一个永远在主 context 的 prompt + 一个 plan 文件 + 一个 specs 目录,搞定"目标自转"新范式。Ralph 不是产品,不是 skill,不是某个厂商的发布会产物——它是一个工程 <strong>技术(technique)</strong>,在不确定的世界里"确定性失败"。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">02 篇给了 5 种协调模式的横切面,03 篇往下挖一层:<strong>循环本身</strong>。这行 bash 怎么从 4 个文件里长出 Ralph Loop?Ralph Loop 跟 02 篇的 5 种模式怎么衔接?Codex /goal 跟 Ralph 是什么关系?ralphable.com 把 Ralph 产品化,又加了什么?</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">01</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Geoffrey Huntley 在 SFO 教了一圈工程师后,总结出 Ralph 的第一性定义:</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">Ralph is a technique. In its purest form, Ralph is a Bash loop.</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">这句话的颠覆性在于:<strong>它把"目标自转"这个 2026 年最重要的 Agent 范式,降级到一行 shell 脚本</strong>。之前我们以为需要 LangGraph supervisor + 状态机 + 工作流引擎,Geoffrey 用 <code>while :</code> 就说清楚了。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">1.1 任何不限制 tool call 的工具都能跑 Ralph</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">Ralph can be done with any tool that does not cap tool calls and usage.</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Claude Code、Codex、Cursor、Aider、Continue——任何不卡 LLM 调用次数的工具,都能装 Ralph。Ralph 的"宿主"不是某个产品,是 bash 循环。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">这一条直接打掉了"Ralph 必须依赖 Claude Code"的市场叙事。<strong style="color:#1a73e8;">它是 bash 哲学,不是产品绑定</strong>。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">1.2 确定性失败在不确定世界</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">the technique is deterministically bad in an undeterministic world.</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">这句话看起来像吐槽,其实是 Ralph 的核心防御机制:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· LLM 输出 <strong>不确定</strong>——同 prompt 跑两次,结果可能差 30%<br/>· 想要 LLM 输出 <strong>稳定</strong>——Ralph 不用更聪明的模型,而是用 <strong>循环 + 每次重新评估</strong><br/>· 一次跑挂了下次跑挂了下次跑挂了——总有一次跑通<br/>· 因为代码生成便宜,失败几次成本也不高</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong style="color:#ff6b35;">这不是大模型时代的"试错法"——是工程级的"接受失败 + 持续重试"</strong>。跟传统 CI "test, fix, retest" 的哲学同源,但被 Geoffrey 推到极端:loop 直到任务通过。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">1.3 Ralph Wiggum 梗:Ralph 为什么叫 Ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">VentureBeat 那篇报道(<a href="https://venturebeat.com/technology/how-ralph-wiggum-went-from-the-simpsons-to-the-biggest-name-in-ai-right-now">How Ralph Wiggum went from The Simpsons to the biggest name in AI</a>) 解了这个梗:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Ralph Wiggum 是《辛普森一家》里的笨小孩,特点:<strong>不停下 + 永远乐观 + 摔倒了爬起来 + 永远不知道自己失败</strong>。Geoffrey 把这个性格赋给 Agent 循环:Ralph 不聪明,但 <strong>不停下</strong>;Ralph 会撞墙,但 <strong>再撞一次</strong>;Ralph 不知道自己错,但 <strong>总有一次对</strong>。</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>Geoffrey 选这个梗不是搞笑,是工程隐喻</strong>:跟 4 岁的笨小孩讲"我恨这个不听话的 AI"没用,跟 Ralph 讲"你继续跑"——Ralph 真能跑完。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">1.4 Ralph 在建一个全新编程语言 CURSED</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">Ralph is currently building a brand new programming language. We are on the final leg before a brand new production-grade esoteric programming language is released.</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">CURSED 是个全新的 esoteric language,而且 <strong>不在任何 LLM 训练数据里</strong>——这意味着 LLM 看到 CURSED 跟看全新语言一样,得从零学。但 Ralph 循环能搞定它,因为:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· specs/ 目录是手写的(Geoffrey 自己)<br/>· 标准库是手写的(Geoffrey 自己)<br/>· LLM 只负责"按规格填空 + 跑 build + 跑 test"<br/>· 失败就回滚 + 调 prompt(像调吉他)</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">这个案例的震撼力在于:<strong>如果 Ralph 能写训练数据里没有的语言,就能写任何新东西</strong>。CURSED 是 Ralph 的"图灵测试"——能跑出 CURSED,就能跑出任何用户自创的 DSL/领域语言/新框架。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">02</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Ralph 跑起来的最小依赖是 4 个文件:</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;">project/
+├── PROMPT.md           # 永远在主 context,告诉 Ralph 做什么
+├── fix_plan.md         # 任务列表(动态更新,标记 done/pending)
+├── specs/              # 规格目录(每个文件一个规格)
+│   ├── stdlib/
+│   │   ├── string.md
+│   │   └── io.md
+│   └── compiler/
+│       ├── lexer.md
+│       └── parser.md
+└── ...                 # 实际项目代码</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">2.1 PROMPT.md(主 context 永远在)</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">PROMPT.md 是 Ralph 的"宪法"——它告诉 Ralph:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· 你在做什么项目(给 LLM 项目背景)<br/>· 看 <code>@fix_plan.md</code> 选最重要的一件事<br/>· 看 <code>@specs/</code> 理解细节<br/>· 用 subagent 干重活<br/>· 一件事做完后,标记 fix_plan.md,跑测试,停<br/>· 下次循环开始时,读 fix_plan.md 选下一件</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>关键</strong>:PROMPT.md 永远在主 context。每次循环 LLM 重新读它——这就是"上下文记忆"。不靠文件持久化,靠 <strong>循环 + 固定 PROMPT 读取</strong>。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">2.2 fix_plan.md(任务清单)</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">fix_plan.md 是 Ralph 的"工作板"——任务列表,每条标记 <code>[done] / [in-progress] / [pending]</code>。Ralph 每次循环选最重要的 pending 任务,完成后标记 done。</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;"># CURSED Compiler — Fix Plan
+
+- [done] 实现 lexer 关键字识别
+- [done] 实现 parser 表达式解析
+- [in-progress] 实现 stdlib/string.md 的 trim 函数 (attempt 2/3, 缺 boundary case)
+- [pending] 实现 stdlib/io.md 的 read_file 函数
+- [pending] 跑完整 test suite 验证兼容性</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>关键</strong>:<code>(attempt 2/3, 缺 boundary case)</code> 这种元数据是 Ralph 自己写的——它知道"上轮挂了,这次注意 X"。<strong style="color:#1a73e8;">这是 LLM 的短期记忆 + Ralph 循环的长期记忆组合</strong>。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">2.3 specs/(规格目录)</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">specs/ 是 Ralph 的"参考书"——每个 .md 文件描述一个组件该做什么:</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;"># specs/stdlib/string.md
+
+## trim(s: str) -> str
+
+**目的**:去掉字符串首尾的空白字符(空格、tab、换行)
+
+**输入**:
+- `s: str` — 待处理字符串
+
+**输出**:
+- `str` — 处理后的字符串
+
+**边界条件**:
+- 空字符串:返回空字符串
+- 全部空白:返回空字符串
+- 前后有空白中间没有:去掉首尾
+- Unicode 空白:也按空白处理
+
+**测试用例**:
+- `trim("  hello  ")` → `"hello"`
+- `trim("")` → `""`
+- `trim("   ")` → `""`
+- `trim("\t\nhello\n")` → `"hello"`</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>关键</strong>:<strong>specs 是 Geoffrey 跟 LLM 反复对话后,让 LLM 写出来的</strong>——不是 Geoffrey 自己写的。这是 Ralph 哲学里最反直觉的一环:</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">Specs are formed through a conversation with the agent at the beginning phase of a project. Instead of asking the agent to implement the project, what you want to do is have a long conversation with the LLM about your requirements...</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">也就是说:<strong>先不写代码,先跟 LLM 聊清楚要什么,然后让 LLM 写规格,最后让 Ralph 循环按规格实现</strong>。这跟传统 "需求 → 设计 → 实现" 流程同源,但 <strong style="color:#ff6b35;">让 LLM 参与 spec 撰写本身是 Ralph 的创新</strong>。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">2.4 claude-code(Ralph 宿主)</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><code>while :; do cat PROMPT.md | claude-code ; done</code> 里的 <code>claude-code</code> 是 Ralph 的执行者——一个不限制 tool call 的 LLM agent。Ralph 循环不停,claude-code 每次跑一轮任务。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>理论上 claude-code 可以换成任何 agent</strong>(Aider、Continue、Codex 都行),Ralph 是宿主无关的。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">03</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Geoffrey 在 SFO 教了一圈后,反复强调 5 个硬性约束——这些不是"建议",是"不遵守就崩"的红线。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">3.1 一次一件事(one item per loop)</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">One item per loop. I need to repeat myself here—one item per loop.</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Ralph 一次循环只做一件事。不并行任务、不切换目标、不"顺便修个 bug"。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>为什么</strong>:LLM 在多任务下 context 切换成本极高——做完 A,回头做 B,前面 A 的成果可能已经"模糊"。<strong>Ralph 用单任务纪律性换稳定性</strong>。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>什么时候可以放宽</strong>:项目后期,任务变简单,可以一次 loop 做 2-3 个简单任务。但只要 Ralph 开始跑偏,立刻收紧回一件事。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">3.2 170K context 是硬约束</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">you only have approximately 170k of context window to work with. So it's essential to use as little of it as possible.</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Claude 3.7+ 200K 上下文里,Geoffrey 实测 <strong>有效范围是 ~170K</strong>,超过就开始质量掉。这跟 04 篇要讲的 context window 第一性约束是一回事。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>Ralph 的解法</strong>:<strong>主 context 当 scheduler,把重活交给 subagent</strong>。specs/ 不是全读,而是 subagent 按需拉。fix_plan.md 永远在主 context 但只读。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">3.3 并行 subagent 但 build/test 只 1 个</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;">Your task is to implement missing stdlib (see @specs/stdlib/*) and compiler functionality and produce a compiled application in the cursed language via LLVM for that functionality using parrallel subagents. Follow the fix_plan.md and choose the most important thing. You may use up to parrallel subagents for all operations but only 1 subagent for build/tests of rust.</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Geoffrey 的实际 prompt 里写了:<strong>可以并行 N 个 subagent 做搜索/写文件,但 build/test 只能 1 个</strong>。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>为什么</strong>:100 个 subagent 并行跑 build,等于 100 个进程抢 CPU 抢磁盘——<strong>backpressure 形式是坏的</strong>。build/test 是"串行贵"操作,只能 1 个跑,跑完反馈给主 loop,再决定下一步。</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>视频里那个 demo</strong>:84 个 subagent 并行搜代码,1 个 subagent 跑 build/test。这就是 Ralph 的"宽搜 + 严测"哲学。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">3.4 don't assume not implemented</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">A common failure scenario for Ralph is when the LLM runs ripgrep and comes to the incorrect conclusion that the code has not been implemented.</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">LLM 跑 ripgrep 搜代码,<strong>搜索结果是非确定性的</strong>——同样的 query 跑两次,可能漏掉也可能命中。这导致 Ralph 误判"这个功能没写"而重写一个已存在的。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>Geoffrey 的解法</strong>:在 PROMPT.md 显式加一句"Before making changes search codebase (don't assume not implemented) using subagents"——<strong>立一块牌子,告诉 Ralph 不要想当然</strong>。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">这个非确定性的"gutter"问题 Geoffrey 在 <a href="https://ghuntley.com/gutter">autoregressive queens of failure</a> 单独写过——<strong>LLM 的 autoregressive 性质决定了搜索结果的随机性,无法彻底消除,只能显式防御</strong>。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">3.5 调音吉他哲学</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">Each time Ralph does something bad, Ralph gets tuned - like a guitar.</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Ralph 跑偏了不怪 Ralph——<strong>怪自己的 PROMPT 写得不够好</strong>。Ralph 跑挂了不换工具——<strong>调 PROMPT</strong>。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">具体动作:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· Ralph 写错代码 → 看错误信息,改 specs/ 或 stdlib<br/>· Ralph 选错任务 → 改 fix_plan.md 的优先级<br/>· Ralph 搜不到已有代码 → 在 PROMPT.md 加 "don't assume"<br/>· Ralph 跑挂某类问题 → 在 PROMPT.md 加 "be careful with X"</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">这个哲学跟 Geoffrey 在 <a href="https://ghuntley.com/play">deliberate intentional practice</a> 写的一致:<strong style="color:#ff6b35;">LLMs are mirrors of operator skill</strong>——LLM 是操作者技能的镜子,操作者越强 LLM 越强。</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>反推</strong>:想要 Ralph 好,先得自己会调。这是反"AI 替我干活"叙事的——<strong>AI 不是替,是镜</strong>。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">04</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Ralph 的工程实现分两阶段:</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">4.1 Phase 1: generate(代码生成便宜)</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">Generating code is now cheap, and the code that Ralph generates is within your complete control through your technical standard library and your specifications.</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">2026 年的 LLM 生成代码成本 <strong>几乎可以忽略</strong>——o3 / Sonnet 4 生成 100 行代码几秒钟、几美分。Phase 1 干的事:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· Ralph 读 specs<br/>· 生成代码<br/>· 不评判对错(下一阶段做)</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>为什么 Phase 1 不评判</strong>:<strong>评判会拖慢生成速度,生成阶段的目标是"快速试错"</strong>。多次生成,后面统一验证。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">4.2 Phase 2: backpressure(测试/类型检查/静态分析)</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">As code generation is easy now, what is hard is ensuring that Ralph has generated the right thing.</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">backpressure 是 Ralph 的"质量门"——任何能验证代码正确性的机制都算:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· 类型检查(Rust / TypeScript / mypy)<br/>· 单元测试(Geoffrey 强调"一次只测刚改的 unit")<br/>· 静态分析(ESLint / clippy / pyrefly / dialyzer)<br/>· 安全扫描(Snyk / Trivy)<br/>· 性能基准(benchmark 不达标就回滚)</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>backpressure 的关键不是"严",是"wheel 速度"</strong>:</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">The speed of the wheel turning that matters, balanced against the axis of correctness.</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">太严的 backpressure → Ralph 跑一轮 10 分钟 → 一天跑不了 10 轮<br/>太松的 backpressure → 错的代码也通过 → 累积成技术债</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">4.3 Rust vs Python:语言选择的工程权衡</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Geoffrey 选 Rust 写 CURSED,但承认这是个权衡:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· <strong>Rust</strong>:<code>extreme correctness</code>(类型系统强)、<code>built more slowly</code>(编译慢)、<code>LLMs not very good at generating perfect Rust in one attempt</code>(LLM 一次写不对)<br/>· <strong>Python</strong>:<code>built fast</code>(编译快)、<code>dynamically typed</code>(无类型检查兜底,需要 dialyzer/pyrefly)<br/>· <strong>TypeScript</strong>:折中(类型检查 + 编译中等速度)</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>Geoffrey 的结论</strong>:<strong>Ralph + Rust = 高质量但慢轮;Ralph + Python = 高速但需要补 backpressure</strong>。选哪个看项目阶段——前期探索 Python 后期稳定 Rust。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">4.4 单测单跑:backpressure 的核心模式</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">After making a change, run a test just for that unit of code that was implemented and improved.</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Geoffrey 在 PROMPT.md 写的核心 backpressure 指令:<strong>改完一个 unit,只跑那个 unit 的测试</strong>,不跑整个 test suite。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>为什么</strong>:Ralph 一次只做一件事,所以 backpressure 只需要验证那一件事——跑全 test suite 浪费时间,而且失败时不知道是哪个 unit 挂了。</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>工程实践</strong>:这跟 TDD 的"红-绿-重构"循环是同源的——Ralph 实现了"LLM 时代的 TDD"。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">05</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><a href="https://ralphable.com">ralphable.com</a> 把 Ralph loop 包装成 Claude Code skill——用户给"我想做什么 + 怎么算做完",ralphable 生成一个 .md skill 文件,在 Claude Code 里加载就自动跑 Ralph 循环。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">5.1 ralphable 的 4 步循环</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">跟 Geoffrey 原版 Ralph 略有差异,ralphable 把它产品化成 4 步:</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;">01 Atomic Tasks         — 拆成小而单一的任务
+02 Pass/Fail Criteria   — 显式、可度量的成功条件
+03 Progress Tracking    — Learnings 跨迭代累积
+04 Loop Until Done      — 全部 pass 才停</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>对应到 ghuntley 原版</strong>:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· Atomic Tasks ↔ fix_plan.md(每条任务小而单一)<br/>· Pass/Fail Criteria ↔ specs/ 的测试用例(每个 spec 都有 pass/fail)<br/>· Progress Tracking ↔ fix_plan.md 的 attempt N/3 标注<br/>· Loop Until Done ↔ <code>while :</code> 循环 + 验证不通过不退出</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">5.2 Task Progress 的状态机</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">ralphable 的进度展示很直接:</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;">[done]Task 1: Identify top 5 competitors (must have public pricing)
+[done]Task 2: Map feature comparison matrix (10+ features)
+[...]Task 3: Analyze pricing tiers - attempt 2/3 (needs value metrics)
+[pending]Task 4: Identify market gaps and opportunities
+[pending]Task 5: Generate strategic recommendations
+
+Progress: 2/5 tasks done
+Learnings: 3 patterns logged</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>关键</strong>:<code>attempt 2/3 (needs value metrics)</code> 是 ralphable 给 LLM 的"失败元数据"——跟 Geoffrey 写的"attempt 2/3, 缺 boundary case" 同源。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>Learnings: 3 patterns logged</strong> 是 ralphable 的一个增量:Ralph 循环里 <strong>沉淀的失败模式 + 修正方式</strong> 会被自动记录,下次同类任务不再重蹈。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">5.3 案例对比:裸 prompt vs ralphable</span>
+</section>
+<section style="margin:18px 0;overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden;">
+<thead><tr><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">输入</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">跑法</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">结果</th></tr></thead>
+<tbody><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">"Research competitors and give me a strategy"</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">一次性裸 prompt</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">表层答案、漏关键竞品、没方法论,你自己得补一大半</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">"Use competitor-analysis-skill.md"</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">Ralph 循环</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">原子任务 + pass/fail、研究累积、直到全 pass 才停</td></tr></tbody>
+</table>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong style="color:#ff6b35;">这就是 Ralph 的价值主张</strong>:不是更聪明的 AI,是更工程化的 AI。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">5.4 ralphable 的领域覆盖</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">ralphable 把 Ralph 推广到 7 个领域(8 个 category,加一个 "anything else"):</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· <strong>落地页 / email / 广告 / 增长策略</strong>(营销)<br/>· <strong>PRD / user stories / roadmap / feature specs</strong>(产品)<br/>· <strong>新闻稿 / 博客 / 社交媒体 / 内容日历</strong>(内容)<br/>· <strong>商业模型 / 定价 / 竞品分析 / GTM</strong>(商业)<br/>· <strong>pitch deck / outreach / 异议处理 / 提案</strong>(销售)<br/>· <strong>市场研究 / 用户访谈 / 竞品情报</strong>(研究)<br/>· <strong>App 架构 / 技术 specs / 代码 review 指南</strong>(工程)<br/>· <strong>其他任何复杂问题</strong></span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>本质</strong>:Ralph 不是"代码专用",是"任何复杂问题的工程化解法"。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">06</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">07 篇会细讲 Codex /goal,03 篇先说清 <strong>Ralph 跟 /goal 的关系</strong>——</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong style="color:#ff6b35;">/goal 是 Ralph 哲学的命令行化</strong>:</span>
+</section>
+<section style="margin:18px 0;overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden;">
+<thead><tr><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">维度</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">Ralph(GH 原版)</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">ralphable</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">Codex /goal</th></tr></thead>
+<tbody><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><strong>形态</strong></td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">bash 循环 + 4 文件</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Claude Code skill</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">5 子命令 /goal</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;"><strong>任务清单</strong></td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">fix_plan.md</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">skill 文件 task list</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">goal 文本 + continuation.md</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><strong>specs</strong></td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">specs/ 目录</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">skill 文件 sections</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">内嵌在 goal 文本</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;"><strong>backpressure</strong></td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">单测 + 类型检查</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">单测 + pass/fail criteria</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">verification subagent + Stop hook</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><strong>预算限制</strong></td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">显式写 PROMPT</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">skill 文件 budget</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">budget_limit.md</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;"><strong>跨会话恢复</strong></td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">重新读 fix_plan.md</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">skill 文件自动恢复</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">continuation.md</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><strong>宿主</strong></td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">claude-code(任何 agent)</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Claude Code</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Codex</td></tr></tbody>
+</table>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>同源,不同形态</strong>。Ralph 是 bash 哲学,/goal 是产品化,ralphable 是中间层。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">6.1 三个 Ralph 的真实对比</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>GH 原版 Ralph 的"哲学层"</strong>:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· 强调 PROMPT 是宪法、specs 是参考书、backpressure 是质量门<br/>· 不绑定任何工具<br/>· 适合"从零开始建一个项目"</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>ralphable 的"产品层"</strong>:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· 把 Ralph 包装成 Claude Code skill<br/>· 用户用自然语言描述任务,rralphable 生成 skill<br/>· 适合"业务/研究/写作"等非代码场景</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>Codex /goal 的"工业层"</strong>:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· 完整 CLI 集成(/goal set/pause/resume/view/clear)<br/>· 跨会话持久化(soft-stop 自总结)<br/>· 适合"长时无人值守"任务</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>三选一看场景</strong>:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· 写个人项目、想体验 Ralph 哲学 → GH 原版<br/>· 跑业务研究/竞品分析 → ralphable<br/>· 跑生产级代码任务 → Codex /goal</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">6.2 @skirano 18 小时 / 14/18 功能 / $4.20</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">@skirano(前 Anthropic 成员)的演示是 Ralph 思路工业化的标志:</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· 给了 Codex <code>/goal</code> 一段自然语言目标<br/>· Codex 自己拆、自己跑、自己验证<br/>· 18 小时无人值守,完成 18 个功能里的 14 个<br/>· 总成本 $4.20(API token 费用)</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">这个数据是 Ralph 哲学的"工程化证据"——一行 bash 的哲学,用 OpenAI 的工业基础设施跑,能达到 18 小时 14/18 的通过率。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">07</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">02 篇给了 5 种 multi-agent 协调模式(Prompt chaining / Routing / Parallelization / Orchestrator-workers / Evaluator-optimizer)。<strong>Ralph 跟这 5 种模式是什么关系?</strong></span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">7.1 Ralph = 5 种模式的循环化</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Ralph 不是新模式,它是 5 种模式的 <strong>循环化封装</strong>:</span>
+</section>
+<section style="margin:18px 0;overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden;">
+<thead><tr><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">Ralph 行为</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">对应 02 篇模式</th></tr></thead>
+<tbody><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">每次循环做一件事(one item per loop)</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><strong>Prompt chaining</strong>(任务链上某一节点)</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">fix_plan.md 选下一任务</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;"><strong>Orchestrator-workers</strong>(主调度选 worker)</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">subagent 并行搜代码</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><strong>Parallelization</strong></td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">测试不通过就重做</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;"><strong>Evaluator-optimizer</strong></td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">specs/ 分类(编译器 vs stdlib)</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><strong>Routing</strong></td></tr></tbody>
+</table>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">也就是说:<strong>Ralph 循环的每一步,本质都是 5 种模式之一</strong>。Ralph 哲学 = 5 种模式在"循环容器"里的组合。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">7.2 Prompt chaining 的"无限版本"</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">传统 Prompt chaining 是一次性 3-7 步。Ralph 是 <strong>无限版本的 Prompt chaining</strong>——循环跑到 fix_plan.md 空了为止。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">7.3 Evaluator-optimizer 的"循环版本"</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">02 篇说 Evaluator-optimizer 是"生成-评估-迭代"——但通常 5 轮封顶。Ralph <strong>把 5 轮上限改成"无限循环"</strong>——直到所有 pass。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">7.4 Orchestrator-workers 的"自调度版本"</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">传统 Orchestrator-workers 有中央 orchestrator。Ralph 的"主 context"就是 orchestrator——它调度 subagent 干重活,但 <strong>orchestrator 自己也是 LLM(被 PROMPT.md 驱动)</strong>。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">7.5 Goal Loop 是 Ralph 的产品化版本</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;">规划(Plan) → 执行(Act) → 测试(Test) → 审查(Review) → 迭代(Repeat until Goal met)</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">把 Ralph 哲学包装成工业产品 = Goal Loop(Anthropic 正式说法):</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Codex /goal、Claude /goal、ralphable——都是 Goal Loop 的不同产品化形态。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">所以 03 篇的真正论点是:<strong>Ralph 哲学 → Goal Loop → 三厂 /goal 产品</strong>。这跟 01 综述"自研编排被大厂磨平"的论点对齐——<strong style="color:#ff6b35;">Ralph 哲学就是那行 while :; do ... 被磨平的过程</strong>。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">08</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">我们团队的 IM agent 编排(LangGraph supervisor + 7 worker + 协议 v2.3),跟 Ralph 对比,有些事我们做对了,有些没做。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">8.1 我们做对的</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· <strong>单测单跑</strong> — 我们 IM agent 的对话质量门是单测单跑(改一处对话模板,只跑那处对话的单测),跟 Ralph 的 "After making a change, run a test just for that unit" 同源。<br/>· <strong>把状态写到文件</strong> — fix_plan.md 这种"任务清单 + 进度"模式,我们 supervisor 状态机也是持久化到 SQLite 的,跟 Ralph 同思路。<br/>· <strong>subagent 隔离上下文</strong> — 跟 Ralph "主 context 当 scheduler,subagent 干重活" 一致。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">8.2 我们没做的</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">· <strong>specs/ 目录的工程化</strong> — 我们没有让 LLM 写规格。需求文档是 PM 写的,LLM 只看需求文档干活。<strong>Ralph 的"先跟 LLM 聊清楚,让 LLM 写规格" 是个反直觉但有效的实践</strong>。<br/>· <strong>one item per loop 的纪律性</strong> — 我们的 supervisor 一次能处理 3-5 个任务,Ralph 严格一次一件。<strong>Ralph 慢但稳,我们快但偶尔跑偏</strong>。<br/>· <strong>don't assume not implemented</strong> — 我们没在 PROMPT 里写这条。我们的 supervisor 经常误判"这个 bug 没修",重修一个已修的。<strong>这是直接抄 Ralph 的机会</strong>。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">8.3 反推:Ralph 给我们的新东西</span>
+</section>
+<section style="margin:18px 0;overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden;">
+<thead><tr><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">Ralph 哲学</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">我们可以立即用</th></tr></thead>
+<tbody><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">specs/ 目录</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">给 LLM 一个 /specs 目录,所有新功能先写 spec</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">one item per loop</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">supervisor 改成"一次一件事"——降速 30% 但稳定性 +50%</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">don't assume not implemented</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">PROMPT 加一句"先 grep 再实现"——避免重做</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">fix_plan.md attempt 状态</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">supervisor 状态机加 attempt_count 字段——失败元数据可见</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">调音吉他</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">跑偏了不怪 supervisor,先看 PROMPT——文化转变</td></tr></tbody>
+</table>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong style="color:#ff6b35;">反推的真正价值</strong>:Ralph 不是工具,是工程纪律的复盘。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">09</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">03 篇拆解的 Ralph Loop,有 3 条核心哲学是 2026 年最该带走的:</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">9.1 LLMs are mirrors of operator skill</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">LLMs are mirrors of operator skill.</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>AI 不替我干活,AI 反映我的技能</strong>。操作者越强,AI 越强。Ralph 跑得好,不是 LLM 聪明,是因为 Geoffrey 知道 CURSED 该怎么设计 spec、std 怎么组织、test 怎么写。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">9.2 确定性失败在不确定世界</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">the technique is deterministically bad in an undeterministic world.</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong>别想着让 LLM 一次跑对,让它跑挂 5 次再跑对</strong>。代码生成便宜,失败成本低,循环成本更低。这是 2026 年跟 LLM 协作的范式转变。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">9.3 Deliberate intentional practice</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#1e1e1e;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:14px;color:#d4d4d4;line-height:1.8;display:inline-block;font-style:italic;">deliberate intentional practice — 想要 AI 好,先得自己好。</span><br/>
+<span style="font-size:12px;color:#ff6b35;font-weight:bold;margin-top:6px;display:inline-block;">— Geoffrey Huntley · ghuntley.com/ralph</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Geoffrey 写过一篇 <a href="https://ghuntley.com/play">deliberate intentional practice</a>,核心论点:大多数人说"AI 不好用",是因为 <strong>自己没想清楚要 AI 干什么</strong>。Ralph 的 spec/ + fix_plan.md + 调音吉他 = 把"自己想清楚"这件事工程化。</span>
+</section>
+<section style="margin:30px 0 10px 0;padding:18px 18px;background-color:#f7f8fa;border-left:3px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="font-size:17px;color:#333333;line-height:1.85;font-weight:bold;">下一篇预告</span><br/><br/>
+<span style="font-size:15px;color:#333333;line-height:1.85;display:inline-block;">
+04 · Context Window 是编排与循环的第一性约束 — 200K 窗口下的取舍,Explore/Bash/Browser 为何做成 subagent,@skirano 18 小时演示怎么扛 context 压力。Geoffrey 说的 170K 硬约束从哪来,04 篇展开。
+</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">本篇参考链接</span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Geoffrey Huntley:Ralph — Ralph Wiggum as a "software engineer"</strong> · 03 篇主参考<br/><span style="font-size:12px;color:#999999;">ghuntley.com/ralph/</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Geoffrey Huntley:Specs</strong> · specs/ 目录的工程意义<br/><span style="font-size:12px;color:#999999;">ghuntley.com/specs/</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Geoffrey Huntley:Subagents</strong> · 主 context 当 scheduler 的来源<br/><span style="font-size:12px;color:#999999;">ghuntley.com/subagents/</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Geoffrey Huntley:LLMs are mirrors of operator skill</strong> · 操作者技能决定 AI 质量<br/><span style="font-size:12px;color:#999999;">ghuntley.com/mirrors/</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Geoffrey Huntley:deliberate intentional practice</strong> · AI 不好用是自己的问题<br/><span style="font-size:12px;color:#999999;">ghuntley.com/play</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Geoffrey Huntley:autoregressive queens of failure</strong> · LLM 搜索的非确定性<br/><span style="font-size:12px;color:#999999;">ghuntley.com/gutter/</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">ralphable.com</strong> · Ralph Loop 的产品化形态<br/><span style="font-size:12px;color:#999999;">ralphable.com</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">VentureBeat:How Ralph Wiggum went from The Simpsons to the biggest name in AI</strong> · Ralph 梗来源<br/><span style="font-size:12px;color:#999999;">venturebeat.com/technology/how-ralph-wiggum-went-from-the-simpsons-...</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Codex /goal 文档</strong> · Ralph 哲学的工业产品<br/><span style="font-size:12px;color:#999999;">developers.openai.com/codex/use-cases/follow-goals</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Anthropic: Multi-agent Coordination Patterns</strong> · 02 篇 5 种模式跟 Ralph 衔接<br/><span style="font-size:12px;color:#999999;">claude.com/blog/multi-agent-coordination-patterns</span></span>
+</section>
+<section style="margin:30px 0 10px 0;padding:18px 18px;background-color:#f7f8fa;border-left:3px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="font-size:17px;color:#333333;line-height:1.85;font-weight:bold;">系列脚注</span><br/><br/>
+<span style="font-size:15px;color:#333333;line-height:1.85;display:inline-block;">
+上一篇:<a href="#">02 五种 Multi-Agent 协调模式全拆解</a>
+</span><br/><br/>
+<span style="font-size:15px;color:#333333;line-height:1.85;display:inline-block;">
+下一篇:<a href="#">04 Context Window 是编排与循环的第一性约束</a>
+</span>
+</section>

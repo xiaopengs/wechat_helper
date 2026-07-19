@@ -1,0 +1,329 @@
+<section style="text-align:center;margin:8px 0 18px 0;">
+<span style="display:inline-block;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="font-size:15px;color:#333333;line-height:1.8;font-style:italic;">「workflow 到 loop 拆解与实战」系列目录:01 综述·从自研到大厂默认(本文) · 02 五种 Multi-Agent 协调模式全拆解 · 03 一行 Bash 循环里的工程哲学 · 04 Context Window 是编排与循环的第一性约束 · 05 Cursor Subagent 完整使用手册 · 06 Claude Code Agent Teams + Outcomes + Dreaming · 07 OpenAI Codex /goal · 08 收官 · 我们的工作流如何被大厂磨平 + 自留地清单。<br/><br/>本文是 <strong style="color:#1a73e8;">第 01 篇</strong>。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">00</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="font-size:15px;color:#333333;line-height:1.8;font-style:italic;">18 小时无人值守,自主完成 18 个功能里的 14 个,总成本 4.20 美元。前 Anthropic 成员 @skirano 用 Codex <code>/goal</code> 给出的数据,跟 OpenAI 自己 5 月 GA 的 Goal Mode 同一个调子。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">我们曾经花几周搭起来的多智能体编排框架,今天别人用一行命令 + 一个 subagent 文件 + 一段 Goal 文本就复刻了——而且往往跑得更稳。<strong style="color:#ff6b35;">这不是夸张</strong>,这是 2026 年 5-6 月大厂工具集体下沉的结果。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">01</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-top:36px;margin-bottom:18px;padding-left:12px;border-left:3px solid #1a73e8;">
+<span style="font-size:19px;font-weight:bold;color:#333333;line-height:1.6;">一个刺痛的故事</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">去年我们团队做了一次「自研编排升级」:</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">① 把 LangGraph 的 supervisor 模式移植到我们的 IM agent 项目里</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">② 给 orchestrator 加了路由表、限流、重试、状态持久化</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">③ 设计了 7 类 worker,每个有自己的 system prompt + 工具白名单</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">④ 写了一份《编排协议 v2.3》,专门培训新人</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">上线的时候,我们觉得挺自豪——它能跑、能扩展、能在多渠道复用。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">半年后,<strong style="color:#1a73e8;">Cursor 3.0(代号 Glass,4/2 发布)</strong>搞了个 Agents Window,全屏把 Agent 当一等公民;Claude Code 在 <strong style="color:#1a73e8;">5/6</strong>把多智能体编排搬进 Managed Agents,Lead Agent 能委派给 20 个 subagent;Codex <strong style="color:#1a73e8;">5/21</strong>把 /goal 升 GA,目标文本同时充当「起始指令 + 完成审计」。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">再看一眼 Cursor 官方文档的三句话:</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="font-size:15px;color:#333333;line-height:1.8;font-style:italic;">Subagents are specialized AI assistants that Cursor's agent can delegate tasks to. Each subagent operates in its own context window, handles specific types of work, and returns its result to the parent agent. Use subagents to break down complex tasks, do work in parallel, and preserve context in the main conversation.</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">每个 subagent:<strong style="color:#1a73e8;">独立上下文窗口</strong>、<strong style="color:#1a73e8;">专门化</strong>、<strong style="color:#1a73e8;">并行执行</strong>、<strong style="color:#1a73e8;">上下文隔离</strong>。——这不是我们半年前做的同一件事吗?只是它现在叫 <span style="font-size:14px;color:#ff6b35;background-color:#f7f8fa;padding:2px 6px;border-radius:3px;">.cursor/agents/verifier.md</span>,几行 YAML frontmatter + 一个 prompt。</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">对照的不是概念,是 @skirano 给出的实证数字:<strong style="color:#ff6b35;">18 小时,14/18 功能,$4.20</strong>。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">02</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-top:36px;margin-bottom:18px;padding-left:12px;border-left:3px solid #1a73e8;">
+<span style="font-size:19px;font-weight:bold;color:#333333;line-height:1.6;">三厂同步发布:一个值得记录的窗口</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">2026 年 5-6 月,三家厂商像约好了一样,先后推出「目标自转 + 多智能体编排」能力:</span>
+</section>
+<section style="margin:18px 0;overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden;">
+<thead><tr><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">时间</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">厂商</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">关键发布</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">核心特性</th></tr></thead>
+<tbody><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">4/2</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Cursor</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">3.0 "Glass"</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Agents Window,Agent 作一等公民</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">4/24</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">Cursor</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">3.2</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;"><code>/multitask</code>,8 个并行 subagent,Git worktree 隔离</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">5/6</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Anthropic</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Managed Agents 多智能体编排</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Lead Agent + 最多 20 subagent,深度刻意限制 1 层</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">5/7</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">Cursor</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;"><code>/orchestrate</code></td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">与 Anthropic 同日对位,选中间路线</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">5/21</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">OpenAI</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Goal Mode GA</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><code>/goal</code> 五子命令,跨会话持久化</td></tr></tbody>
+</table>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">这是一个 <strong style="color:#ff6b35;">18 天三厂同步</strong> 的窗口。The New Stack 在 4/12 的观察很准:<strong style="color:#1a73e8;">Cursor、Claude Code、Codex 正在合成同一个 stack</strong>。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">搜索热度也佐证:Futurum Research 统计,「multi-agent orchestration」在 2026-05 同比 <strong style="color:#ff6b35;">+376%</strong>。该术语在 2026 年 5 月的位置,大致相当于 2024 年初的 RAG。</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">我们站在一个 <strong style="color:#ff6b35;">范式转移的起点</strong> 上,而不是中段。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">03</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-top:36px;margin-bottom:18px;padding-left:12px;border-left:3px solid #1a73e8;">
+<span style="font-size:19px;font-weight:bold;color:#333333;line-height:1.6;">三类磨平现象</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">我把大厂工具对「自研编排」的磨平,归成三类。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">① 模式磨平:五种协调模式 → 一键调用</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Anthropic 官方博客系统总结了五种 multi-agent 协调模式:</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">Prompt chaining(链式)· Routing(路由)· Parallelization(并行)· Orchestrator-workers(编排)· Evaluator-optimizer(评估优化)</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">半年里这五种模式的实现成本是这样变化的:</span>
+</section>
+<section style="margin:18px 0;overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden;">
+<thead><tr><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">模式</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">2024 年实现成本</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">2026 年下半年实现成本</th></tr></thead>
+<tbody><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Prompt chaining</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">LangChain Expression Language + LCEL</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Claude Code 计划模式(<code>Shift+Tab</code> 进入 plan mode)</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">Routing</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">自定义分类器 + 路由表</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">Subagent 文件(<code>description:</code> 字段 + 触发条件)</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Parallelization</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Celery + 自研任务图</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><code>git worktree</code> + <code>/multitask</code> 命令</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">Orchestrator-workers</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">LangGraph supervisor + state schema</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">Lead Agent + 20 个 subagent 委派(Anthropic Managed Agents)</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Evaluator-optimizer</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Reflexion / 自研 rubrics</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><code>/goal</code> + Stop hook + verification subagent</td></tr></tbody>
+</table>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">每一行右边那栏,都是 <strong style="color:#ff6b35;">几行配置或一个文件</strong>。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">② 上下文磨平:context isolation → 默认行为</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">2025 年之前,谁要做上下文隔离,得自己折腾:</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">起一个 sub-process,把对话历史摘出来</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">维护 memory 文件,定期清理</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">写 trim/summary 脚本,避免 context window 撑爆</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Cursor 把它做成默认:Explore / Bash / Browser 三个内置 subagent,不是「提供能力让你用」,而是「自动启用,你看不见但它在保护你的主 context」。</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="font-size:15px;color:#333333;line-height:1.8;font-style:italic;">These three operations share common traits: they generate noisy intermediate output, benefit from specialized prompts and tools, and can consume significant context. Running them as subagents solves several problems.</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Claude Code 同源思路:best practices 反复强调 <strong style="color:#1a73e8;">context window is the most important resource to manage</strong>。<code>/goal</code>、Stop hook、verification subagent 都是这个资源紧张下的产物。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">③ 循环磨平:while-do 哲学 → 产品级体验</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Geoffrey Huntley 在 ralph 那篇博客里那段著名的话:</span>
+</section>
+<section style="margin:14px 0;padding:12px 14px;background-color:#1e1e1e;border-radius:6px;">
+<span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:#d4d4d4;line-height:1.7;display:block;white-space:pre-wrap;">while :; do cat PROMPT.md | claude-code ; done</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Ralph 的本质是:<strong style="color:#1a73e8;">一个 bash 循环 + 一个 prompt 文件 + 一个 plan 文件 + 一个 spec 目录</strong>。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">ralphable.com 把这个思路产品化成四步:</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">① Atomic Tasks · 拆成单个可验证的小任务</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">② Pass/Fail Criteria · 每个任务有明确成功条件</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">③ Progress Tracking · 进度在循环里累积</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">④ Loop Until Done · 全部 pass 才停</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Codex <code>/goal</code> 是同一个思路的命令行化:你给一个目标,Codex 自己拆、自己跑、自己验证、直到目标达成;目标文本 <strong style="color:#ff6b35;">同时充当起始指令与完成审计</strong>——不到目标不收手。</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">Ralph 是一行 bash,Codex <code>/goal</code> 是一个命令。我们曾经做的「任务编排引擎 + 自动验证」,今天等价于一句「达成 X 目标」。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">04</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-top:36px;margin-bottom:18px;padding-left:12px;border-left:3px solid #1a73e8;">
+<span style="font-size:19px;font-weight:bold;color:#333333;line-height:1.6;">三厂取舍:同一题面,三种答案</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">三厂对「multi-agent + 目标循环」这件事,给出了 <strong style="color:#ff6b35;">清晰不同的设计取舍</strong>。这不是偶然,是哲学差异:</span>
+</section>
+<section style="margin:18px 0;overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden;">
+<thead><tr><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">维度</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">Codex /goal</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">Anthropic Multi-agent</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">Cursor /orchestrate</th></tr></thead>
+<tbody><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><strong>目标深度</strong></td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><strong>无限制</strong>(子智能体可自我递归)</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><strong>刻意限制 1 层</strong></td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><strong>中间</strong>(子智能体可 spawn 子,但有限制)</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">编排模式</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">目标驱动循环(Goal Loop)</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">Orchestrator-Subagent 为主</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;"><code>/multitask</code> + Cloud Agents</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">并行度</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">通过子 Agent 实现</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">最多 20 个 subagent 并行</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">最多 8 个并行 Agent</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">上下文隔离</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">子 Agent 独立会话</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">共享文件系统 + 独立上下文</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">Git worktree 隔离</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">持久化</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">跨会话持久化(soft-stop 自总结)</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Claude Console 云端持久</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Cloud Agents 长时间运行</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">成本模型</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">API token($4.20/18 小时)</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">API token</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">Cursor plan usage(绕开直接 API 计费)</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">适用场景</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">长时无人值守</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">企业级多 Agent 协作</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">IDE 内实时编排</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">品牌调性</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">激进,追求最大自主</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">保守,企业安全可控</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">中间,开发者体验优先</td></tr></tbody>
+</table>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">取舍差异不是「哪个更好」,是 <strong style="color:#1a73e8;">不同的风险偏好</strong>。Anthropic 把 subagent 深度限制在 1 层,是为了防止递归失控;OpenAI 不限深度,是为了让 <code>/goal</code> 跑更长的任务链;Cursor 卡 8 个并行,是因为超过这个数开发者就看不过来了。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">我们做自研编排的时候,其实也在做同样的取舍——只是没明说。这一节给 08 篇「自研 vs 大厂」对照打底。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">05</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-top:36px;margin-bottom:18px;padding-left:12px;border-left:3px solid #1a73e8;">
+<span style="font-size:19px;font-weight:bold;color:#333333;line-height:1.6;">我们做对了什么,做错了什么</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">做对的三件事</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong style="color:#1a73e8;">① 把编排能力抽象出来。</strong>这是基础设施,不是会被磨平的「功能」。我们的 supervisor 模式、worker 协议,这些骨架还有用,只是默认实现要被换掉。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong style="color:#1a73e8;">② 踩过的坑,大厂也在踩。</strong>context overflow、tool hallucination、agent 间消息丢失,我们比他们早知道。这些经验在 08 篇会变成「自留地清单」。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong style="color:#1a73e8;">③ 业务适配层。</strong>大厂工具默认行为覆盖不到我们 IM agent 的小细节(QQ/微信/钉钉协议、renwei 改稿步骤、renwei 写作心法),这些是护城河。</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">做错的三件事</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong style="color:#ff6b35;">① 把「框架」当成了「产品」。</strong>LangGraph 的图、AutoGen 的对话组,本质是脚手架,不是用户价值。AutoGen 本身已经在 2026 年 5 月被 Microsoft 转入 maintenance mode,被 Microsoft Agent Framework 接替——<strong style="color:#ff6b35;">这件事本身就是框架产品化的失败注脚</strong>。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong style="color:#ff6b35;">② 在 orchestration 层做了太多事情。</strong>路由、限流、状态持久化,这些是大厂工具默认开的,自己造是重复造轮子。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong style="color:#ff6b35;">③ 低估了「工具默认行为」的覆盖速度。</strong>2024 年还需要 AutoGen,2025 年 subagent 已经是 IDE 默认;2025 年还需要自研 Goal Loop,2026 年 Codex <code>/goal</code> 一个命令就够。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">06</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-top:36px;margin-bottom:18px;padding-left:12px;border-left:3px solid #1a73e8;">
+<span style="font-size:19px;font-weight:bold;color:#333333;line-height:1.6;">接下来:八篇拆解的预告</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">我把「编排」这件事拆成八篇来写。这个系列想回答三个问题:</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">· <strong style="color:#1a73e8;">是什么</strong>:大厂工具的 multi-agent / loop 默认行为究竟是什么?怎么用?</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">· <strong style="color:#1a73e8;">为什么</strong>:为什么这些模式现在成立?Context window、verifiable tasks、spec-driven development 各自扮演什么角色?</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">· <strong style="color:#1a73e8;">怎么落地</strong>:对我们自己的项目,哪些事该自己留,哪些事该让位给工具?</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">八篇如下(本篇是第 01 篇综述):</span>
+</section>
+<section style="margin:18px 0;overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden;">
+<thead><tr><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">编号</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">标题</th><th style="padding:8px 6px;background-color:#1a73e8;color:#ffffff;font-size:13px;font-weight:bold;text-align:left;line-height:1.5;">主要回答</th></tr></thead>
+<tbody><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">01</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;"><strong>从自研到大厂默认</strong>(本文)</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">现状、为什么发生、系列预告</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">02</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">五种 Multi-Agent 协调模式全拆解</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">是什么:五种模式 + 三厂取舍表</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">03</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">一行 Bash 循环里的工程哲学:Ralph Loop</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">是什么:Goal Loop 的最小完整形态</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">04</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">Context Window 是编排与循环的第一性约束</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">为什么:一切都回到 context</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">05</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">Cursor Subagent 完整使用手册</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">怎么用:三内置 + <code>/multitask</code> + Skills</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">06</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">Claude Code Agent Teams + Outcomes + Dreaming</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">怎么用:Managed Agents 编排 + 验证闭环</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">07</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">OpenAI Codex /goal:目标驱动的 Agent 循环</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;">怎么用:五子命令 + 14/18 演示 + Goal 模板</td></tr><tr><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">08</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">收官 · 我们的工作流如何被大厂磨平 + 自留地清单</td><td style="padding:7px 6px;font-size:13px;color:#333333;line-height:1.6;border-bottom:1px solid #eeeeee;vertical-align:top;background-color:#fafbfc;">怎么落地:02-07 全部纳入对照 + OpenClaw 自留地</td></tr></tbody>
+</table>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">每篇约 3000-5000 字,带代码示例 + 命令片段 + 我们自己项目的对照。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">07</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-top:36px;margin-bottom:18px;padding-left:12px;border-left:3px solid #1a73e8;">
+<span style="font-size:19px;font-weight:bold;color:#333333;line-height:1.6;">经典参考文章清单</span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">大厂官方</span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Cursor Subagents 文档</strong> · 三内置 subagent(Explore/Bash/Browser)+ 自定义协议<br/><span style="font-size:12px;color:#999999;">cursor.com/docs/subagents</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Anthropic Multi-agent Coordination Patterns</strong> · 五种协调模式综述<br/><span style="font-size:12px;color:#999999;">claude.com/blog/multi-agent-coordination-patterns</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Anthropic Building Effective Agents</strong> · workflows vs agents 的核心区分<br/><span style="font-size:12px;color:#999999;">anthropic.com/research/building-effective-agents</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Claude Code Best Practices</strong> · context window + verification 闭环<br/><span style="font-size:12px;color:#999999;">code.claude.com/docs/en/best-practices</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">OpenAI Codex follow-goals</strong> · 目标驱动的 agent 循环<br/><span style="font-size:12px;color:#999999;">developers.openai.com/codex/use-cases/follow-goals</span></span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">Goal Loop / Ralph 系</span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Geoffrey Huntley · Ralph Wiggum as a Software Engineer</strong> · Ralph loop 原始思想<br/><span style="font-size:12px;color:#999999;">ghuntley.com/ralph</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Ralphable</strong> · Ralph loop 的产品化形态,skill.md 生成器<br/><span style="font-size:12px;color:#999999;">ralphable.com</span></span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">经典综述 / 框架</span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Lilian Weng · LLM Powered Autonomous Agents</strong> · Planning/Memory/Tool use 三件套<br/><span style="font-size:12px;color:#999999;">lilianweng.github.io/posts/2023-06-23-agent</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">LangGraph Multi-Agent Workflows</strong> · multi-agent 三种连接方式<br/><span style="font-size:12px;color:#999999;">blog.langchain.com/langgraph-multi-agent-workflows</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Microsoft AutoGen</strong> · 已进入 maintenance mode,被 Microsoft Agent Framework 接替<br/><span style="font-size:12px;color:#999999;">github.com/microsoft/autogen</span></span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">案例 / 行业分析</span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">@skirano Codex /goal 演示</strong>(X/Twitter 2026-06-16)· 18 小时 / 14/18 功能 / $4.20<br/><span style="font-size:12px;color:#999999;">x.com 上的公开演示,搜索 "@skirano codex goal"</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Futurum Research · Cursor 3.2 as Agent Execution Runtime</strong>(2026-04-29)· 「multi-agent orchestration」搜索 +376%<br/><span style="font-size:12px;color:#999999;">futurumresearch.com</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">The New Stack · Cursor, Claude Code, Codex merging into one stack</strong>(2026-04-12)<br/><span style="font-size:12px;color:#999999;">thenewstack.io</span></span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">FindSkill.ai · Multi-Agent Orchestration Plain-Language Guide</strong>(2026-05-21)<br/><span style="font-size:12px;color:#999999;">findskill.ai</span></span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">延伸选型问题(08 篇展开)</span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;"><strong style="color:#1a73e8;">Paseo(远程)/ OpenSwarm(本地)/ Symphony(团队)</strong> · Agent 编排的三种部署形态<br/><span style="font-size:12px;color:#999999;">08 篇展开讨论</span></span>
+</section>
+<section style="margin:30px 0 10px 0;padding:18px 18px;background-color:#f7f8fa;border-left:3px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="font-size:17px;color:#333333;line-height:1.85;font-weight:bold;">下一篇预告</span><br/><br/>
+<span style="font-size:15px;color:#333333;line-height:1.85;display:inline-block;">
+02 · 五种 Multi-Agent 协调模式全拆解 — 把 Anthropic 那篇博客的五种模式拆成实战可选项,每种配 Cursor/Codex/Claude 三厂怎么落地的对照案例。
+</span><br/><br/>
+<span style="font-size:15px;color:#333333;line-height:1.85;display:inline-block;">
+如果对哪一篇你最想先看,告诉我,我把顺序调一调。
+</span>
+</section>
