@@ -1,0 +1,76 @@
+# Repo-overview 模板的字段约定（仅说明，不是合法的配置）
+# 用作占位符 / 取值范围参考；实际生效以 generate.py 内的 if 分支为准。
+
+meta:                       # 项目元数据（封面 / 全局用）
+  name: "项目名（必填），如 OpenWiki"            # 显示在 P1 中央大字
+  kicker: "顶部小标，10 字以内，如 开源项目解读 · 2026.07"
+  stars_text: "12,309 Stars*（必填，标 * 表示数据源截止日期）"
+  version: "v0.2.0"
+  license: "MIT"
+  source: "github.com/owner/repo（每张图 footer 显示）"
+  star_source_date: "2026-07-19（仅当 stars_text 含 * 时显示）"
+
+cover:
+  tagline_left: "封面左半主标，6–12 字"
+  tagline_right: "封面右半主标，强调色，6–14 字"
+  subline: "封面底部一行注解，建议两短句用 ｜ 或 ，分隔"
+  central_nodes:           # P1 中央"百科"图标连出去的 4 个节点
+    - label: "AGENTS.md"   # 节点标题
+      sub: "Agent 入口"   # 节点副标题
+      color: "blue|purple|green|orange|red|cyan"
+
+pains:                     # 必填 3 条
+  - num: "01–99"
+    title: "4–8 字动宾短语"
+    desc: "15–30 字具体场景描述（不要泛泛）"
+    color: "red|orange|purple|green|blue"
+
+pipeline:                  # 必填 4 条，按顺序
+  - num: "1"
+    name: "2–4 字动词"
+    sub: "<具体动作>"
+    color: "blue|purple|cyan|green|orange"
+
+advantages:                # 必填 4 条
+  - title: "<4–10 字亮点>" 
+    desc: "<15–30 字可观察细节>"
+    color: "blue|purple|green|orange"
+
+modes:                     # 必填 2 条
+  - label: "CODE MODE / ROLE A / …"   # 大写短标识
+    title: "项目知识库 / 个人知识库 / …"
+    icon: "code|brain|book|chain"     # 当前实现只支持 code / brain
+    bullets:                          # 4 条短句
+      - "<15–25 字>"
+      - "<15–25 字>"
+      - "<15–25 字>"
+      - "<15–25 字>"
+    color: "blue|purple|green|orange"
+    pale: "对应的 pastel 色（默认按 color 自动派生）"
+
+modes_shared_footer: "共同底座描述，两行字内（顶层字段）"
+
+comparisons:               # 必填 3–4 条；第一项应该是本项目自己
+  - name: "<项目 / 工具名>"
+    best_for: "<10–18 字>"
+    features: "<10–20 字三个要点>"
+    color: "blue|purple|orange|green"
+
+comparisons_closing: "1 短句，作 P5 黑底结论条（顶层字段）"
+
+quickstart:                # 必填 3–4 条
+  - n: "01–04"
+    cmd: "<可执行的 CLI / 命令字串>"
+    desc: "<4–10 字动词短语>"
+
+tips:                      # 必填 3 条
+  - title: "2–4 字短语"
+    desc: "<15–30 字具体建议>"
+    color: "blue|green|orange|purple"
+
+risk:
+  banner: "<一行风险提示，≤ 30 字>"
+  detail: "<一行细节，≤ 36 字>"
+
+# 可选：footer 文案
+footer_label: "OpenWiki 开源项目拆解（默认是这个，可改成项目名 + 第几期）"

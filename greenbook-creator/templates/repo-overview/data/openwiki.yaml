@@ -1,0 +1,81 @@
+meta:
+  name: OpenWiki
+  kicker: 开源项目解读 · 2026.07
+  stars_text: 12,309 Stars*
+  version: v0.2.0
+  license: MIT
+  source: github.com/langchain-ai/openwiki
+  star_source_date: 2026-07-19
+
+cover:
+  tagline_left: 给 AI 编程助手
+  tagline_right: 一份会自动更新的项目百科
+  subline: LangChain 团队新开源：让仓库知识可读、可审、可持续更新
+  central_nodes:
+    - { label: AGENTS.md,  sub: Agent 入口,    color: blue }
+    - { label: CLAUDE.md,  sub: 上下文入口,    color: purple }
+    - { label: Git / Diff, sub: 变化证据,      color: green }
+    - { label: CI / PR,    sub: 持续维护,      color: orange }
+
+pains:
+  - { num: "01", title: 上下文碎片, desc: README、源码、Issue、口头约定各说一块,           color: red }
+  - { num: "02", title: 文档漂移,   desc: 代码已经改了，架构说明还停在旧版本,             color: orange }
+  - { num: "03", title: 重复交接,   desc: 人和 Agent 每次都要重新定位入口与约束,           color: purple }
+
+pipeline:
+  - { num: "1", name: 读变化, sub: status / log / diff, color: blue }
+  - { num: "2", name: 做综合, sub: DeepAgents 工作流,   color: purple }
+  - { num: "3", name: 写知识, sub: Markdown + OKF,      color: cyan }
+  - { num: "4", name: 提审查, sub: CI 自动开 PR,        color: green }
+
+advantages:
+  - { title: 本地 Markdown,   desc: 输出就在仓库里，能 diff、review、回滚,                color: blue }
+  - { title: 保护人工内容,   desc: AGENTS.md / CLAUDE.md 只改自己的标记区块,              color: purple }
+  - { title: 避免空转,       desc: 内容快照没变化，就不刷新更新时间元数据,                color: green }
+  - { title: 跨 Git 平台,    desc: GitHub / GitLab / Bitbucket 流水线示例,                color: orange }
+
+modes:
+  - label: CODE MODE
+    title: 项目知识库
+    icon: code
+    bullets:
+      - "输出：当前仓库 openwiki/"
+      - "输入：代码 + Git 变化证据"
+      - "联动：AGENTS.md / CLAUDE.md"
+      - "维护：CI 定时更新并开 PR"
+    color: blue
+  - label: PERSONAL MODE
+    title: 个人知识库
+    icon: brain
+    bullets:
+      - "输出：~/.openwiki/wiki/"
+      - "来源：Git、Gmail、Notion、Slack"
+      - "扩展：X、Web Search、Hacker News"
+      - "调度：macOS 可配置本地计划"
+    color: purple
+
+modes_shared_footer: Markdown + Google Open Knowledge Format（OKF）v0.1
+
+comparisons:
+  - { name: OpenWiki,           best_for: 给 Agent 写项目内 Wiki,       features: 本地文件 · Git 可审查 · CI 维护,  color: blue }
+  - { name: DeepWiki,           best_for: 最快看懂陌生仓库,             features: 托管 Wiki · 架构图 · 源码链接 · Q&A, color: purple }
+  - { name: GitBook / Mintlify, best_for: 给客户与团队发布文档,         features: 托管站点 · 协作 · 权限 · AI 助手,   color: orange }
+  - { name: Context7,           best_for: 给 Agent 查第三方库 API,      features: MCP / CLI · 版本相关 · 文档进提示词, color: green }
+
+comparisons_closing: 知识留在项目里，能和代码一起被审查与迭代。
+
+quickstart:
+  - { n: "01", cmd: "npm install -g openwiki",                  desc: 安装 CLI }
+  - { n: "02", cmd: "cd your-repo && openwiki --init",         desc: 生成项目 Wiki }
+  - { n: "03", cmd: "openwiki --update",                       desc: 按 Git 变化更新 }
+  - { n: "04", cmd: "openwiki personal --init",                desc: 可选：初始化个人 Wiki }
+
+tips:
+  - { title: 先写边界, desc: 在 openwiki/INSTRUCTIONS.md 写清范围与优先级,                    color: blue }
+  - { title: PR 审核,  desc: 复制官方 workflow，让更新先开 PR，别直接自动合并,            color: green }
+  - { title: 看清成本, desc: 生成质量取决于模型；敏感代码要核对提供商数据政策,            color: orange }
+
+risk:
+  banner: 早期版本 v0.2.0｜匿名遥测默认开启，可手动关闭
+  detail: 生成内容仍需人工审阅；敏感仓库先核对模型提供商的数据政策
+footer_label: OpenWiki 开源项目拆解
