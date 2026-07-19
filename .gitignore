@@ -1,7 +1,7 @@
 # === 排版/封面产物(每次会重新生成) ===
-# 排版脚本(运行中临时脚本)
-草稿/build_*.py
-草稿/make_cover*.py
+# 排版脚本(运行中临时脚本,草稿/ 任何子目录)
+草稿/**/build_*.py
+草稿/**/make_*.py
 # 封面与排版产物
 草稿/cover/
 草稿/_outputs/
@@ -21,9 +21,12 @@
 草稿/cl4r1t4s-*.md
 草稿/ai-degrade-*.md
 
+# === Python 缓存(通用) ===
+**/__pycache__/
+*.pyc
+*.pyo
+
 # === 杂项 ===
 _knowledge_base/
-wechat-draft-publish/__pycache__/
 wechat-draft-publish/build_fable5.py
 wechat-draft-publish/fable5_prompt_teardown.html
-wechat-sticker-generator/__pycache__/
