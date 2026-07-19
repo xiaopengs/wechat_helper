@@ -1,0 +1,33 @@
+{
+  "mode": "animated",
+  "set_name": "愤怒猫猫日常",
+  "set_description": "一只穿紫卫衣的小白猫，每天都有值得愤怒的事。",
+  "copyright_info": "© 2026 愤怒猫猫",
+  "character_name": "愤怒猫猫",
+  "character_prompt": "白色短毛猫咪，紫罗兰色耳尖内侧偏粉，蓬松大尾巴，粉色腮红，宽大的紫色连帽卫衣，胸口有一枚白色小爪印，圆润大眼，水汪汪的紫色瞳孔，2D KAWAII 萌系Q版",
+  "reference_image": "/home/ubuntu/Documents/wechat-sticker-output/20260719_083127_gpt-image-2/base_reference.png",
+  "style_preset": "2D_KAWAII",
+  "custom_style": "",
+  "scene_theme": "COMPREHENSIVE",
+  "character_type": "HUMAN_CHIBI",
+  "color_mood": "BRIGHT_VIBRANT",
+  "background_type": "transparent",
+  "enable_bg_removal": true,
+  "bg_removal_method": "dual",
+  "bg_removal_model": "isnet-anime",
+  "bg_alpha_matting": true,
+  "bg_sharpen_edges": false,
+  "bg_sharpen_threshold": 200,
+  "grid_size": 9,
+  "expressions": [
+    {"action": "双手叉腰，身体前倾，眉毛倒竖，眼神凶狠", "text": "气死了"},
+    {"action": "右手握拳用力挥过头顶，左手攥紧卫衣下摆，跺脚", "text": "不干了"},
+    {"action": "右手指向镜头前方，左手叉腰，嘴巴大张怒吼", "text": "就是你"},
+    {"action": "双手抱胸侧身扭头，尾巴大幅甩动", "text": "哼"},
+    {"action": "瞪大眼张大嘴往后仰，爪子举起贴脸", "text": "啊?"},
+    {"action": "俯身伸爪向前扑，头部压低锁定前方", "text": "冲鸭"},
+    {"action": "侧身抬腿大步走，尾巴竖直甩动，嘴紧闭皱眉", "text": "走人"},
+    {"action": "双手捂脸低头，耳朵向后压，尾巴下垂", "text": "心累"},
+    {"action": "双手举过头顶欢呼跳起，嘴巴大张微笑，尾巴蓬松展开", "text": "耶!"}
+  ]
+}

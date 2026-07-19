@@ -196,6 +196,25 @@ python wechat-account-diagnostic/scripts/account_analyzer.py full \
 
 详见 `knowledge-visual-cartographer/SKILL.md` 与 `INTEGRATION-cartographer.md`。
 
+### 🎭 wechat-sticker-generator — 微信表情包生成（2026-07-19 集成）
+
+**把一张定妆图（或文字描述）一键做成微信规范的表情包套件：静态 9/16 张独立 PNG，或动态 9/16 帧 GIF**。
+
+支持 12 种画风（萌系 Q 版 / 帅气动漫 / 皮克斯 3D / 像素风 / 水墨国风 / 水彩 / 简笔线条 / 欧美卡通 / 超级 Q 版 / 表情包梗图风 / 自定义等）× 10 大场景主题（职场 / 爱情 / 吃货 / 节日 / 学习 / 运动 / 旅行 / 游戏 / 萌宠 / 自定义）× 真人照片转 Q 版。
+
+| 能力 | 说明 |
+|------|------|
+| 静态 / 动态 | `static` = N 张独立 PNG；`animated` = 每个 GIF 由 N 帧组成 |
+| 宫格类型 | 9 宫格（默认）/ 16 宫格（动作更流畅） |
+| 数量 | 默认 9 个；微信专辑标准需 24 个 |
+| 角色来源 | 文字描述 / 用户提供的定妆图 / 参考图 / 真人照片转 Q 版 |
+| Provider | gpt-image-2（默认，TokenRouter 走 image-provider-constraint 委派）/ Gemini / 千问 |
+| 自动化后处理 | 切宫格 → 透明背景抠图（isnet-anime）→ GIF 合成 → 微信合规导出包（240×240 main + 120×120 thumb + cover/icon/banner + upload_info.txt） |
+
+**实测样本**：见 [`images/sticker-2026-07-19/`](images/sticker-2026-07-19/) ——「愤怒猫猫日常」9 张动态 GIF，已生成微信合规导出包。
+
+详见 `wechat-sticker-generator/SKILL.md`。
+
 ---
 
 ## 目录结构
@@ -229,6 +248,11 @@ wechat_helper/
 ├── knowledge-visual-cartographer/        # 知识视觉化排版方案 (2026-06-18 集成)
 │   ├── SKILL.md
 │   └── references/ (module-catalog, style-spec, canvas-specs)
+├── wechat-sticker-generator/             # 微信表情包生成技能 (2026-07-19 集成)
+│   ├── SKILL.md
+│   ├── sticker_utils.py
+│   ├── modules/ (api, postprocess, prompts, background, ...)
+│   └── reference/ (reference, external_platform_guide, output_guide)
 ├── README.md
 ├── INTEGRATION-renwei.md                 # renwei 接入说明
 ├── INTEGRATION-cartographer.md           # cartographer 接入说明

@@ -26,3 +26,4 @@ _knowledge_base/
 wechat-draft-publish/__pycache__/
 wechat-draft-publish/build_fable5.py
 wechat-draft-publish/fable5_prompt_teardown.html
+wechat-sticker-generator/__pycache__/
