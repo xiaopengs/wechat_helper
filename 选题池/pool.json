@@ -1,7 +1,32 @@
 {
   "version": "1.0",
-  "updatedAt": "2026-06-13T20:51:32+08:00",
+  "updatedAt": "2026-06-17T14:44:35+08:00",
   "topics": [
+    {
+      "id": "topic-20260616-001",
+      "title": "Agent 不需要更多 context,需要一张地图——CodeGraph 涨到 20k 星背后的工程哲学、实测数据与踩坑指南",
+      "angle": "基于 aliyun article/1740235 解读。不和 5/17、5/27 两篇'涨星+对比'角度的 selected 主题重复,这次走'工程哲学+实操+反向问题'线。抓住 aliyun 原文核心命题:Agent 写代码前太多时间花在'找代码'上,CodeGraph 的解法不是给 Agent 喂更多 context,而是提前把代码解析成本地 AST+调用链图谱(存在 SQLite,FTS5 全文检索),让 Agent 按结构查询。文风:aliyun 那种'我建议/我会怎么用'的克制 + Jerry 标题钩子和 AI Native Coder 段。",
+      "outline": [
+        "开头:codegraph 周新增 15909 星 / 总 19392 星(GitGenius 已 20k+),但我们更关心的是一个具体问题——Agent 进项目第一件事不是写代码,是翻箱倒柜",
+        "核心命题:Agent 不缺 context,缺地图(类比新同事入职,不是不会写,是不知道门在哪里)",
+        "工程哲学:不要让 Agent 每次都现场翻——先把代码解析成图谱,再让 Agent 按结构查询。和 grep 的根本区别:grep 知道字符串,CodeGraph 知道这是函数定义还是注释",
+        "四层架构(tree-sitter 解析 → 建图 → SQLite+FTS5 存储 → CLI/MCP/TS API 接入)",
+        "冷静看 benchmark:README 那个'VS Code 52→3 次'和文档的'工具调用 -71%、token -57%、速度 +46%'数字不严格一致,口径要保留。但揭示的工程事实:大项目里 Agent 探索成本真实存在,预索引能显著下降",
+        "实操命令:init/index/sync,query/callers/callees/impact,context,affected——哪些是给人用,哪些是给 Agent 用",
+        "团队落地三场景:老项目改 bug、大仓库问答、CI 测试选择",
+        "提示词小技巧:把 Agent 的第一反应从'扫文件'改成'查地图'",
+        "反向问题:索引非零成本 / 静态分析不等于运行时真相 / MCP 工具也要权限管理 / benchmark 数字看口径",
+        "AI Native Coder 启示:Agent 时代的关键工程能力,从'写代码'变成'给 Agent 铺路'",
+        "一句话总结:地图不等于目的地,但在大仓库里,能明显减少绕路"
+      ],
+      "source": "aliyun article 1740235 (CodeGraph 爆火)",
+      "difficulty": "⭐⭐⭐",
+      "status": "published",
+      "createdAt": "2026-06-16T22:54:48+08:00",
+      "selectedAt": "2026-06-16T22:54:48+08:00",
+      "publishedAt": "2026-06-16T23:00:33+08:00",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQsOteN8ffLnWi6jkMRiVCvNq_0IJsGj4I-_zYj_OfEX3"
+    },
     {
       "id": "topic-20260514-001",
       "title": "AI开始自己挖漏洞了——一场你没有注意到的安全军备竞赛",
@@ -683,6 +708,125 @@
       "selectedAt": "2026-06-13T20:30:00+08:00",
       "publishedAt": "2026-06-13T20:48:00+08:00",
       "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQvkrCGo9AB0V4480ejPA1nBmr-BUZKJ4t50bLdhub7ai"
+    },
+    {
+      "id": "topic-20260614-001",
+      "title": "凌晨五点的失败,催生了一个改稿 skill · renwei-writing 项目拆解",
+      "angle": "从橘子(orange2ai)凌晨五点让 AI 改稿失败的真实事件切入,拆解 renwei-writing 这个 skill 的三层结构(原理+清单+案例)、位置/代价/手迹三件事、以及在 wechat_helper 里默认开的应用",
+      "outline": [
+        "开头:凌晨五点,AI 磨三遍,人味儿变少了",
+        "为什么:AI 改东西缺一个叫'存在感'的东西(位置/代价/手迹三件事)",
+        "用法:git clone 一行,集成进 wechat_helper 默认开",
+        "结构:三层(原理 SKILL.md / 检查清单 / 真实案例)",
+        "失败解剖:六处改动逐条对比",
+        "给 Agent 的两条规矩:位置 + 代价",
+        "收束:帮人改文字的上限是隐形"
+      ],
+      "source": "github.com/orange2ai/renwei-writing",
+      "difficulty": "⭐",
+      "status": "published",
+      "createdAt": "2026-06-14T08:50:51+08:00",
+      "selectedAt": "2026-06-14T08:50:51+08:00",
+      "publishedAt": "2026-06-14T09:27:20+08:00",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQuyfgHOow6qWl6hV3_ssPSvT8MBBEEzgoghKYwNMVSrb"
+    },
+    {
+      "id": "topic-20260615-001",
+      "title": "把灵感变成完整小说——乔木 qiaomu-novel-generator 拆解",
+      "angle": "从向阳乔木(@vista8)的开源小说 skill 切入,拆解 qiaomu-novel-generator 的 15 个 Hook 工作流(从 Intent 到 Evolution)、与 renwei-writing 配对的对比(改稿 vs 创作)、以及自己跑完 15 步的真实试写(35 岁便利店店长 + 凌晨三点陌生女孩)",
+      "outline": [
+        "开头:今晚十一点,Jerry 丢来一篇乔木公众号文章,191 颗星 MIT",
+        "为什么:AI 写小说的失败模式不是不会写,是'拿到灵感不知道往哪走'(5 条结构缺一不可)",
+        "用法:什么人用?一类有想法写不出,一类用 AI 写出来像扩写",
+        "结构:15 个 Hook(意图/调研/灵感/引擎/访谈/策略/内核/技法/计划/草稿/反 AI/质量/反馈/演化/验证),固定顺序",
+        "对比:renwei 守'作者声音'边界,qiaomu 守'创作结构'边界,配对装进 wechat_helper",
+        "实测:35 岁便利店店长 + 凌晨三点陌生女孩题目,9 项评分钩子 8/欲望 7/升级 9",
+        "给 Agent 的两条规矩:结构比灵感重要 + 检查点不能省",
+        "收束:qiaomu 不教 AI 写小说,它给 AI 一本 craft 手册",
+        "renwei 改稿实录 5 处:句式套路/位置/破折号/排比三连/金句风险",
+        "信源索引:github 仓库 + 10 个 references/ 文档 + 2 个 scripts + 作者 X"
+      ],
+      "source": "github.com/joeseesun/qiaomu-novel-generator + 公众号向阳乔木",
+      "difficulty": "⭐⭐",
+      "status": "published",
+      "createdAt": "2026-06-15T23:22:00+08:00",
+      "selectedAt": "2026-06-15T23:22:00+08:00",
+      "publishedAt": "2026-06-16T00:38:19+08:00",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQrBPA9GkMY8UWPzITRlxzHKSu2Hv4GuAucd3a6gHk2g4"
+    },
+    {
+      "id": "topic-20260617-001",
+      "title": "[Workflow→Loop 01] 从自研到大厂默认——多智能体编排正在被一行命令磨平",
+      "angle": "「workflow 到 loop 拆解与实战」系列 8 篇综述。基于 5/6-5/21 三厂同步发布窗口(Anthropic Managed Agents、Cursor /orchestrate、Codex /goal GA)+ 18 小时/14/18/$4.20 实证数据(前 Anthropic @skirano 演示)。核心论点:我们自研的 workflow/智能体编排/loop 流程,正在被大厂工具用一行命令磨平;今天用大厂工具就能实现复杂工作流和多智能体编排。文风:系列开头模板 + 三类磨平现象对照表 + 三厂 8 维取舍表 + 做对/做错自检。",
+      "outline": [
+        "00 一句话开篇:@skirano Codex /goal 18h/14/18 功能/$4.20 实证数字",
+        "01 一个刺痛的故事:我们自研编排(LangGraph supervisor + 7 worker + 协议 v2.3)对照 Cursor 文档三句话",
+        "02 三厂同步发布窗口(4/2-5/21 时间线)+ multi-agent orchestration 搜索 +376% 数据 + The New Stack 观察",
+        "03 三类磨平现象:模式(五种协调模式实现成本对照)/上下文(context isolation → 默认行为)/循环(while-do → /goal 命令)",
+        "04 三厂取舍差异 8 维表(目标深度/编排模式/并行度/上下文隔离/持久化/成本/场景/品牌)",
+        "05 做对三件事(抽象编排/踩坑经验/业务适配)+ 做错三件事(框架当产品/自造轮子/低估覆盖速度)+ AutoGen 进 maintenance 注脚",
+        "06 8 篇系列预告(02-07 + 08 收官)",
+        "07 经典参考清单(大厂官方/Goal Loop 系/经典综述/案例演示/行业分析/延伸选型)",
+        "信源索引:4 用户给链接 + 5 大厂官方补充 + Ralph 系 2 + 经典综述 3 + 案例演示 2 + 行业分析 3 + 选型问题 1"
+      ],
+      "source": "cursor.com/docs/subagents + claude.com/blog/multi-agent-coordination-patterns + ghuntley.com/ralph + ralphable.com + developers.openai.com/codex/use-cases/follow-goals + Coding Agent 三连报告(@skirano 18h/$4.20 demo + Futurum Research +376% + The New Stack)",
+      "difficulty": "⭐⭐⭐",
+      "status": "published",
+      "createdAt": "2026-06-17T08:36:00+08:00",
+      "selectedAt": "2026-06-17T08:36:00+08:00",
+      "publishedAt": "2026-06-17T08:50:00+08:00",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQoGtFE_rqPPlghNa7_v2-mTy8V66ad-5DgL4alWx_S8h"
+    },
+    {
+      "id": "topic-20260617-002",
+      "title": "[Workflow→Loop 02] 五种 Multi-Agent 协调模式全拆解——从 Anthropic 官博到三厂取舍",
+      "angle": "系列第 02 篇原理篇。Anthropic 4/10 官博 5 种 workflow 模式(Prompt chaining / Routing / Parallelization / Orchestrator-workers / Evaluator-optimizer)逐一深拆:每种给经典实现(LCEL 链式/客服工单派单/MapReduce/LangGraph supervisor/Reflexion)+ 三厂对应 + 选型决策树 + 我们的踩坑。脚注:另一套分类(Generator-Verifier/Agent Teams/Hierarchical/Network)是架构风格维度,跟主线正交。深化 01 综述的三厂取舍表:为什么 Anthropic 限深度 1 / OpenAI 不限 / Cursor 卡 8 个(人因工程上限)。",
+      "outline": [
+        "00 一句话开篇:01 综述那张表展开",
+        "01 模式总览:为什么是这 5 种",
+        "02 Prompt chaining:LCEL | 链式 + Claude Code 计划模式",
+        "03 Routing:客服工单派单 → LLM 路由 + Cursor Subagent description 字段",
+        "04 Parallelization:MapReduce / asyncio.gather + Cursor /multitask 8 个上限",
+        "05 Orchestrator-workers:LangGraph supervisor + Anthropic 限深度 1 的真实理由 + 我们的递归 4 层  踩坑",
+        "06 Evaluator-optimizer:Reflexion 论文 + /goal verification subagent + evaluator 成本必须是 generator 1/5",
+        "07 脚注:另一套分类(架构风格维度)跟主线 5 种正交",
+        "08 三厂取舍深读:为什么 Anthropic 限 1 层 / OpenAI 不限 / Cursor 卡 8 个",
+        "09 实战选型决策树 + 实战口诀 + 复合场景:真实系统是 4 种模式叠加",
+        "10 收束:5 种是积木,真实系统是组合,引 03 Ralph Loop",
+        "参考链接 9 条:Anthropic Building Effective Agents / claude.com/blog / Managed Agents / LangGraph / Reflexion / Cursor / Claude Code / Codex / 三连 §一.②"
+      ],
+      "source": "claude.com/blog/multi-agent-coordination-patterns + anthropic.com/research/building-effective-agents + LangGraph supervisor 文档 + Reflexion 论文 arxiv.org/abs/2303.11381 + Cursor Subagent 文档 + Claude Code best practices + Codex /goal 文档 + Coding Agent 三连 §一.②",
+      "difficulty": "⭐⭐⭐⭐",
+      "status": "published",
+      "createdAt": "2026-06-17T08:36:00+08:00",
+      "selectedAt": "2026-06-17T08:36:00+08:00",
+      "publishedAt": "2026-06-17T14:35:00+08:00",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQlwJ-piZC82IRdGBP7bNY_30UdvWIrT80OZGQe_CGfJi"
+    },
+    {
+      "id": "topic-20260617-003",
+      "title": "[Workflow→Loop 03] 一行 Bash 循环里的工程哲学:Ralph Loop 拆解",
+      "angle": "系列第 03 篇原理篇。Geoffrey Huntley 的 Ralph 哲学深拆:一行 bash 循环 + 4 个文件(PROMPT.md / fix_plan.md / specs/ / claude-code)+ 5 个硬性约束(one item per loop / 170K context / 并行 subagent 但 build/test 只 1 个 / don't assume not implemented / 调音吉他)+ Phase 1 generate + Phase 2 backpressure。横向对比:Ghuntley 原版 Ralph(哲学层) / ralphable.com(产品层) / Codex /goal(工业层)。反推我们自研 IM agent 编排:做对(单测单跑/状态持久化) / 没做(specs/ 工程化/one item 纪律性/don't assume 防御)。Ralph 不是工具是工程纪律的复盘。",
+      "outline": [
+        "00 一句话开篇:while :; do cat PROMPT.md | claude-code ; done 这一行 + 4 个文件",
+        "01 Ralph 的本质:不是产品是技术(Ralph is a technique)+ 任何不限制 tool call 的工具都能跑 + 确定性失败在不确定世界 + Ralph Wiggum 梗 + CURSED 编程语言(训练数据外)",
+        "02 四件套:PROMPT.md(宪法) / fix_plan.md(任务清单+attempt 元数据) / specs/(规格目录,LLM 写) / claude-code(宿主,宿主无关)",
+        "03 5 个硬性约束:one item per loop / 170K context 硬约束 / 并行 subagent 但 build/test 只 1 个 / don't assume not implemented / 调音吉他哲学",
+        "04 Phase 1: generate(代码生成便宜) + Phase 2: backpressure(测试/类型检查/静态分析)+ Rust vs Python 语言选择 + 单测单跑模式",
+        "05 ralphable 把 Ralph 产品化:4 步循环(Atomic Tasks / Pass-Fail / Progress / Loop Until Done)+ Task Progress 状态机 + 案例对比 + 7 领域覆盖",
+        "06 Codex /goal 是 Ralph 思路的命令行化:3 个 Ralph 对比(哲学层/产品层/工业层)+ @skirano 18h/14/18/.20 工业化证据",
+        "07 Ralph 跟 5 种模式衔接:Ralph = 5 种模式循环化封装(Prompt chaining 无限版 + Evaluator-optimizer 循环版 + Orchestrator-workers 自调度 + Routing/Parallelization)",
+        "08 我们的踩坑:做对(单测单跑/状态持久化/subagent 隔离)/没做(specs/ 工程化/one item 纪律性/don't assume 防御)/反推(Ralph 是工程纪律的复盘)",
+        "09 收束:3 条核心哲学(LLMs are mirrors of operator skill / 确定性失败在不确定世界 / deliberate intentional practice)+ 引 04 Context Window",
+        "参考链接 10 条:ghuntley.com/ralph / specs / subagents / mirrors / play / gutter + ralphable.com + VentureBeat + Codex /goal + Anthropic Multi-agent"
+      ],
+      "source": "ghuntley.com/ralph + ghuntley.com/specs + ghuntley.com/subagents + ghuntley.com/mirrors + ghuntley.com/play + ghuntley.com/gutter + ralphable.com + VentureBeat Ralph Wiggum 报道 + Codex /goal 文档 + Anthropic Multi-agent Coordination Patterns + Coding Agent 三连 §四",
+      "difficulty": "⭐⭐⭐⭐⭐",
+      "status": "published",
+      "createdAt": "2026-06-17T08:36:00+08:00",
+      "selectedAt": "2026-06-17T08:36:00+08:00",
+      "publishedAt": "2026-06-17T14:43:00+08:00",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQsBwyRu3niJW49LIGkEaSITAuPLWvsyKx2UTQLJvqd7t"
     }
   ]
 }
