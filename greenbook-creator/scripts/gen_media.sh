@@ -83,7 +83,7 @@ generate 选项:
   --size WxH            默认 1024x1024
   --quality low|medium|high|auto
   --n COUNT             生成数量(1-4),默认 1
-  --style NAME          default | tech-dark | tech-light
+  --style NAME          default | tech-dark | tech-light | cartographer | orange-parenting
   --from-article PATH   从文章 + LLM 生成 prompt
   --image-desc TEXT     (--from-article 配合) 描述图要画什么
   --force               覆盖已存在文件
