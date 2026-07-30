@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Superset · RUNTIME ARCHITECTURE</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="label-tag blue">RUNTIME ARCHITECTURE</div>
+      <div class="page-num"><strong>03</strong> / 08</div>
+    </div>
+
+    <div class="chip blue">运行链路</div>
+
+    <h1 class="title title-sm">一次任务怎么<span class="hl">持续跑完</span>？</h1>
+
+    <p class="subtitle" style="margin-bottom:28px;font-size:26px;">关键是 Leader 与 Session Actor 的分工：Leader 派任务 + 状态聚合，Session Actor 在 Worktree 内执行完整循环。</p>
+
+    <!-- 三入口 -->
+    <div class="grid-3" style="margin-bottom: 4px;">
+      <div class="block block-pink" style="padding:18px 22px;">
+        <div class="block-title">TUI</div>
+        <div class="block-sub" style="font-size:20px;">终端客户端</div>
+      </div>
+      <div class="block block-yellow" style="padding:18px 22px;">
+        <div class="block-title">IDE</div>
+        <div class="block-sub" style="font-size:20px;">ACP 客户端</div>
+      </div>
+      <div class="block block-green" style="padding:18px 22px;">
+        <div class="block-title">CI</div>
+        <div class="block-sub" style="font-size:20px;">Headless</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin: 2px 0;">
+      <div class="arrow-down" style="height:24px;"></div>
+      <div class="pill" style="background: var(--yellow);font-size:20px;">多入口</div>
+      <div class="arrow-down" style="height:24px;"></div>
+    </div>
+
+    <!-- LEADER -->
+    <div class="block block-blue" style="margin-bottom: 4px;display:flex;align-items:center;gap:20px;padding:18px 24px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:900;letter-spacing:2px;">LEADER</div>
+      <div style="font-size:22px;font-weight:500;opacity:0.95;">连接客户端，管理会话入口</div>
+      <div class="tag-chip" style="margin-left:auto;background:#fff;font-size:16px;">编排层</div>
+    </div>
+
+    <div style="text-align:center;margin: 2px 0;">
+      <div class="arrow-down" style="height:24px;"></div>
+      <div class="pill" style="background: var(--green);font-size:20px;">持续运行</div>
+      <div class="arrow-down" style="height:24px;"></div>
+    </div>
+
+    <!-- SESSION ACTOR -->
+    <div class="block block-green-d" style="margin-bottom: 4px;padding: 18px 22px;">
+      <div style="display:flex;align-items:center;gap:20px;margin-bottom:12px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:900;letter-spacing:2px;color:#fff;">SESSION ACTOR</div>
+        <div class="tag-chip" style="margin-left:auto;background:#fff;color:#111;font-size:16px;">工作区层</div>
+      </div>
+      <div class="grid-3">
+        <div class="block block-white" style="padding:14px 16px;">
+          <div class="block-title-2" style="font-size:20px;">会话</div>
+          <div class="block-sub" style="font-size:16px;color:#666;">持久上下文</div>
+        </div>
+        <div class="block block-white" style="padding:14px 16px;">
+          <div class="block-title-2" style="font-size:20px;">Worktree</div>
+          <div class="block-sub" style="font-size:16px;color:#666;">Git 隔离分支</div>
+        </div>
+        <div class="block block-white" style="padding:14px 16px;">
+          <div class="block-title-2" style="font-size:20px;">后台任务</div>
+          <div class="block-sub" style="font-size:16px;color:#666;">长跑不中断</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin: 2px 0;">
+      <div class="arrow-down" style="height:24px;"></div>
+      <div class="pill" style="background: var(--purple);font-size:20px;">循环</div>
+    </div>
+
+    <!-- MODEL ↔ TOOLS -->
+    <div class="row" style="gap: 14px;margin-top:4px;">
+      <div class="block block-purple" style="flex:1;display:flex;align-items:center;gap:12px;padding:18px 22px;">
+        <div class="block-title-2" style="font-family:'JetBrains Mono',monospace;font-size:24px;">MODEL</div>
+        <div style="font-size:22px;font-weight:900;">推理与决策</div>
+      </div>
+      <div style="display:flex;align-items:center;font-size:30px;font-weight:900;">↔</div>
+      <div class="block block-orange" style="flex:1;display:flex;align-items:center;gap:12px;padding:18px 22px;">
+        <div class="block-title-2" style="font-family:'JetBrains Mono',monospace;font-size:24px;">TOOLS</div>
+        <div style="font-size:22px;font-weight:900;">执行与回写</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="tagline">横向对比 + 合并优胜，<span class="accent">多 Agent 同题异解</span>。</div>
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · Superset 拆解</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,501 @@
+/* Superset 小绿书 贴图样式 — 对齐「贴图号·猴子AI笔记」风格
+   1080x1440 竖图，白底 + 多色块圆角矩形 + 黑描边 + 偏移阴影 */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #FFFFFF;
+  --grid: #ECECEC;
+  --ink: #111111;
+  --ink-2: #555555;
+  --ink-3: #999999;
+  --ink-mute: #BBBBBB;
+
+  --pink:    #FFB6C1;
+  --pink-d:  #FF8FA3;
+  --yellow:  #FFE066;
+  --yellow-d:#FFD43B;
+  --ylight:  #FFF7C2;
+  --green:   #B4E876;
+  --green-d: #6CC24A;
+  --blue:    #6FD8E5;
+  --blue-d:  #4FB6C8;
+  --purple:  #C8A8E9;
+  --purple-d:#9F7AD1;
+  --orange:  #FF9966;
+  --orange-d:#E8744A;
+  --red:     #FF6B6B;
+
+  --border: 4px solid #111111;
+  --shadow-hard: 0 8px 0 #111111;
+  --shadow-soft: 6px 6px 0 rgba(0,0,0,0.15);
+}
+
+html, body { width: 1080px; height: 1440px; overflow: hidden; }
+
+body {
+  font-family: 'Noto Sans SC', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  position: relative;
+}
+
+/* 背景网格 */
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.6;
+  z-index: 0;
+}
+
+/* 右下大弧形装饰 */
+body::after {
+  content: '';
+  position: absolute;
+  right: -180px;
+  bottom: -180px;
+  width: 480px;
+  height: 480px;
+  background: var(--ylight);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 64px 72px;
+  z-index: 1;
+}
+
+/* ============ Header ============ */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.label-tag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 1.5px;
+}
+
+.label-tag::before {
+  content: '';
+  width: 32px;
+  height: 4px;
+  background: var(--ink);
+}
+
+.label-tag.green::before { background: var(--green-d); }
+.label-tag.blue::before  { background: var(--blue-d); }
+.label-tag.purple::before { background: var(--purple-d); }
+.label-tag.orange::before { background: var(--orange-d); }
+.label-tag.pink::before { background: var(--pink-d); }
+
+.page-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink-3);
+  letter-spacing: 2px;
+}
+
+.page-num strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ============ Chip ============ */
+.chip {
+  display: inline-block;
+  padding: 8px 22px;
+  background: var(--blue);
+  color: var(--ink);
+  font-size: 26px;
+  font-weight: 700;
+  border: var(--border);
+  border-radius: 999px;
+  box-shadow: var(--shadow-hard);
+  margin-bottom: 32px;
+}
+
+.chip.green { background: var(--green); }
+.chip.pink { background: var(--pink); }
+.chip.yellow { background: var(--yellow); }
+.chip.purple { background: var(--purple); }
+.chip.orange { background: var(--orange); }
+
+/* ============ Title ============ */
+.title {
+  font-size: 86px;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+
+.title .hl {
+  background: var(--ylight);
+  padding: 0 8px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.title-sm {
+  font-size: 68px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+/* ============ Subtitle ============ */
+.subtitle {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin-bottom: 40px;
+  max-width: 920px;
+}
+
+/* ============ Color Block ============ */
+.block {
+  border: var(--border);
+  border-radius: 24px;
+  box-shadow: var(--shadow-hard);
+  padding: 24px 28px;
+  position: relative;
+}
+
+.block-pink { background: var(--pink); }
+.block-yellow { background: var(--yellow); }
+.block-green { background: var(--green); }
+.block-green-d { background: var(--green-d); color: #fff; }
+.block-blue { background: var(--blue); }
+.block-purple { background: var(--purple); }
+.block-orange { background: var(--orange); }
+.block-white { background: #fff; }
+
+.block-title {
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.block-sub {
+  font-size: 22px;
+  font-weight: 500;
+  opacity: 0.85;
+  line-height: 1.4;
+}
+
+/* ============ Connection Pills ============ */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  background: var(--bg);
+  border: var(--border);
+  border-radius: 999px;
+  font-size: 22px;
+  font-weight: 700;
+  box-shadow: var(--shadow-hard);
+}
+
+.arrow-down {
+  width: 4px;
+  height: 36px;
+  background: var(--ink);
+  margin: 0 auto;
+  position: relative;
+}
+.arrow-down::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 16px solid var(--ink);
+}
+
+/* ============ Footer / Watermark ============ */
+.footer {
+  position: absolute;
+  bottom: 64px;
+  left: 72px;
+  right: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.tagline {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.tagline .accent {
+  background: var(--ylight);
+  padding: 2px 8px;
+}
+
+.watermark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink-3);
+}
+
+.watermark-icon {
+  width: 28px;
+  height: 28px;
+  background: var(--green);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+/* ============ Grids ============ */
+.row {
+  display: flex;
+  gap: 16px;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+/* 步骤数字 */
+.step-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+/* 小标签 */
+.tag-chip {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(255,255,255,0.85);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* 等宽小字 */
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+/* 双行块标题 */
+.block-title-2 {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  line-height: 1.25;
+  margin-bottom: 6px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* 对比项 */
+.compare-cell {
+  background: #fff;
+  border: var(--border);
+  border-radius: 16px;
+  padding: 14px 12px;
+  text-align: center;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.compare-cell .check {
+  color: var(--green-d);
+  font-size: 28px;
+  font-weight: 900;
+}
+.compare-cell .cross {
+  color: var(--red);
+  font-size: 28px;
+  font-weight: 900;
+}
+.compare-cell .warn {
+  color: var(--orange-d);
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.compare-label {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 4px;
+  line-height: 1.3;
+}
+
+/* 大色块 banner */
+.banner {
+  background: #fff;
+  border: var(--border);
+  border-radius: 24px;
+  box-shadow: var(--shadow-hard);
+  padding: 28px 32px;
+}
+
+.banner-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 适用 / 不适用 列 */
+.yes-col { background: rgba(108, 194, 74, 0.18); border: 4px dashed var(--green-d); border-radius: 24px; padding: 24px 26px; }
+.no-col  { background: rgba(255, 107, 107, 0.14); border: 4px dashed var(--red); border-radius: 24px; padding: 24px 26px; }
+
+.col-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 16px;
+}
+
+.col-head.yes { color: var(--green-d); }
+.col-head.no  { color: var(--red); }
+
+.col-head .badge {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 22px; color: #fff;
+}
+.col-head.yes .badge { background: var(--green-d); }
+.col-head.no  .badge { background: var(--red); }
+
+.list-item {
+  font-size: 22px;
+  line-height: 1.5;
+  padding: 8px 0;
+  border-bottom: 1.5px dashed rgba(0,0,0,0.15);
+}
+.list-item:last-child { border-bottom: none; }
+
+.list-item .marker {
+  display: inline-block;
+  width: 22px;
+  text-align: center;
+  font-weight: 900;
+  margin-right: 8px;
+}
+.list-item.yes .marker { color: var(--green-d); }
+.list-item.no  .marker { color: var(--red); }
+
+/* 警告条 */
+.warn-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 18px;
+  background: #FFF;
+  border: var(--border);
+  border-radius: 18px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.warn-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.warn-text {
+  font-size: 22px;
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.warn-text b {
+  color: var(--orange-d);
+  font-weight: 900;
+}
+
+/* 代码块 */
+.code {
+  background: #1E1E1E;
+  color: #E0E0E0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 3px solid var(--ink);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.code .k { color: #FF9966; }
+.code .s { color: #B4E876; }
+.code .c { color: #888; font-style: italic; }
+.code .p { color: #6FD8E5; }

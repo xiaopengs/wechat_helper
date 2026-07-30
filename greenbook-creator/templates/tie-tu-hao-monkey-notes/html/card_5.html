@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Superset · VS OTHERS</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="label-tag orange">VS OTHERS</div>
+      <div class="page-num"><strong>05</strong> / 08</div>
+    </div>
+
+    <div class="chip orange">对比优势</div>
+
+    <h1 class="title">vs 传统工具<br><span class="hl">编排能力是分水岭</span></h1>
+
+    <p class="subtitle">Superset 是目前唯一原生支持「并行多 Agent + 横向对比 + 合并优胜」的编码工具。</p>
+
+    <!-- 对比表 -->
+    <div class="banner" style="padding:18px 22px;">
+      <div class="grid-4" style="margin-bottom:8px;">
+        <div></div>
+        <div style="background:var(--green);border:var(--border);border-radius:12px;padding:8px;text-align:center;box-shadow:3px 3px 0 var(--ink);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:900;">SUPERSET</div>
+        </div>
+        <div style="background:#fff;border:var(--border);border-radius:12px;padding:8px;text-align:center;box-shadow:3px 3px 0 var(--ink);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:900;">CURSOR</div>
+        </div>
+        <div style="background:#fff;border:var(--border);border-radius:12px;padding:8px;text-align:center;box-shadow:3px 3px 0 var(--ink);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:900;">纯 CLI</div>
+        </div>
+      </div>
+
+      <!-- 行 1: 并行 Agent -->
+      <div class="grid-4" style="margin-bottom:6px;align-items:center;">
+        <div style="font-size:20px;font-weight:700;">并行多 Agent</div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="check" style="font-size:24px;">✓</div><div class="compare-label" style="font-size:15px;">10+ 同时跑</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="cross" style="font-size:24px;">✗</div><div class="compare-label" style="font-size:15px;">单个 Agent</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="cross" style="font-size:24px;">✗</div><div class="compare-label" style="font-size:15px;">手动多窗口</div></div>
+      </div>
+
+      <!-- 行 2: Worktree 隔离 -->
+      <div class="grid-4" style="margin-bottom:6px;align-items:center;">
+        <div style="font-size:20px;font-weight:700;">Worktree 隔离</div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="check" style="font-size:24px;">✓</div><div class="compare-label" style="font-size:15px;">自动</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="warn" style="font-size:24px;">!</div><div class="compare-label" style="font-size:15px;">手动</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="cross" style="font-size:24px;">✗</div><div class="compare-label" style="font-size:15px;">无</div></div>
+      </div>
+
+      <!-- 行 3: 内置 Diff 评论 -->
+      <div class="grid-4" style="margin-bottom:6px;align-items:center;">
+        <div style="font-size:20px;font-weight:700;">Diff 评论 + 提交</div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="check" style="font-size:24px;">✓</div><div class="compare-label" style="font-size:15px;">IDE 内一键</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="warn" style="font-size:24px;">!</div><div class="compare-label" style="font-size:15px;">仅展示</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="cross" style="font-size:24px;">✗</div><div class="compare-label" style="font-size:15px;">git diff 工具</div></div>
+      </div>
+
+      <!-- 行 4: 持久化终端 -->
+      <div class="grid-4" style="margin-bottom:6px;align-items:center;">
+        <div style="font-size:20px;font-weight:700;">持久化终端</div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="check" style="font-size:24px;">✓</div><div class="compare-label" style="font-size:15px;">会话可恢复</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="warn" style="font-size:24px;">!</div><div class="compare-label" style="font-size:15px;">本地</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="cross" style="font-size:24px;">✗</div><div class="compare-label" style="font-size:15px;">断连即丢</div></div>
+      </div>
+
+      <!-- 行 5: 远程办公 -->
+      <div class="grid-4" style="margin-bottom:6px;align-items:center;">
+        <div style="font-size:20px;font-weight:700;">远程办公</div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="check" style="font-size:24px;">✓</div><div class="compare-label" style="font-size:15px;">远程唤醒</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="cross" style="font-size:24px;">✗</div><div class="compare-label" style="font-size:15px;">本地优先</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="warn" style="font-size:24px;">!</div><div class="compare-label" style="font-size:15px;">需 SSH</div></div>
+      </div>
+
+      <!-- 行 6: 多 AI 协作 -->
+      <div class="grid-4" style="align-items:center;">
+        <div style="font-size:20px;font-weight:700;">多 AI 协作</div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="check" style="font-size:24px;">✓</div><div class="compare-label" style="font-size:15px;">原生</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="cross" style="font-size:24px;">✗</div><div class="compare-label" style="font-size:15px;">不支持</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="cross" style="font-size:24px;">✗</div><div class="compare-label" style="font-size:15px;">不支持</div></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="tagline"><span class="accent">唯一选择</span>：多 AI 协作 + 横向对比。</div>
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · Superset 拆解</div>
+    </div>
+  </div>
+</body>
+</html>

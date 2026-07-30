@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Superset · GOTCHAS</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="label-tag orange">GOTCHAS</div>
+      <div class="page-num"><strong>08</strong> / 08</div>
+    </div>
+
+    <div class="chip orange">避坑指南</div>
+
+    <h1 class="title">上手前必看<br><span class="hl">6 条坑</span></h1>
+
+    <p class="subtitle">装之前先 <code style="background:#eee;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:26px;">brew doctor</code> 检查环境，省去 80% 报错。</p>
+
+    <!-- 6 条警告 -->
+    <div class="col" style="gap:10px;">
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><b>仅 macOS</b>：Windows / Linux 官方未测试，硬装请自行承担风险。</div>
+      </div>
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><b>Bun 须 v1.0+</b>：旧版启动 PTY 会话失败，PTY 是持久终端核心。</div>
+      </div>
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><b>Git 须 2.20+</b>：Worktree 命令依赖较新特性，旧版可能行为异常。</div>
+      </div>
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><b>必装 Caddy</b>：用于开发服务器代理，否则应用内浏览器端口检测失效。</div>
+      </div>
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><b>CLI Agent 自备 Key</b>：Amp / Claude Code 计费由用户承担，不内置额度。</div>
+      </div>
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><b>远程唤醒命令需自配</b>：文档未给默认样例，按需写 hook 命令。</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="tagline">收藏这套按步骤跑一遍，<span class="accent">5 分钟搞定</span>。</div>
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · Superset 拆解</div>
+    </div>
+  </div>
+</body>
+</html>

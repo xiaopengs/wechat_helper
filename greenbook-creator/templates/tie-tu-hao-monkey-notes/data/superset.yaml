@@ -1,0 +1,96 @@
+# Superset 案例数据（贴图号·猴子AI笔记 v2）
+# 这是把 v2 八张图的全部文案 + 色块配置提取成 YAML,作为可复用数据样例
+# 改主题时:复制本文件 → 改 8 张的 title / cards / colors → 重新渲染
+
+project: superset
+project_full_name: Superset · AI Coding Agents 编排型 IDE
+github: superset-sh/superset
+platform: macOS only
+stack: [Bun v1.0+, Git 2.20+, gh CLI, Caddy]
+
+one_liner: 并行 10+ AI 编码 Agent,你只管挑最好的。
+tagline: Git Worktree 自动隔离 · 编码提速 ×10 · 多界面同源
+
+# 8 张结构(对齐 card_1 ~ card_8.html)
+cards:
+  - id: 1
+    tag: PRODUCT POSITIONING
+    title: 一句话定位
+    hl: 并行 10+ AI 编码 Agent
+    metrics:
+      - { value: ×10, label: 编码提速 }
+      - { value: 10+, label: 并行 Agent 数 }
+      - { value: 5, label: 多界面同源 }
+      - { value: 0, label: 工作区冲突 }
+  - id: 2
+    tag: WHAT IT DOES
+    title: 它不只补全代码,而是做完整任务
+    steps:
+      - 需求
+      - 读仓库
+      - 改文件
+      - 跑命令
+      - 持续处理
+    entries: [TUI, HEADLESS, ACP]
+  - id: 3
+    tag: RUNTIME ARCHITECTURE
+    title: 一次任务怎么持续跑完?
+    layers:
+      - { name: 三入口, items: [TUI, IDE, CI], color: pink }
+      - { name: LEADER, desc: 编排层, items: [连接客户端, 任务调度], color: blue }
+      - { name: SESSION ACTOR, desc: 工作区层, items: [会话, 上下文, 后台任务], color: green }
+      - { name: MODEL ↔ TOOLS, desc: 推理+执行, items: [LLM 推理, 工具调用], color: [purple, orange] }
+  - id: 4
+    tag: KEY FEATURES
+    title: 5 大特性
+    features:
+      - { name: 并行工作区, color: pink }
+      - { name: 智能体监控, color: yellow }
+      - { name: 持久化终端, color: green }
+      - { name: 内置 Diff 查看器, color: blue }
+      - { name: 应用内浏览器 + 命令面板 / 远程, color: purple }
+  - id: 5
+    tag: VS OTHERS
+    title: 编排能力是分水岭
+    dimensions:
+      - 并行 Agent
+      - Worktree
+      - Diff
+      - 终端
+      - 远程
+      - 多 AI 协作
+    competitors: [传统工具, Cursor, 纯 CLI]
+  - id: 6
+    tag: INSTALLATION
+    title: 5 分钟上手
+    steps:
+      - brew install bun gh caddy
+      - git clone github.com/superset-sh/superset
+      - 'bun install && bun run dev'
+      - 在应用内接 amp / claude-code
+      - 开始并行调度
+    notes:
+      - 仅 macOS,Win/Linux 未测试
+      - 远程命令需自配 Caddy
+  - id: 7
+    tag: USE CASES
+    title: 适用 vs 不适用
+    suitable:
+      - 多 Agent 择优
+      - 多模块并行重构
+      - 远程固定机器跑
+      - 夜间自动化
+    not_suitable:
+      - Win/Linux
+      - 纯手写党
+      - 单 Agent 小项目
+  - id: 8
+    tag: GOTCHAS
+    title: 避坑 6 条
+    warnings:
+      - 仅 macOS
+      - Bun ≥ 1.0
+      - Git ≥ 2.20
+      - 必装 Caddy
+      - Agent 自备 Key
+      - 远程命令自配

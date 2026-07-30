@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Superset · INSTALLATION</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="label-tag blue">INSTALLATION</div>
+      <div class="page-num"><strong>06</strong> / 08</div>
+    </div>
+
+    <div class="chip blue">5 分钟上手</div>
+
+    <h1 class="title">macOS 5 分钟<br><span class="hl">跑起来</span></h1>
+
+    <p class="subtitle">环境准备 → 克隆 → 安装 → 启动 → 接 Agent，五步完成。⚠️ 仅 macOS，Win/Linux 未测试。</p>
+
+    <!-- 步骤 1-2 -->
+    <div class="row" style="margin-bottom: 14px;gap:14px;">
+      <div style="flex:1;background:#fff;border:var(--border);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-hard);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div class="block block-orange" style="padding:4px 14px;border-radius:999px;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:900;">01</span>
+          </div>
+          <div style="font-size:24px;font-weight:900;">装依赖</div>
+        </div>
+        <div class="code">
+<span class="c"># macOS 装 Bun / gh / Caddy</span><br>
+brew install <span class="s">bun</span> <span class="s">gh</span> <span class="s">caddy</span><br>
+xcode-select --install
+        </div>
+      </div>
+      <div style="flex:1;background:#fff;border:var(--border);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-hard);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div class="block block-pink" style="padding:4px 14px;border-radius:999px;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:900;">02</span>
+          </div>
+          <div style="font-size:24px;font-weight:900;">克隆仓库</div>
+        </div>
+        <div class="code">
+<span class="k">git</span> clone <span class="s">https://github.com/<br>&nbsp;&nbsp;superset-sh/superset</span><br>
+<span class="k">cd</span> superset
+        </div>
+      </div>
+    </div>
+
+    <!-- 步骤 3-4 -->
+    <div class="row" style="margin-bottom: 14px;gap:14px;">
+      <div style="flex:1;background:#fff;border:var(--border);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-hard);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div class="block block-blue" style="padding:4px 14px;border-radius:999px;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:900;">03</span>
+          </div>
+          <div style="font-size:24px;font-weight:900;">安装依赖</div>
+        </div>
+        <div class="code">
+<span class="c"># Bun 1.0+ 必装</span><br>
+bun install
+        </div>
+      </div>
+      <div style="flex:1;background:#fff;border:var(--border);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-hard);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div class="block block-yellow" style="padding:4px 14px;border-radius:999px;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:900;">04</span>
+          </div>
+          <div style="font-size:24px;font-weight:900;">启动桌面应用</div>
+        </div>
+        <div class="code">
+<span class="c"># 弹出桌面应用</span><br>
+bun run dev
+        </div>
+      </div>
+    </div>
+
+    <!-- 步骤 5 - 全宽 -->
+    <div style="background:#fff;border:var(--border);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-hard);margin-bottom: 14px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <div class="block block-green-d" style="padding:4px 14px;border-radius:999px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:900;color:#fff;">05</span>
+        </div>
+        <div style="font-size:24px;font-weight:900;">连接任意 CLI Agent</div>
+        <div class="tag-chip" style="margin-left:auto;">在应用内配 API Key</div>
+      </div>
+      <div style="font-size:22px;color:var(--ink-2);margin-top:4px;">
+        接 <span class="tag-chip" style="background:var(--pink);">amp</span>
+        <span class="tag-chip" style="background:var(--yellow);">claude-code</span>
+        <span class="tag-chip" style="background:var(--blue);">任意 CLI 编码 Agent</span>
+      </div>
+    </div>
+
+    <!-- 小贴士 -->
+    <div class="block block-yellow" style="padding:14px 22px;display:flex;align-items:center;gap:12px;">
+      <div style="font-size:32px;">💡</div>
+      <div style="font-size:22px;font-weight:600;">第一次启动会下载 Bun 引擎约 30 MB，耐心等 1-2 分钟。</div>
+    </div>
+
+    <div class="footer">
+      <div class="tagline">macOS 用户 + 想多 AI 协作 → <span class="accent">值得装</span>。</div>
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · Superset 拆解</div>
+    </div>
+  </div>
+</body>
+</html>
