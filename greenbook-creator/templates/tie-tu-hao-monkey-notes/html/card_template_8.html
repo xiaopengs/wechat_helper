@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Card 8 · 避坑清单</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <!-- 模板骨架 · 避坑清单 (card_8)
+       结构：label + chip + title + N 行 warn-row + footer
+       适合：踩坑清单/前置条件/读者提醒 -->
+  <div class="card">
+    <div class="header">
+      <div class="label-tag orange">GOTCHAS · 避坑清单</div>
+      <div class="page-num"><strong>08</strong> / 08</div>
+    </div>
+
+    <div class="chip orange">避坑</div>
+
+    <h1 class="title title-sm">TODO · 装之前<br><span class="hl">先看这 6 条</span></h1>
+
+    <p class="subtitle">TODO · 一段说明：每条都是血泪教训,提前知道省时间</p>
+
+    <!-- 6 条 warn-row -->
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text">TODO · <b>坑 1 关键词</b> · 一句话说明场景 + 后果</div>
+      </div>
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text">TODO · <b>坑 2 关键词</b> · 一句话说明</div>
+      </div>
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text">TODO · <b>坑 3 关键词</b> · 一句话说明</div>
+      </div>
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text">TODO · <b>坑 4 关键词</b> · 一句话说明</div>
+      </div>
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text">TODO · <b>坑 5 关键词</b> · 一句话说明</div>
+      </div>
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text">TODO · <b>坑 6 关键词</b> · 一句话说明</div>
+      </div>
+    </div>
+
+    <!-- 收尾 banner -->
+    <div class="banner" style="background: var(--ylight);margin-top:14px;">
+      <div class="banner-label">PRO TIP · 终极建议</div>
+      <div class="tagline">TODO · 装之前先 <span class="accent">做某事</span>,省去 80% 报错</div>
+    </div>
+
+    <div class="footer">
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · TODO 品牌</div>
+    </div>
+  </div>
+</body>
+</html>

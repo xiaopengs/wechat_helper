@@ -11,7 +11,8 @@ templates/tie-tu-hao-monkey-notes/
 ├── README.md                    # 本文件
 ├── html/
 │   ├── base.css                 # 共享样式（色码/字号/水印/弧形装饰,3KB）
-│   └── card_1.html ~ card_8.html  # 8 张内容块,只换 innerHTML
+│   ├── card_1.html ~ card_8.html    # 8 张完整示例:Superset 拆解实例
+│   └── card_template_1.html ~ card_template_8.html  # 8 张空白骨架,复用作起点
 ├── scripts/
 │   ├── render.py                # Playwright 截图脚本（2160×2880,2x retina）
 │   └── send_qq.mjs              # QQ bot 推送脚本（用底层 API,CLI 不可靠）
@@ -37,31 +38,33 @@ templates/tie-tu-hao-monkey-notes/
 | 7 | **USE CASES** | 适用 vs 不适用 漫画分镜 |
 | 8 | **GOTCHAS** | 6 条避坑（彩色警示牌） |
 
-## 怎么用（一句话）
+## 🎨 设计要点
 
-```bash
-# 1. 复制一份卡片 HTML（8 张）
-cp -r html html-myproject
-# 2. 编辑每张 card_N.html 的 innerHTML（标题/色块/标签条）
-# 3. 渲染
-python3 scripts/render.py html-myproject/ images-myproject/
-# 4. 推送（改 OPENID + IMG_DIR）
-node scripts/send_qq.mjs
+### 视觉语言
+| 元素 | 风格 |
+| --- | --- |
+| 底色 | 纯白 `#FFFFFF` + 极淡网格 40px（透明度 0.6） |
+| 角色块 | 圆角 24px + 4px 黑色描边 + 8px 偏移硬阴影 |
+| 主标题 | 86px / 68px 粗体中文（Noto Sans SC 900）|
+| 等宽小字 | 22px JetBrains Mono（标签/页码/banner 头）|
+| 装饰 | 右下 / 左下 480×480 弧形大色块,30% 透明 |
+| 水印 | 右下角"贴图号 · 品牌名",灰色 22px |
+
+### 配色变量（base.css :root 可改）
+```css
+--pink:    #FFB6C1;   --pink-d:    #FF8FA3;
+--yellow:  #FFE066;   --yellow-d:  #FFD43B;  --ylight: #FFF7C2;
+--green:   #B4E876;   --green-d:   #6CC24A;
+--blue:    #6FD8E5;   --blue-d:    #4FB6C8;
+--purple:  #C8A8E9;   --purple-d:  #9F7AD1;
+--orange:  #FF9966;   --orange-d:  #E8744A;
+--red:     #FF6B6B;
+--ink:     #111111;   --ink-2: #555;   --ink-3: #999;
 ```
 
-## 风格规范（base.css 关键 class）
+> 改主题色只需替换这些变量值,不用动其他 CSS。
 
-| Class | 用途 | 关键属性 |
-|---|---|---|
-| `.tag-bar` | 顶部浅灰标签条 | `display:flex; padding:24px;` + 圆角药丸 + 右上"NN/08"页码 |
-| `.title-h1` | 超大粗体中文标题 | `font-size:84px; font-weight:900;`（可包 `<span class="hl">` 高亮） |
-| `.subtitle` | 灰色小字段落 | `color:#666; font-size:28px;` |
-| `.color-card` | 圆角色块 | `border-radius:32px; border:3px solid #111; box-shadow:0 6px 0 #111;` |
-| `.pill-conn` | 节点间连接圆角药丸 | `background:#fff; border:2px solid #111; border-radius:999px;` |
-| `.deco-arc` | 右下/左下弧形大色块 | `border-radius:50%; opacity:0.3;` |
-| `.watermark` | 右下角灰色水印 | `position:absolute; bottom:36px; right:48px; color:#999;` |
-
-## 配色码（参考图取值,可继承）
+### 配色码（参考图取值,可继承）
 
 | 用途 | 颜色 | 取值 |
 |---|---|---|
@@ -75,6 +78,104 @@ node scripts/send_qq.mjs
 | 文字 | 主文字 | `#111` |
 | 辅文 | 次要文字 | `#666` |
 | 底纹 | 网格底 | `#FAFAFA` |
+
+## 🧩 CSS class 速查
+
+### 容器
+- `.card` — 1080×1440 内容容器,padding 64px 72px
+
+### Header
+- `.header` / `.label-tag` (`.pink|.green|.blue|.purple|.orange` 5 色前缀) / `.page-num`
+
+### Chip（顶部小药丸标签）
+- `.chip` (`.green|.pink|.yellow|.purple|.orange|.blue`)
+
+### 标题
+- `.title` (86px) / `.title-sm` (68px) / `.title .hl` (黄底高亮)
+
+### 色块 / Banner
+- `.block` + `.block-pink|.block-yellow|.block-green|.block-blue|.block-purple|.block-orange|.block-white`
+- `.block-title` (32px Mono 900) / `.block-title-2` (28px Mono 900)
+- `.block-sub` (22px 描述)
+- `.banner` (白底/可换 ylight) / `.banner-label` (22px Mono)
+
+### 数据展示
+- `.grid-3` / `.grid-4` / `.grid-5` / `.row` / `.col`
+- `.compare-cell` (含 `.check` 绿 ✓ / `.cross` 红 ✗ / `.warn` 橙 ⚠)
+- `.compare-label` (18px 维度名)
+- `.tag-chip` (18px 小药丸)
+
+### 流程连接
+- `.arrow-down` (36px 黑线 + 三角箭头)
+- `.pill` (圆角 999px 节点胶囊)
+
+### 适用 / 不适用
+- `.yes-col` (绿虚线边框 + 浅绿底) / `.no-col` (红虚线边框 + 浅红底)
+- `.col-head.yes|.no` (含 `.badge` 圆角色块)
+- `.list-item` (虚线分隔项 + `.marker` 标记)
+
+### 警告
+- `.warn-row` (白底 + 黑描边 + 阴影) / `.warn-icon` (黄底小方块) / `.warn-text` (含 `.warn-text b` 橙色加粗关键词)
+
+### 代码块
+- `.code` (深灰 #1E1E1E 底 + 等宽)
+- `.code .k` 关键字橙 / `.code .s` 字符串绿 / `.code .c` 注释灰斜体 / `.code .p` 标点青
+
+### 页脚
+- `.footer` (绝对定位底部 64px) / `.tagline` (26px 含 `.accent` 黄底高亮) / `.watermark` + `.watermark-icon` (28px 圆点)
+
+## 🚀 复用步骤（详细版）
+
+### 1. 复制项目骨架
+```bash
+cp -r ~/.openclaw/workspace/wechat_helper/greenbook-creator/templates/tie-tu-hao-monkey-notes \
+      ~/.openclaw/workspace/<your-topic>-greenbook/
+cd ~/.openclaw/workspace/<your-topic>-greenbook
+rm -rf images/*    # 清空旧图
+rm html/card_*.html  # 删示例(非 template_*),只留骨架
+```
+
+### 2. 改主题色（可选）
+编辑 `html/base.css` 的 `:root` 变量,全局生效。
+
+### 3. 改 8 张卡的内容
+编辑 `html/card_template_*.html`,搜索 `TODO` 标记,逐项替换:
+- `TODO · 顶部英文标签` → `PRODUCT POSITIONING` / `WHAT IT DOES` 等
+- `TODO · 一句话定位主标题` → 你的核心 hook
+- `TODO · 关键短语` → 高亮短语（包 `<span class="hl">`）
+- 数据/对比/代码/警告内容同理
+
+### 4. 渲染
+```bash
+cd scripts && python3 render.py
+# 输出:../images/card_1.png ~ card_8.png (2160×2880 PNG, ~300KB/张)
+```
+
+### 5. 推送（QQ bot 场景）
+```bash
+# 改 scripts/send_qq.mjs 里的 OPENID / COVER_TEXT / CAPTIONS / IMG_DIR
+node scripts/send_qq.mjs
+```
+
+## ⚠️ 注意事项
+
+1. **Playwright 依赖**:沙箱已装 `playwright + chromium`,本地若无要先装:
+   ```bash
+   pip install playwright && playwright install chromium
+   ```
+
+2. **send_qq.mjs 必须用底层 API**:`openclaw message send --media` 返回的 `Message ID` 为空字符串 = 没真发。
+   直接 `import` `/usr/lib/node_modules/openclaw-qqbot/dist/src/api.js` 调 `sendC2CImageMessage`。
+
+3. **图片大小**:1080×1440 渲染 → 2160×2880 PNG ≈ 300KB,每张都 < 1MB,可直接发 QQ / 微信。
+
+4. **小绿书尺寸**:发「贴图/海报」用 3:4 比例正好（1080×1440 → 微信 1080×1440 实际显示完美）。
+
+5. **网页字体**:沙箱加载 Google Fonts 会偶尔失败（限速）。如果首屏白字,可改本地字体:
+   ```bash
+   # 下载到 html/fonts/, 改 base.css import 为相对路径
+   curl -fsSL https://fonts.googleapis.com/css2?... -o html/fonts/noto.css
+   ```
 
 ## 渲染产物
 
@@ -97,9 +198,16 @@ node scripts/send_qq.mjs
 - Node 端无 playwright/puppeteer → **必须走 Python 端渲染**
 - CLI `openclaw message send --media` 在 QQ bot 上 messageId 为空 = **没真发**,必须用底层 `import openclaw-qqbot/dist/src/api.js`
 
-## 复用沉淀
+## 复用沉淀（v3 · 2026-08-02）
 
-- 首次沉淀时间:2026-07-30(Superset 案例)
+- **v1** (2026-07-30): 首次沉淀,Superset 拆解实例 + base.css + 8 张 card
+- **v2** (2026-07-30): 重构对齐「贴图号·猴子AI笔记」风,引入弧形装饰 / drop-shadow / 等宽 Mono
+- **v3** (2026-08-02): 模板化升级,新增 8 张 `card_template_*.html` 空白骨架 + 详细 README
+  - 主题色集中在 `:root`,改一套换整套图风格
+  - 复用流程文档化（5 步: 复制骨架 → 改配色 → 替换 TODO → 渲染 → 推送）
+  - CSS class 速查 + Playwright / 字体 / send_qq 注意事项齐全
+
+- 首次沉淀项目:Superset(AI Coding Agents 编排型 IDE)
 - 沉淀人:OpenClaw main agent
 - 沉淀位置:`wechat_helper/greenbook-creator/templates/tie-tu-hao-monkey-notes/`
-- 后续主题:只需改 8 个 card 的 innerHTML,无需重写 CSS
+- 后续主题:只需改 `card_template_*.html` 的 TODO + 配色变量,无需重写 CSS

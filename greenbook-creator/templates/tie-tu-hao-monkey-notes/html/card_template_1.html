@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Card 1 · 封面</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <!--
+    模板骨架 · 封面 (card_1)
+    结构：label + chip + title + subtitle + banner(核心数据) + row(特性) + footer
+    替换 TODO 标记 + 改配色变量即可
+  -->
+  <div class="card">
+    <div class="header">
+      <div class="label-tag pink">TODO · 顶部英文标签</div>
+      <div class="page-num"><strong>01</strong> / 08</div>
+    </div>
+
+    <div class="chip blue">TODO · 类别标签</div>
+
+    <h1 class="title">TODO · 一句话定位主标题<br><span class="hl">TODO · 高亮短语</span></h1>
+
+    <p class="subtitle">TODO · 一段 1-2 行的副标题说明，30px, 灰色, max-width: 920px</p>
+
+    <!-- 核心数据 banner · 4 列 grid -->
+    <div class="banner" style="margin-bottom: 28px;">
+      <div class="banner-label">CORE METRICS · 核心数据</div>
+      <div class="grid-4">
+        <div class="compare-cell">
+          <div style="font-size:48px;font-weight:900;color:var(--blue-d);">10+</div>
+          <div class="compare-label">数据点 1</div>
+        </div>
+        <div class="compare-cell">
+          <div style="font-size:48px;font-weight:900;color:var(--green-d);">×10</div>
+          <div class="compare-label">数据点 2</div>
+        </div>
+        <div class="compare-cell">
+          <div style="font-size:48px;font-weight:900;color:var(--purple-d);">5</div>
+          <div class="compare-label">数据点 3</div>
+        </div>
+        <div class="compare-cell">
+          <div style="font-size:48px;font-weight:900;color:var(--orange-d);">1.0</div>
+          <div class="compare-label">数据点 4</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 色块特性 -->
+    <div class="row" style="margin-bottom: 12px;">
+      <div class="block block-green-d" style="flex:1;padding:20px 24px;">
+        <div class="block-title-2">TODO · 特性 A</div>
+        <div class="block-sub">说明文字</div>
+      </div>
+      <div class="block block-orange" style="flex:1;padding:20px 24px;">
+        <div class="block-title-2">TODO · 特性 B</div>
+        <div class="block-sub">说明文字</div>
+      </div>
+      <div class="block block-purple" style="flex:1;padding:20px 24px;">
+        <div class="block-title-2">TODO · 特性 C</div>
+        <div class="block-sub">说明文字</div>
+      </div>
+    </div>
+
+    <!-- 底部 chip 行 -->
+    <div class="banner" style="background: var(--ylight);">
+      <div class="banner-label">TODO · 兼容/适用 chip 行标签</div>
+      <div class="row" style="gap: 10px; flex-wrap: wrap;">
+        <span class="tag-chip" style="background:#fff;">Chip A</span>
+        <span class="tag-chip" style="background:#fff;">Chip B</span>
+        <span class="tag-chip" style="background:#fff;">Chip C</span>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="tagline">从<span class="accent">"TODO"</span>升级到<span class="accent">"TODO"</span>。</div>
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · TODO 品牌</div>
+    </div>
+  </div>
+</body>
+</html>

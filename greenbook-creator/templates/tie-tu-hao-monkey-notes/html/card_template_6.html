@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Card 6 · 上手安装</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <!-- 模板骨架 · 上手安装 (card_6)
+       结构：label + chip + title + 步骤列表 + 代码块 + 警告 banner + footer
+       适合：安装教程/快速上手/复制粘贴命令 -->
+  <div class="card">
+    <div class="header">
+      <div class="label-tag blue">INSTALLATION · 5 分钟上手</div>
+      <div class="page-num"><strong>06</strong> / 08</div>
+    </div>
+
+    <div class="chip green">快速上手</div>
+
+    <h1 class="title title-sm">TODO · 5 分钟<br><span class="hl">跑起来</span></h1>
+
+    <p class="subtitle">TODO · 一段说明：依赖 + 命令 + 验证</p>
+
+    <!-- 步骤列表 -->
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">
+      <div class="block block-pink" style="padding:16px 22px;">
+        <div class="step-num">STEP 01 · 安装依赖</div>
+        <div class="code">$ TODO · brew install / apt install / npm i -g <span class="s">"xxx"</span></div>
+      </div>
+      <div class="block block-yellow" style="padding:16px 22px;">
+        <div class="step-num">STEP 02 · 拉代码</div>
+        <div class="code">$ TODO · <span class="k">git</span> clone <span class="s">"https://github.com/xxx/yyy"</span></div>
+      </div>
+      <div class="block block-blue" style="padding:16px 22px;">
+        <div class="step-num">STEP 03 · 装包 + 启动</div>
+        <div class="code">$ TODO · <span class="k">cd</span> yyy && bun install && bun run dev</div>
+      </div>
+      <div class="block block-green-d" style="padding:16px 22px;">
+        <div class="step-num">STEP 04 · 接入</div>
+        <div class="block-sub" style="opacity:0.95;">TODO · 在应用里接 amp / claude-code 即可 XXX</div>
+      </div>
+    </div>
+
+    <!-- 警告 banner -->
+    <div class="warn-row">
+      <div class="warn-icon">⚠</div>
+      <div class="warn-text">TODO · <b>关键限制</b> · 仅 macOS / Win / Linux / 依赖 X 版本</div>
+    </div>
+
+    <div class="footer">
+      <div class="tagline"><span class="accent">装之前先 TODO</span>,省去 80% 报错</div>
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · TODO 品牌</div>
+    </div>
+  </div>
+</body>
+</html>

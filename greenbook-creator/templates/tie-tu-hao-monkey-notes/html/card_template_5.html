@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Card 5 · 对比表</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <!-- 模板骨架 · 对比表 (card_5)
+       结构：label + chip + title + 对比表 (表头 + 3 列 + N 行 check/cross/warn) + footer
+       适合：vs 竞品 / 方案横评 / 维度盘点 -->
+  <div class="card">
+    <div class="header">
+      <div class="label-tag orange">VS OTHERS · 对比优势</div>
+      <div class="page-num"><strong>05</strong> / 08</div>
+    </div>
+
+    <div class="chip orange">横评</div>
+
+    <h1 class="title title-sm">TODO · vs 传统工具<br><span class="hl">TODO 能力是分水岭</span></h1>
+
+    <p class="subtitle">TODO · 一句话说明对比维度（建议 5-7 项）</p>
+
+    <!-- 对比表 -->
+    <div class="banner">
+      <div class="banner-label">DIMENSIONS · 对比维度</div>
+      <table style="width:100%;border-collapse:separate;border-spacing:8px;">
+        <thead>
+          <tr>
+            <th style="font-family:'JetBrains Mono',monospace;font-size:20px;text-align:left;padding:8px 12px;">维度</th>
+            <th style="font-family:'JetBrains Mono',monospace;font-size:20px;text-align:center;padding:8px 12px;">TODO · 旧方案 A</th>
+            <th style="font-family:'JetBrains Mono',monospace;font-size:20px;text-align:center;padding:8px 12px;">TODO · 旧方案 B</th>
+            <th style="font-family:'JetBrains Mono',monospace;font-size:20px;text-align:center;padding:8px 12px;background:var(--green);border:3px solid #111;border-radius:12px;">本方案</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="compare-cell" style="text-align:left;"><div class="compare-label" style="font-size:18px;">维度 1</div></td>
+            <td class="compare-cell"><div class="cross">✗</div></td>
+            <td class="compare-cell"><div class="warn">⚠</div></td>
+            <td class="compare-cell" style="background:var(--green);"><div class="check">✓</div></td>
+          </tr>
+          <tr>
+            <td class="compare-cell" style="text-align:left;"><div class="compare-label" style="font-size:18px;">维度 2</div></td>
+            <td class="compare-cell"><div class="warn">⚠</div></td>
+            <td class="compare-cell"><div class="cross">✗</div></td>
+            <td class="compare-cell" style="background:var(--green);"><div class="check">✓</div></td>
+          </tr>
+          <tr>
+            <td class="compare-cell" style="text-align:left;"><div class="compare-label" style="font-size:18px;">维度 3</div></td>
+            <td class="compare-cell"><div class="cross">✗</div></td>
+            <td class="compare-cell"><div class="cross">✗</div></td>
+            <td class="compare-cell" style="background:var(--green);"><div class="check">✓</div></td>
+          </tr>
+          <tr>
+            <td class="compare-cell" style="text-align:left;"><div class="compare-label" style="font-size:18px;">维度 4</div></td>
+            <td class="compare-cell"><div class="warn">⚠</div></td>
+            <td class="compare-cell"><div class="warn">⚠</div></td>
+            <td class="compare-cell" style="background:var(--green);"><div class="check">✓</div></td>
+          </tr>
+          <tr>
+            <td class="compare-cell" style="text-align:left;"><div class="compare-label" style="font-size:18px;">维度 5</div></td>
+            <td class="compare-cell"><div class="cross">✗</div></td>
+            <td class="compare-cell"><div class="warn">⚠</div></td>
+            <td class="compare-cell" style="background:var(--green);"><div class="check">✓</div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 总结条 -->
+    <div class="banner" style="background: var(--ylight);margin-top:14px;">
+      <div class="banner-label">VERDICT · 一句话结论</div>
+      <div class="tagline">TODO · 本方案是<span class="accent">目前唯一</span>做 XXX 的工具。</div>
+    </div>
+
+    <div class="footer">
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · TODO 品牌</div>
+    </div>
+  </div>
+</body>
+</html>

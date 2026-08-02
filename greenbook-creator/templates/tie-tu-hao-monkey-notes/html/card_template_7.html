@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Card 7 · 适用 vs 不适用</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <!-- 模板骨架 · 适用 vs 不适用 (card_7)
+       结构：label + chip + title + 2 列 (yes-col 绿 / no-col 红) + footer
+       适合：决策辅助/读者画像/适用边界 -->
+  <div class="card">
+    <div class="header">
+      <div class="label-tag pink">USE CASES · 适用 vs 不适用</div>
+      <div class="page-num"><strong>07</strong> / 08</div>
+    </div>
+
+    <div class="chip pink">决策树</div>
+
+    <h1 class="title title-sm">TODO · 你是<br><span class="hl">TODO 画像</span>吗</h1>
+
+    <p class="subtitle">TODO · 一段说明：用 / 不用 的边界在哪</p>
+
+    <!-- 双列 · yes / no -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+      <div class="yes-col">
+        <div class="col-head yes"><span class="badge">✓</span> 适用</div>
+        <div class="list-item yes"><span class="marker">●</span>TODO · 场景 1（具体到用户能秒判断）</div>
+        <div class="list-item yes"><span class="marker">●</span>TODO · 场景 2</div>
+        <div class="list-item yes"><span class="marker">●</span>TODO · 场景 3</div>
+        <div class="list-item yes"><span class="marker">●</span>TODO · 场景 4</div>
+      </div>
+      <div class="no-col">
+        <div class="col-head no"><span class="badge">✗</span> 不适用</div>
+        <div class="list-item no"><span class="marker">●</span>TODO · 反例 1</div>
+        <div class="list-item no"><span class="marker">●</span>TODO · 反例 2</div>
+        <div class="list-item no"><span class="marker">●</span>TODO · 反例 3</div>
+      </div>
+    </div>
+
+    <!-- 收尾 -->
+    <div class="banner" style="background: var(--ylight);margin-top:18px;">
+      <div class="banner-label">VERDICT · 一句话结论</div>
+      <div class="tagline">你是 <span class="accent">TODO 画像</span> → <span class="accent">值得装</span></div>
+    </div>
+
+    <div class="footer">
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · TODO 品牌</div>
+    </div>
+  </div>
+</body>
+</html>

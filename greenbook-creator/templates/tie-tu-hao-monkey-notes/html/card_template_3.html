@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Card 3 · 三层架构图</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <!-- 模板骨架 · 三层架构图 (card_3)
+       结构：label + chip + title + 3 个 tier block + pill connector + footer
+       适合：架构/链路/分层/调用关系 -->
+  <div class="card">
+    <div class="header">
+      <div class="label-tag green">RUNTIME ARCHITECTURE · 运行链路</div>
+      <div class="page-num"><strong>03</strong> / 08</div>
+    </div>
+
+    <div class="chip blue">三层架构</div>
+
+    <h1 class="title title-sm">TODO · <span class="hl">一次任务怎么跑完</span></h1>
+
+    <p class="subtitle">TODO · 一段说明,讲清数据/请求流转路径</p>
+
+    <!-- 入口行 · pill -->
+    <div style="display:flex;gap:14px;justify-content:center;margin-bottom:14px;">
+      <div class="pill">TODO · 入口 A</div>
+      <div class="pill">TODO · 入口 B</div>
+      <div class="pill">TODO · 入口 C</div>
+    </div>
+
+    <div class="arrow-down"></div>
+
+    <!-- 第一层 -->
+    <div class="block block-pink" style="margin-bottom: 8px;">
+      <div class="block-title-2">第一层 · TODO 标签</div>
+      <div class="block-sub">TODO · 这一层做什么 · 输入 → 输出</div>
+    </div>
+
+    <div class="arrow-down"></div>
+
+    <!-- 第二层 -->
+    <div class="block block-yellow" style="margin-bottom: 8px;">
+      <div class="block-title-2">第二层 · TODO 标签</div>
+      <div class="block-sub">TODO · 这一层做什么 · 输入 → 输出</div>
+    </div>
+
+    <div class="arrow-down"></div>
+
+    <!-- 第三层 · 双向 ↔ 模型 + 工具 -->
+    <div class="block block-blue">
+      <div class="block-title-2">第三层 · TODO 标签</div>
+      <div class="block-sub">TODO · MODEL ↔ TOOLS · 模型和工具之间的循环</div>
+    </div>
+
+    <div class="footer">
+      <div class="tagline"><span class="accent">TODO · 一句话总结架构本质</span></div>
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · TODO 品牌</div>
+    </div>
+  </div>
+</body>
+</html>

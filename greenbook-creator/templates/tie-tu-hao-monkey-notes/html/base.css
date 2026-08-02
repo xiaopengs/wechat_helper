@@ -1,5 +1,6 @@
-/* Superset 小绿书 贴图样式 — 对齐「贴图号·猴子AI笔记」风格
-   1080x1440 竖图，白底 + 多色块圆角矩形 + 黑描边 + 偏移阴影 */
+/* 小绿书贴图号 · 猴子AI笔记风 — 通用 8 图模板
+   1080×1440 竖图，白底 + 极淡网格 + 圆角色块 + 黑描边 + 偏移阴影
+   复用：复制 card_1~8.html，改 innerHTML + 配色变量，跑 render.py 即出新图 */
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
