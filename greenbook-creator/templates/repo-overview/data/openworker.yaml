@@ -1,0 +1,144 @@
+meta:
+  name: OpenWorker
+  kicker: 开源项目解读 · 2026.08
+  stars_text: 11,808 Stars*
+  version: v0.1.0
+  license: MIT
+  source: github.com/andrewyng/openworker
+  star_source_date: 2026-08-02
+
+cover:
+  tagline_left: 你桌面上的
+  tagline_right: AI 同事
+  subline: Andrew Ng 最新开源 · Python + TS + Rust 跨端 · 交付完成的工作
+  central_nodes:
+    - { label: "aisuite",   sub: Python 引擎,   color: purple }
+    - { label: "MCP",       sub: 工具总线,      color: blue }
+    - { label: "25+ Apps",  sub: 连接器,        color: green }
+    - { label: "BYO Model", sub: 模型任选,      color: orange }
+
+pains:
+  - { num: "01", title: 聊天 ≠ 干活, desc: AI 只会给方案和草稿,真正执行还得人来跑, color: red }
+  - { num: "02", title: 工具割裂,   desc: Slack/GitHub/Notion 数据分散,Agent 串不起来, color: orange }
+  - { num: "03", title: 云端依赖,   desc: 敏感数据上传第三方,合规风险和失控担忧常在,   color: purple }
+
+pipeline:
+  - { num: "1", name: 接收目标, sub: 你说想要什么结果,       color: blue }
+  - { num: "2", name: 拆解执行, sub: 横跨桌面/文件/连接器,     color: purple }
+  - { num: "3", name: 审批闸门, sub: 重要操作前问你,         color: cyan }
+  - { num: "4", name: 交付成品, sub: 文档/表格/回复,落盘文件, color: green }
+
+advantages:
+  - { title: 桌面原生,  desc: Python 引擎 + TS UI + Rust 原生壳,开箱即用,         color: blue }
+  - { title: 模型无关,  desc: OpenAI/Anthropic/Gemini/Ollama 任意切,BYO API key, color: purple }
+  - { title: 25+ 工具,  desc: GitHub/Slack/Jira/Notion/MCP 全打通,自动串联,     color: green }
+  - { title: 审批可控,  desc: 写/发/命令都过 gate,Inbox 兜底,人始终在回路,       color: orange }
+
+modes:
+  - label: DESKTOP MODE
+    title: 桌面交互
+    icon: code
+    bullets:
+      - "你说目标,AI 同事自己拆步骤执行"
+      - "横跨你的桌面、文件、25+ 连接器"
+      - "写/发/跑命令前先停下让你 Approve"
+      - "macOS 签名公证,Windows 签名进行中"
+    color: blue
+  - label: SCHEDULED MODE
+    title: 定时自动化
+    icon: brain
+    bullets:
+      - "晨间简报 / 周报 / 频道巡检"
+      - "计划任务 + 触发器组合"
+      - "Slack 线程 / 邮件 / Notion 回传"
+      - "完整 transcript,可回放可审计"
+    color: purple
+
+modes_shared_footer: aisuite 引擎 + 25+ 连接器 + BYO 模型 · 一套本地 + 云端混合运行时
+
+comparisons:
+  - { name: OpenWorker,     best_for: 桌面真做实事的 AI 同事,    features: 本地运行 · 25+ 工具 · 真交付,        color: blue }
+  - { name: Manus AI,       best_for: 云端通用异步 Agent,        features: 沙箱执行 · 中文友好 · 商业化,         color: purple }
+  - { name: Claude Cowork,  best_for: 文档协作与总结,            features: 团队共享 · 写作流 · Anthropic 生态,   color: orange }
+  - { name: Devin,          best_for: 软件工程端到端 Agent,      features: IDE 集成 · 端到端开发 · 商业 SaaS,    color: green }
+
+comparisons_closing: OpenWorker 的相对优势：交付完成的工作，且留在你自己的机器上。
+
+quickstart:
+  - { n: "01", cmd: "openworker.com/download",                desc: 下载 macOS / Windows 桌面端 }
+  - { n: "02", cmd: "粘贴 API key 或指向 Ollama",                desc: 接模型 · BYO key }
+  - { n: "03", cmd: '"整理今早收件箱并起草回复"',                  desc: 描述目标 · 自然语言 }
+  - { n: "04", cmd: "Approve 或 Redirect 关键步骤",            desc: 审批放行 · 人始终在回路 }
+
+tips:
+  - { title: 从小事起, desc: 第一次挑「整理收件箱」等低风险任务,熟悉审批节奏再放权,         color: blue }
+  - { title: 看 transcript, desc: 每个自动运行都有完整日志,出问题能精确回放和修正,          color: green }
+  - { title: 严审批,    desc: 写/发/跑命令前必看输出,信任是逐步放权,不要一次性全开,          color: orange }
+
+risk:
+  banner: Beta 版本 · Windows 未签名,SmartScreen 会拦
+  detail: 自动化任务会调用模型 API,留意 token 成本与数据外发范围
+
+# === 项目专属文案覆盖（可选，默认为 OpenWiki 文本）===
+overrides:
+  cover_tagline:                  "不是又一个聊天窗口,而是真做实事的 AI 同事"
+  pain_title:                     "它解决的，不是「聊天就行」"
+  pain_subtitle:                  "真正的问题：聊天给方案,执行要人跑。"
+  pain_pipeline_caption:          "{name} 把「真交付」接进 AI 同事"
+  pain_card_labels:               ["你的目标", "{name}", "成品"]
+  pain_card_subs:                 ["自然语言描述", "桌面+文件+连接器", "落到本地文件"]
+  pain_banner:                    "一句话：把「人跑流程」变成「AI 同事自己跑」。"
+  pain_footer_source_suffix:      "docs/how-it-works.md"
+  advantage_title:                "真护城河：不是 AI 助手,是 AI 同事"
+  advantage_subtitle:             "聊天助手遍地；难的是交付成品 + 落地在本地。"
+  advantage_closing:              "{name} 把「聊天 AI 助手」升级为「真做实事的同事」。"
+  advantage_footer_source_suffix: "docs/scheduled-mode.md"
+  modes_title:                    "它不只聊天,还能定时跑"
+  modes_subtitle:                 "同一套桌面应用,两种完全不同的用法。"
+  modes_note:                     "API key 存在本地 secret store,数据外发范围由你定。"
+  modes_footer_source_suffix:     "#scheduled-mode"
+  compare_title:                  "别问谁最好,先看你的场景"
+  compare_subtitle:               "桌面/云端/协作/工程,四种路径解决不同问题。"
+  howto_title:                    "4 步上手：下载桌面端 → 接模型 → 描述 → 审批"
+  howto_subtitle:                 "前置：macOS 12+ 或 Windows 10/11,准备好 API key 或本地 Ollama。"
+  howto_footer_source_suffix:     "openworker.com/download"
+  captions: |
+    ## 总导语（公众号「图片·文字」首图说明）
+
+    你有没有发现，AI 聊天助手很溜，但真要做实事还是得人跑——开会、整理收件箱、写周报、回 Slack，流程一长就掉链子。
+
+    Andrew Ng 团队（deeplearning.ai / Coursera 创始人）最新开源 **OpenWorker**，13 天拿下 11.8k stars。它跑在你桌面上，你告诉它想要什么结果，它就在桌面/文件/25+ 应用里执行，写/发/跑命令前停下让你审批。文档、表格、网页，落盘为本地文件，不是又一个聊天窗口。
+
+    最大特点：**本地优先 + 模型无关**。OpenAI、Anthropic、Gemini、Ollama 任意切，BYO API key，不锁模型。技术栈 Python（aisuite 引擎）+ TypeScript（UI）+ Rust（原生壳），跨 macOS 和 Windows。
+
+    下面 6 张图把痛点、流水线、双模式、相对 Manus / Claude Cowork / Devin 的差异、上手节奏都拆给你看。
+    ⭐ 11,808 Stars*、MIT 开源、v0.1.0 Beta · macOS 已签名公证，Windows 签名进行中。
+
+    ---
+
+    ## P1 ｜封面
+    > 你桌面上的 AI 同事，不是又一个聊天窗口。
+    封面一句话：**OpenWorker = 真交付 + 本地 + BYO 模型**。
+    Python + TS + Rust 跨端、MIT 开源、v0.1.0、11,808 Stars*。
+
+    ## P2 ｜痛点
+    > 聊天 ≠ 干活。聊天助手给方案、真正执行要人跟；工具割裂串不起；云端依赖有合规风险。
+    OpenWorker 把「真做实事」接进 AI 同事：目标 → 拆解 → 审批 → 交付。
+
+    ## P3 ｜优势 / 流水线
+    > 4 步流水线：目标 → 拆解 → 审批 → 交付。4 大护城河：Python+TS+Rust 跨端、模型无关、25+ 工具、审批可控。
+    聊天助手遍地；难的是交付成品 + 落地在本地。
+
+    ## P4 ｜双模式
+    > DESKTOP MODE 桌面交互 vs SCHEDULED MODE 定时自动化。
+    同一套 aisuite 引擎 + 25+ 连接器 + BYO 模型，两条完全不同的生产线。
+
+    ## P5 ｜竞品
+    > 别问谁最好，先看你的场景。vs Manus（云端异步）/ Claude Cowork（文档协作）/ Devin（软件工程）。
+    OpenWorker 的相对优势：桌面 + 真交付 + 本地优先 + BYO 模型。
+
+    ## P6 ｜上手
+    > 4 步上手：下载桌面端 → 接模型 → 描述目标 → 审批放行。
+    3 条建议：从小事起 / 看 transcript / 严审批。Beta 版本 Windows 未签名，SmartScreen 会拦；模型 API 有 token 成本与数据外发范围。
+
+footer_label: OpenWorker 开源项目拆解

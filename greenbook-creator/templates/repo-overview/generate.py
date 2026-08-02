@@ -63,6 +63,73 @@ DATA_DEFAULTS = {
     "footer_label": "开源项目拆解",
 }
 
+# 页面内硬编码文本的可覆盖项（默认 OpenWiki 文本，向后兼容）
+# 在 YAML 里用 overrides: {key: "..."} 覆盖即可
+OVERRIDE_DEFAULTS = {
+    "cover_tagline":                 "它不是另一个漂亮文档站，而是 Agent 的项目内知识层。",
+    "pain_title":                    "它解决的，不是「没文档」",
+    "pain_subtitle":                 "真正的问题：Agent 每次进仓库，都像第一天入职。",
+    "pain_pipeline_caption":         "{name} 把「重新读仓库」变成一条流水线",
+    "pain_card_labels":              ["代码库", "{name}", "项目百科"],
+    "pain_card_subs":                ["Git 证据", "Agent 综合", "持续更新"],
+    "pain_banner":                   "一句话：把隐性项目知识，变成 Agent 可检索的显性文件。",
+    "pain_footer_source_suffix":     "openwiki/architecture/overview.md",
+    "advantage_title":               "真正的护城河：不是生成，是维护",
+    "advantage_subtitle":            "一次性总结谁都能做；难的是跟着代码一起变。",
+    "advantage_closing":             "{name} 把「AI 生成文档」接进了软件工程的审查链。",
+    "advantage_footer_source_suffix":"examples/openwiki-update.yml",
+    "modes_title":                   "它不只懂代码，还想做「个人大脑」",
+    "modes_subtitle":                "同一个 CLI，两条完全不同的知识生产线。",
+    "modes_note":                    "凭证保存在 ~/.openwiki/.env；连接外部来源前，先核对权限与数据策略。",
+    "modes_footer_source_suffix":    "#personal-brain-mode",
+    "compare_title":                 "别问谁最好，先看你要给谁写",
+    "compare_subtitle":              "它们看似都叫「AI 文档」，其实服务的是四种任务。",
+    "compare_closing_label":         "{name} 的相对优势",
+    "howto_title":                   "4 条命令上手：先跑通，再接自动更新",
+    "howto_subtitle":                "前置：Node.js 22+；首次运行会让你选择模型提供商并配置凭证。",
+    "howto_footer_source_suffix":    "npmjs.com/package/{name_lower}",
+    "cover_intro":                   (
+        "你有没有发现，每次让 AI 编程助手改代码，它都得先花一半时间「重新认识」你的仓库。\n"
+        "README 写到去年，架构图藏在某个 Wiki 子页面，约定只在 PR 评论里出现过——人和 Agent 都在重复同一个动作：在脑子里重建这套代码。\n"
+        "\n"
+        "**{name}** 最近开源 —— 一个会替你仓库「写并维护」文档的 CLI。"
+        "它读 git 变化、用 DeepAgents 写知识、按 OKF 规范组织，"
+        "最后通过 GitHub Actions 自动开 PR 把更新交回来审。\n"
+        "这意味着：同一份知识，Agent 能查到、人能 PR 审核、还能跟代码一起 diff。\n"
+        "\n"
+        "怎么开始？`npm i -g {name_lower}`、`{name_lower} --init`、"
+        "把官方 workflow 复制进 `.github/workflows/`，最快 5 分钟跑通。\n"
+        "\n"
+        "下面 6 张图把它的痛点、相对竞品的差异、两种用法都拆给你看。"
+        "⭐ {stars_text_clean}、{license} 开源、{version}，建议先拿非核心仓库试点。\n"
+    ),
+    "captions_header": (
+        "## 总导语（公众号「图片·文字」首图说明）\n\n"
+    ),
+    "p1_caption": (
+        "## P1 ｜封面\n> {cover_intro_short}\n"
+        "封面一句话：**{name} = 持续维护的项目内 Wiki**，不是又一个文档站。"
+        "{license} 开源、{version}、{stars_text}。\n\n"
+    ),
+    "p2_caption": (
+        "## P2 ｜痛点\n> {pain_caption_short}\n"
+        "{name} 把「重新读仓库」变成一条流水线：代码变化 → 自动综合 → 持续更新。\n\n"
+    ),
+    "p3_caption": (
+        "## P3 ｜优势\n> {advantage_caption_short}\n\n"
+    ),
+    "p4_caption": (
+        "## P4 ｜双模式\n> {modes_caption_short}\n\n"
+    ),
+    "p5_caption": (
+        "## P5 ｜竞品\n> {compare_caption_short}\n"
+        "{name} 的相对优势：知识留在项目里，能跟代码一起被审查与迭代。\n\n"
+    ),
+    "p6_caption": (
+        "## P6 ｜上手\n> {howto_caption_short}\n"
+    ),
+}
+
 # ---------- 文字 / 字体 ----------
 def F(size, weight="regular"):
     path = FONT_B if weight == "bold" else FONT_M if weight == "medium" else FONT_R
@@ -298,7 +365,7 @@ def page_cover(data):
              fill=pal, color=col, font=F(24, "bold"))
         x += w + 18
 
-    d.text((60, 1260), f"它不是另一个漂亮文档站，而是 Agent 的项目内知识层。",
+    d.text((60, 1260), data["overrides"]["cover_tagline"],
            font=F(32, "bold"), fill=INK)
     if m["stars_text"].endswith("*") and m.get("star_source_date"):
         d.text((60, 1312),
@@ -310,8 +377,8 @@ def page_cover(data):
 
 def page_pain(data):
     im = gradient_bg(); d, y = header(im, 2, 6, "PAIN · 痛点",
-        "它解决的，不是「没文档」",
-        "真正的问题：Agent 每次进仓库，都像第一天入职。", 62)
+        data["overrides"]["pain_title"],
+        data["overrides"]["pain_subtitle"], 62)
     y = max(y + 28, 320)
     for i, p in enumerate(data["pains"][:3]):
         yy = y + i * 205
@@ -325,19 +392,21 @@ def page_pain(data):
         d.text((225, yy + 38), p["title"], font=F(34, "bold"), fill=INK)
         d.text((225, yy + 96), p["desc"], font=F(25, "regular"), fill=INK_2)
     fy = y + 645
-    d.text((60, fy), f"OpenWiki 把「重新读仓库」变成一条流水线",
+    name = data["meta"]["name"]
+    d.text((60, fy), data["overrides"]["pain_pipeline_caption"].format(name=name),
            font=F(34, "bold"), fill=INK)
+    labels = [s.format(name=name) for s in data["overrides"]["pain_card_labels"]]
     items = [
-        (120, PALETTE["blue"], "代码库"),
-        (420, PALETTE["purple"], data["meta"]["name"]),
-        (750, PALETTE["green"], "项目百科"),
+        (120, PALETTE["blue"],   labels[0]),
+        (420, PALETTE["purple"], labels[1]),
+        (750, PALETTE["green"],  labels[2]),
     ]
-    for x, c, label in items:
+    for idx, (x, c, label) in enumerate(items):
         d.rounded_rectangle((x, fy + 90, x + 210, fy + 240),
                             radius=28, fill=WHITE, outline=c, width=3)
-        if label == "代码库":
+        if idx == 0:
             icon_code(d, (x + 105, fy + 135), 52, c, 6)
-        elif label == data["meta"]["name"]:
+        elif idx == 1:
             icon_book(d, (x + 60, fy + 105, x + 150, fy + 170),
                       PALETTE["blue"], PALETTE["purple"])
         else:
@@ -348,22 +417,23 @@ def page_pain(data):
         d.text((x + 105, fy + 190), label,
                font=F(26, "bold"), fill=INK, anchor="mm")
         d.text((x + 105, fy + 222),
-               ["Git 证据", "Agent 综合", "持续更新"][items.index((x, c, label))],
+               data["overrides"]["pain_card_subs"][idx],
                font=F(20, "regular"), fill=INK_2, anchor="mm")
     arrow(d, (335, fy + 165), (400, fy + 165), PALETTE["blue"], 5)
     arrow(d, (635, fy + 165), (730, fy + 165), PALETTE["purple"], 5)
     d.rounded_rectangle((60, 1260, 1020, 1325), radius=22, fill=PALE["blue"])
-    d.text((540, 1292), "一句话：把隐性项目知识，变成 Agent 可检索的显性文件。",
+    d.text((540, 1292), data["overrides"]["pain_banner"],
            font=F(27, "bold"), fill=PALETTE["blue"], anchor="mm")
-    footer(im, f"{data['meta']['source']} · openwiki/architecture/overview.md",
+    footer(im,
+           f"{data['meta']['source']} · {data['overrides']['pain_footer_source_suffix']}",
            data.get("footer_label", "开源项目拆解"))
     return im
 
 
 def page_advantage(data):
     im = gradient_bg(); d, y = header(im, 3, 6, "VALUE · 优势",
-        "真正的护城河：不是生成，是维护",
-        "一次性总结谁都能做；难的是跟着代码一起变。", 60)
+        data["overrides"]["advantage_title"],
+        data["overrides"]["advantage_subtitle"], 60)
     y = max(y + 30, 330)
     for i, st in enumerate(data["pipeline"][:4]):
         x = 60 + i * 247
@@ -404,17 +474,18 @@ def page_advantage(data):
     d.text((90, 1238), "差异化结论",
            font=F(22, "bold"), fill=DARK_TXT)
     d.text((90, 1276),
-           f"{data['meta']['name']} 把「AI 生成文档」接进了软件工程的审查链。",
+           data["overrides"]["advantage_closing"].format(name=data["meta"]["name"]),
            font=F(27, "bold"), fill=WHITE)
-    footer(im, f"{data['meta']['source']} · examples/openwiki-update.yml",
+    footer(im,
+           f"{data['meta']['source']} · {data['overrides']['advantage_footer_source_suffix']}",
            data.get("footer_label", "开源项目拆解"))
     return im
 
 
 def page_modes(data):
     im = gradient_bg(); d, y = header(im, 4, 6, "SCOPE · 两种模式",
-        "它不只懂代码，还想做「个人大脑」",
-        "同一个 CLI，两条完全不同的知识生产线。", 56)
+        data["overrides"]["modes_title"],
+        data["overrides"]["modes_subtitle"], 56)
     y = max(y + 25, 325)
     cols = [(60, 520, data["modes"][0]), (560, 1020, data["modes"][1])]
     for x0, x1, mode in cols:
@@ -444,17 +515,18 @@ def page_modes(data):
            font=fit_font(d, data.get("modes_shared_footer", ""), 860, 30, 24, "bold"),
            fill=WHITE)
     d.text((60, sy + 185),
-           "凭证保存在 ~/.openwiki/.env；连接外部来源前，先核对权限与数据策略。",
+           data["overrides"]["modes_note"],
            font=F(22, "regular"), fill=INK_2)
-    footer(im, f"{data['meta']['source']}#personal-brain-mode",
+    footer(im,
+           f"{data['meta']['source']}{data['overrides']['modes_footer_source_suffix']}",
            data.get("footer_label", "开源项目拆解"))
     return im
 
 
 def page_compare(data):
     im = gradient_bg(); d, y = header(im, 5, 6, "COMPARE · 竞品",
-        "别问谁最好，先看你要给谁写",
-        "它们看似都叫「AI 文档」，其实服务的是四种任务。", 58)
+        data["overrides"]["compare_title"],
+        data["overrides"]["compare_subtitle"], 58)
     y = max(y + 20, 315)
     for i, c in enumerate(data["comparisons"][:4]):
         yy = y + i * 218
@@ -477,9 +549,10 @@ def page_compare(data):
     yy = y + 900
     d.rounded_rectangle((60, yy, 1020, yy + 115), radius=26, fill=DARK_BG)
     d.text((90, yy + 28),
-           f"{data['meta']['name']} 的相对优势",
+           data["overrides"]["compare_closing_label"].format(name=data["meta"]["name"]),
            font=F(22, "bold"), fill=DARK_TXT)
-    d.text((90, yy + 69), data.get("comparisons_closing", data["meta"]["name"] + " 的相对优势"),
+    d.text((90, yy + 69), data.get("comparisons_closing",
+           data["overrides"]["compare_closing_label"].format(name=data["meta"]["name"])),
            font=F(30, "bold"), fill=WHITE)
     footer(im, data["meta"]["source"],
            data.get("footer_label", "开源项目拆解"))
@@ -488,8 +561,8 @@ def page_compare(data):
 
 def page_howto(data):
     im = gradient_bg(); d, y = header(im, 6, 6, "HOW TO · 使用",
-        "4 条命令上手：先跑通，再接自动更新",
-        "前置：Node.js 22+；首次运行会让你选择模型提供商并配置凭证。", 56)
+        data["overrides"]["howto_title"],
+        data["overrides"]["howto_subtitle"], 56)
     y = max(y + 25, 320)
     shadow_card(im, (60, y, 1020, y + 420), radius=30,
                 fill=DARK_BG, outline=(51, 58, 82), shadow=(45, 50, 80, 42),
@@ -528,7 +601,8 @@ def page_howto(data):
                          fill=PALE["red"], outline=(255, 205, 205), width=2)
     d.text((90, yy + 24), risk["banner"], font=F(25, "bold"), fill=PALETTE["red"])
     d.text((90, yy + 68), risk["detail"], font=F(21, "regular"), fill=INK_2)
-    footer(im, f"{data['meta']['source']} · npmjs.com/package/{data['meta']['name'].lower()}",
+    footer(im,
+           f"{data['meta']['source']} · {data['overrides']['howto_footer_source_suffix'].format(name_lower=data['meta']['name'].lower())}",
            data.get("footer_label", "开源项目拆解"))
     return im
 
@@ -544,6 +618,10 @@ def build_contact_sheet(paths):
 
 
 def render_intro_and_captions(data, out_path):
+    # 优先使用 YAML overrides.captions(项目自定义)
+    if data.get("overrides", {}).get("captions"):
+        Path(out_path).write_text(data["overrides"]["captions"], encoding="utf-8")
+        return
     m = data["meta"]
     intro = (
         f"你有没有发现，每次让 AI 编程助手改代码，它都得先花一半时间「重新认识」你的仓库。\n"
@@ -583,6 +661,7 @@ def load_data(path):
     data = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
     # 兜底默认值
     merged = {"meta": {**DATA_DEFAULTS["meta"], **(data.get("meta") or {})}}
+    merged["overrides"] = {**OVERRIDE_DEFAULTS, **(data.get("overrides") or {})}
     for k in ("cover", "pains", "pipeline", "advantages",
               "modes", "comparisons", "quickstart", "tips", "risk"):
         if k in data:
