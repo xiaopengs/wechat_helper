@@ -22,8 +22,8 @@ description: 小绿书（微信图文消息）内容创作全流程助手。覆�
 
 **规格 1：小绿书图文消息（≤6 页）**
 - 图片上限：≤ 6 张（含封面），多一页不如少一页
-- 出图引擎：gpt-image-2（默认，TokenRouter 路由），全篇统一 Prompt 体系 + 风格预设
-> 也支持 Gemini 图像系列 (`gemini-2.5-flash-image` / `gemini-3.1-flash-image-preview` / `gemini-3-pro-image-preview`) 与字节方舟视频 (`doubao-seedance-2.0-fast` / `doubao-seedance-2.0`) — 详见 [scripts/gen_media.sh](scripts/gen_media.sh)
+- 出图引擎：gpt-image-2（默认，**image-provider-constraint skill 委派**，独立 JUAPI 凭证，绕开 TokenRouter group 路由），全篇统一 Prompt 体系 + 风格预设
+> 也支持 Gemini 图像系列 (`gemini-2.5-flash-image` / `gemini-3.1-flash-image-preview` / `gemini-3-pro-image-preview` — 需 Gemini 组 key) 与字节方舟视频 (`doubao-seedance-2.0-fast` / `doubao-seedance-2.0` — 需 seedance 组 key) — 详见 [scripts/gen_media.sh](scripts/gen_media.sh)
 - 风格：default / tech-dark / tech-light
 
 **规格 2：长图文知识图解（6-12 页）**

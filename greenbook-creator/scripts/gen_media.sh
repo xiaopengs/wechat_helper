@@ -49,7 +49,7 @@ IMAGE_PROVIDER_CONSTRAINT_HOME="${IMAGE_PROVIDER_CONSTRAINT_HOME:-$HOME/.opencla
 #   note:                 human note
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 MODEL_REGISTRY='[
-  {"model":"gpt-image-2","type":"image","group_base_price":1,"group":"skill:image-provider-constraint","sizes":["1024x1024","1024x1536","1536x1024","auto"],"note":"OpenAI 图像,走 image-provider-constraint skill(独立 JUAPI 凭证)"},
+  {"model":"gpt-image-2","type":"image","group_base_price":0.143,"group":"skill:image-provider-constraint","sizes":["1024x1024","1024x1536","1536x1024","auto"],"note":"OpenAI 图像,走 image-provider-constraint skill(独立 JUAPI 凭证,¥0.143/张)"},
   {"model":"gemini-2.5-flash-image","type":"image","group_base_price":0.2,"group":"Gemini","sizes":["1024x1024"],"note":"Google 图像,需 Gemini 组 key"},
   {"model":"gemini-3.1-flash-image-preview","type":"image","group_base_price":0.3,"group":"Gemini","sizes":["1024x1024"],"note":"Google 图像,需 Gemini 组 key"},
   {"model":"gemini-3-pro-image-preview","type":"image","group_base_price":0.5,"group":"Gemini","sizes":["1024x1024","2K","4K"],"note":"Google 图像,最高质量,需 Gemini 组 key"},
@@ -83,7 +83,7 @@ generate 选项:
   --size WxH            默认 1024x1024
   --quality low|medium|high|auto
   --n COUNT             生成数量(1-4),默认 1
-  --style NAME          default | tech-dark | tech-light | cartographer | orange-parenting
+  --style NAME          default | tech-dark | tech-light | cartographer | orange-parenting | skill-review
   --from-article PATH   从文章 + LLM 生成 prompt
   --image-desc TEXT     (--from-article 配合) 描述图要画什么
   --force               覆盖已存在文件
