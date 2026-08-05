@@ -9,9 +9,10 @@ description: 小绿书（微信图文消息）内容创作全流程助手。覆�
 
 将结构化内容（教程、清单、对比、攻略、观点）转化为微信公众号「图片·文字」消息格式。每张图独立可传播，图文互补而非重复。
 
-**同时支持两种规格**:
+**同时支持三种规格**:
 - **小绿书图文消息**: ≤6 页(含封面),手机端阅读,信息密度适中 → `default` / `tech-dark` / `tech-light` 风格
 - **长图文知识图解**: 6-12 页,小红书/公众号长文配图,精确排版,信息密度高 → `cartographer` 风格 + HTML+Playwright 管线
+- **HTML/Playwright 8 张信息图**: 8 页固定骨架（封面/WHAT/ARCH/FEATURES/VS/INSTALL/USES/GOTCHAS）,项目/技能拆解默认 → [templates/qm-greenbook/](templates/qm-greenbook/) 或 [templates/tie-tu-hao-monkey-notes/](templates/tie-tu-hao-monkey-notes/) + [templates/_lib/](templates/_lib/) 共享脚本
 
 ## 第一性原理
 
@@ -32,6 +33,17 @@ description: 小绿书（微信图文消息）内容创作全流程助手。覆�
 - 风格：**cartographer**（米黄+黑+黄，editorial 编辑感）
 - 完整设计系统 → [references/style-cartographer.md](references/style-cartographer.md)
 - 工作模板 → [references/cartographer-template/](references/cartographer-template/)
+
+**规格 3：HTML/Playwright 8 张信息图（项目拆解默认骨架，2026-08-05 新增）**
+- 适用：GitHub 项目拆解、技能盘点、开源工具介绍
+- 8 页固定结构：封面 / WHAT IT DOES / RUNTIME ARCH / KEY FEATURES / VS OTHERS / INSTALLATION / USE CASES / GOTCHAS
+- 出图引擎：**HTML + Playwright 截图**（与规格 2 同一管线，但骨架不同——8 张独立 `card_N.html` 而非 12 页长图文 `index.html`）
+- 风格：CSS class 体系 + `:root` 配色变量，改一处换整套
+- **共享脚本**：[templates/_lib/](templates/_lib/) — 参数化 `render.py` + `send_qq.mjs`，**所有 HTML 卡模板共用，不再每项目复制**
+- 模板库：
+  - **精简版** [templates/qm-greenbook/](templates/qm-greenbook/) — 8 张完整示例 + base.css + config.json + scripts/wrapper，无 data/ 或 prompts/
+  - **全功能版** [templates/tie-tu-hao-monkey-notes/](templates/tie-tu-hao-monkey-notes/) — 精简版再加 data/ YAML + prompts/，适合需要 LLM 生成配文的工作流
+- 流水线：`html/card_N.html` → `render.py` → `images/card_N.png` → `send_qq.mjs --config config.json` → QQ bot
 
 内容底线：**有干货**——每页必须有读者能带走的具体信息（数字/方法/结论），不堆砌空话
 
@@ -152,6 +164,19 @@ description: 小绿书（微信图文消息）内容创作全流程助手。覆�
 4. **部署公网** — cp 到 1Panel 静态站 + chown + curl 验 200
 5. **发送** — 用公网 URL 形式发到 QQ / 微信（base64 上传会被 QQ 服务端拒）→ MEMORY.md "QQ Bot `<qqimg>` 发送图片踩坑" 章节
 
+### 规格 3：HTML/Playwright 8 张信息图（项目拆解默认骨架，2026-08-05 新增）
+
+1. **选模板骨架** — 默认走精简版 [`templates/qm-greenbook/`](templates/qm-greenbook/)；需要 YAML 数据驱动 + LLM 生成配文的复杂项目走全功能版 [`templates/tie-tu-hao-monkey-notes/`](templates/tie-tu-hao-monkey-notes/)
+2. **复制项目** — `cp -r templates/qm-greenbook output/<topic>-greenbook`，改项目根 `config.json` 的 `openid` 字段（QQ bot 收件人）
+3. **改配色** — 编辑 `html/base.css :root` 配色变量（主色 + 强调色），改一处整套图换风格
+4. **改卡片内容** — 逐张改 `html/card_N.html`，每张只改 TODO/数据/文字，**保留 `base.css` class 体系**（避免破坏 CSS 样式）
+5. **写推送文案** — 编辑 `config.json` 的 `cover_text`（封面引导文）+ `captions`（8 段配文数组，每张一段）
+6. **渲染** — `python3 scripts/render.py`，产出 8 张 2160×2880 retina PNG 到 `images/`（耗时 ~5s/张）
+7. **发送** — `node scripts/send_qq.mjs`；某张上次失败可用 `node scripts/send_qq.mjs --only N` 单卡重发
+8. **改一处生效所有模板** — `templates/_lib/render.py` / `send_qq.mjs` 改动后，subprocess 调用链自动同步，无需改各模板副本
+
+> **为什么 scripts 是 thin wrapper**：每个项目 `scripts/render.py` / `send_qq.mjs` 各 ~10 行，调 `templates/_lib/` 的参数化版本。改 bug / 加特性 → 改 `_lib/` 一处，wrapper 通过 subprocess 自动同步。原先每项目硬编码副本的痛点（OPENID 散落、BASE_DIR 写死、单卡重发要单独写补丁脚本）全部消解。
+
 ## 验证
 
 - [ ] 全篇 ≤ 6 张（含封面）
@@ -187,6 +212,9 @@ description: 小绿书（微信图文消息）内容创作全流程助手。覆�
 - **工程师盘点向专题**：[references/style-skill-review.md](references/style-skill-review.md) — 工程师视角项目/技能速查 / 6 段固定骨架 / 6 件套对象介绍 / GitHub 项目转载专用（2026-06-29 新增）
 - **知识图解专题**：[references/style-cartographer.md](references/style-cartographer.md) — 米黄+黑+黄 editorial 风格 / 12 页骨架 / HTML+Playwright 管线（2026-06-19 新增）
 - **知识图解模板**：[references/cartographer-template/](references/cartographer-template/) — openrouter-cartographer 完整 12 页 HTML 项目（开箱即用）
+- **HTML 卡模板（精简版，2026-08-05 新增）**：[templates/qm-greenbook/](templates/qm-greenbook/) — 8 页项目拆解默认骨架，HTML+CSS+config.json+scripts/wrapper，无 data/ 子目录
+- **HTML 卡模板（全功能版，2026-08-05 接入 _lib/）**：[templates/tie-tu-hao-monkey-notes/](templates/tie-tu-hao-monkey-notes/) — 精简版再加 data/ YAML + prompts/，适合需要 LLM 生成配文的工作流
+- **HTML 卡共享脚本（2026-08-05 新增）**：[templates/_lib/](templates/_lib/) — 参数化 `render.py` + `send_qq.mjs`，所有 HTML 卡模板共用（`--base-dir` / `--config` / `--only N`），OPENID 与文案统一从 `config.json` 读
 - **Prompt 哲学**：[references/prompt-philosophy.md](references/prompt-philosophy.md) — 严守原意 vs 走 LLM 美化的决策表(2026-06-17 新增)
 - Skill 设计规约：[references/skill-design-spec.md](references/skill-design-spec.md) — 复旦-微软论文三维质量标准
 - 生图脚本：[scripts/gen_media.sh](scripts/gen_media.sh) — 多模型 + 图像/视频/编辑，`--model gpt-image-2|gemini-*|doubao-seedance-*`
