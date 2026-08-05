@@ -1,0 +1,15 @@
+{
+  "openid": "5588AB8B76D9A22624886F0B90FE98C1",
+  "img_dir": "images",
+  "cover_text": "🚀 qm 深度拆解（猴子Ai笔记风 · 8张）\n\nYC 系开源 multiplayer agent harness — 给创业公司，Slack 里就能跑。\n每人 / 每房间独立沙箱，4 种 harness 任选（Pi / OpenCode / Codex / Claude Code），部署跑在你自己的云账号。\n\n🔗 https://github.com/yc-software/qm\n\n8 张图速通👇\n1️⃣ 封面｜一句话定位 + 核心数据\n2️⃣ WHAT IT DOES｜Slack 5 步走完整活\n3️⃣ RUNTIME ARCH｜三层架构图\n4️⃣ KEY FEATURES｜5 大特性\n5️⃣ VS OTHERS｜vs 个人 Agent / 自建 Bot\n6️⃣ INSTALLATION｜5 步部署自家云\n7️⃣ USE CASES｜适用 vs 不适用\n8️⃣ GOTCHAS｜避坑 6 条\n\nYC 系 / Slack 重度 / 数据敏感 → qm 值得装。",
+  "captions": [
+    "01/08 封面｜一句话定位\nYC 系开源 multiplayer agent harness — Slack 发条消息就把活干完。\n📊 10.9k stars · 1.2k forks · 4 种 harness · 6 周\n🎯 Per-scope 隔离 · Vendor neutral · Slack + Web\n🔧 兼容 Pi / OpenCode / Codex / Claude Code",
+    "02/08 WHAT IT DOES｜Slack 5 步走完整活\n提需求 → 进调度 → 入沙箱 → 调 LLM → 写回 Slack\n🔁 三入口接入同一 core API：Slack（Bolt 插件内嵌）/ Web UI（Vite + Lit）/ HTTP API（Fastify）\n💾 结果持久化到 Postgres（sessions / memory / queue）",
+    "03/08 RUNTIME ARCHITECTURE｜三层架构\n上层：Slack / Web UI / Admin（可选插件，全部走 core HTTP API）\n中层：Headless Core = API · identity · policy · scheduler · agent loop\n底层：Per-scope sandbox（每人/每房间独立 memory / files / keychain / crons / web apps）\n🎛️ Harness 接口可换：Pi · OpenCode · Codex · Claude Code",
+    "04/08 KEY FEATURES｜5 大特性\n① Per-scope 隔离 — 每人每房间独立 sandbox\n② Vendor-neutral — 4 种 harness 任选，不锁 LLM 厂商\n③ Slack + Web — 同一身份跨端协作\n④ Admin 控制 — 组织级配置 + 安全姿态 + 模型白名单\n⑤ Skill packs — 从 git 仓库导入，scope 内分享\n🎁 + Background：crons + watchers 后台不间断",
+    "05/08 VS OTHERS｜对比优势\nmultiplayer 是分水岭 — qm 是目前唯一为「公司级多人协作 agent」设计的开源 harness。\n6 维度：多人协作 / Per-scope 隔离 / Vendor-neutral / Slack 集成 / 自部署 / 开源+公司级\n对比：个人 Agent（单租户） / 自建 Bot（需自写 Slack 集成）",
+    "06/08 INSTALLATION｜5 步部署自家云\n01 qm init . --org my-co --target fly\n02 npm install\n03 配 .env：SLACK_BOT_TOKEN / POSTGRES_URL / OPENAI_API_KEY\n04 qm deploy（推到自己的 Fly / AWS 账号）\n05 验证：登录 Web UI + Slack 频道 @agent 测消息\n📁 公司专属东西放 deploy/layers/<org>/ 目录",
+    "07/08 USE CASES｜适用 vs 不适用\n✅ 适用：\n  · 5-50 人创业公司 + Slack 重度\n  · 需要 per-employee 隔离，跨部门不串台\n  · 数据敏感，要部署在自己云\n  · 不想锁定 Anthropic / OpenAI\n❌ 不适用：\n  · 个人用户 → 直接用 Claude Code\n  · <3 人小团队 → overhead 大\n  · 不想管基础设施 → 用 SaaS 更轻",
+    "08/08 GOTCHAS｜避坑 6 条\n⚠️ 贡献只接 .md/.txt（在 adrs/），代码由 qm 团队实现，不接 PR 代码\n⚠️ 别用 GitHub fork 私有化 — 共享对象网络，public 侧可按 SHA 拉到 fork 的 commit\n⚠️ 默认 Auto 安全姿态 — Strict 太严（每次工具调用都要人批），Dangerous 太松（无筛查）\n⚠️ 命令黑名单绕不开 — recursive delete / 危险 SQL 即使 Dangerous 姿态也保留\n⚠️ Skill 用 git 仓库导入，不是 GitHub fork 共享\n⚠️ 漏洞走 SECURITY.md 私人渠道，发公开 issue 可能被认定为漏洞披露"
+  ]
+}

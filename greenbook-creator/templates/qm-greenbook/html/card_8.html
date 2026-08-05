@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>QM · GOTCHAS</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="label-tag orange">GOTCHAS</div>
+      <div class="page-num"><strong>08</strong> / 08</div>
+    </div>
+
+    <div class="chip orange">避坑指南</div>
+
+    <h1 class="title">上手前必看<br><span class="hl">6 条坑</span></h1>
+
+    <p class="subtitle">贡献规则、fork 风险、安全姿态、命令黑名单、skill 共享、漏洞披露 — 6 件装之前要知道的事。</p>
+
+    <!-- 6 条警告 -->
+    <div class="col" style="gap:10px;">
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><b>贡献只接 .md/.txt</b>：在 adrs/ 目录用文字描述需求，代码由 qm 团队实现，不接 PR 代码。</div>
+      </div>
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><b>别用 GitHub fork 私有化</b>：fork 共享对象网络，public 侧可按 SHA 拉到 fork 的 commit，企业慎用。要私有化走 <code>git clone --bare</code>。</div>
+      </div>
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><b>默认 Auto 安全姿态</b>：Strict 太严（每次工具调用都要人批），Dangerous 太松（无筛查），Auto 由 classifier 过滤外部数据。</div>
+      </div>
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><b>命令黑名单绕不开</b>：recursive delete / 危险 SQL 等硬禁令即使 Dangerous 姿态也保留，安全兜底不能关。</div>
+      </div>
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><b>Skill 用 git 仓库导入</b>：不是 GitHub fork 共享，admin 控制 skill 是否能晋升到全组织。</div>
+      </div>
+      <div class="warn-row">
+        <div class="warn-icon">⚠</div>
+        <div class="warn-text"><b>漏洞走 SECURITY.md 私人渠道</b>：发公开 issue 可能被认定为漏洞披露，看清楚再发。</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="tagline">6 条坑 <span class="accent">挨个看</span>，省去 80% 后续翻车。</div>
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · QM 拆解</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>QM · WHAT IT DOES</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="label-tag green">WHAT IT DOES</div>
+      <div class="page-num"><strong>02</strong> / 08</div>
+    </div>
+
+    <div class="chip green">一句话定位</div>
+
+    <h1 class="title">不只 chat · 而是把<br><span class="hl">活干完</span></h1>
+
+    <p class="subtitle">Slack 发条消息，qm 调 LLM 理解任务、进入对应 scope 的沙箱、操作文件 / 数据库 / 外部 API，再把结果写回 Slack 并持久化到 Postgres。</p>
+
+    <!-- 5 步工作流 -->
+    <div class="banner" style="margin-bottom: 32px;">
+      <div class="banner-label">ONE SLACK MESSAGE → COMPLETE WORKFLOW</div>
+      <div class="grid-5">
+        <div class="block block-orange" style="padding:20px 14px;text-align:center;">
+          <div class="step-num">01</div>
+          <div style="font-size:24px;font-weight:900;">提需求</div>
+          <div style="font-size:18px;margin-top:6px;opacity:0.85;">Slack / Web 消息</div>
+        </div>
+        <div class="block block-pink" style="padding:20px 14px;text-align:center;">
+          <div class="step-num">02</div>
+          <div style="font-size:24px;font-weight:900;">进调度</div>
+          <div style="font-size:18px;margin-top:6px;opacity:0.85;">Core 接任务</div>
+        </div>
+        <div class="block block-blue" style="padding:20px 14px;text-align:center;">
+          <div class="step-num">03</div>
+          <div style="font-size:24px;font-weight:900;">入沙箱</div>
+          <div style="font-size:18px;margin-top:6px;opacity:0.85;">Per-scope 隔离</div>
+        </div>
+        <div class="block block-yellow" style="padding:20px 14px;text-align:center;">
+          <div class="step-num">04</div>
+          <div style="font-size:24px;font-weight:900;">调 LLM</div>
+          <div style="font-size:18px;margin-top:6px;opacity:0.85;">harness 驱动</div>
+        </div>
+        <div class="block block-green" style="padding:20px 14px;text-align:center;">
+          <div class="step-num">05</div>
+          <div style="font-size:24px;font-weight:900;">写回 Slack</div>
+          <div style="font-size:18px;margin-top:6px;opacity:0.85;">Postgres 持久化</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 三入口 -->
+    <div class="banner-label" style="margin-bottom:14px;">三入口接入 · SAME CORE API</div>
+    <div class="grid-3">
+      <div class="block block-pink">
+        <div class="block-title">Slack</div>
+        <div class="block-sub">Bolt 插件，in-process 起在 core 内</div>
+      </div>
+      <div class="block block-blue">
+        <div class="block-title">Web UI</div>
+        <div class="block-sub">Vite + Lit，admin / portal / app 三视图</div>
+      </div>
+      <div class="block block-green">
+        <div class="block-title">HTTP API</div>
+        <div class="block-sub">Fastify，所有插件都跑在 core 的 API 上</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="tagline">一个人 = 一个 scope，<span class="accent">跨部门协作不串台</span>。</div>
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · QM 拆解</div>
+    </div>
+  </div>
+</body>
+</html>

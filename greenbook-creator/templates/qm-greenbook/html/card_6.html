@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>QM · INSTALLATION</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="label-tag blue">INSTALLATION</div>
+      <div class="page-num"><strong>06</strong> / 08</div>
+    </div>
+
+    <div class="chip blue">5 分钟上手</div>
+
+    <h1 class="title">5 步把 qm<br><span class="hl">部署到自家云</span></h1>
+
+    <p class="subtitle">qm init 一行生成部署仓库，然后装、配、推、验 — 完全不需要 qm 源码 checkout。⚠️ 部署跑在你自己云账号，不是 qm 公司的服务器。</p>
+
+    <!-- 步骤 1-2 -->
+    <div class="row" style="margin-bottom: 14px;gap:14px;">
+      <div style="flex:1;background:#fff;border:var(--border);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-hard);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div class="block block-orange" style="padding:4px 14px;border-radius:999px;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:900;">01</span>
+          </div>
+          <div style="font-size:24px;font-weight:900;">初始化部署仓库</div>
+        </div>
+        <div class="code">
+<span class="c"># 生成 org 专属部署仓库</span><br>
+<span class="k">npm</span> exec --yes \<br>
+  --<span class="p">package</span>=<span class="s">@yc-software/qm@latest</span> \<br>
+  -- qm <span class="k">init</span> . --<span class="p">org</span> my-co \<br>
+  --<span class="p">target</span> fly
+        </div>
+      </div>
+      <div style="flex:1;background:#fff;border:var(--border);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-hard);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div class="block block-pink" style="padding:4px 14px;border-radius:999px;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:900;">02</span>
+          </div>
+          <div style="font-size:24px;font-weight:900;">装依赖</div>
+        </div>
+        <div class="code">
+<span class="k">npm</span> <span class="k">install</span><br>
+<span class="c"># 初始化会走完剩下的步骤：</span><br>
+<span class="c"># infra · sign-in · credentials · Slack · deploy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 步骤 3-4 -->
+    <div class="row" style="margin-bottom: 14px;gap:14px;">
+      <div style="flex:1;background:#fff;border:var(--border);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-hard);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div class="block block-blue" style="padding:4px 14px;border-radius:999px;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:900;">03</span>
+          </div>
+          <div style="font-size:24px;font-weight:900;">配凭证</div>
+        </div>
+        <div class="code">
+<span class="c"># 编辑 .env：</span><br>
+<span class="k">SLACK_BOT_TOKEN</span>=<span class="s">xoxb-...</span><br>
+<span class="k">SLACK_SIGNING_SECRET</span>=...<br>
+<span class="k">POSTGRES_URL</span>=postgres://...<br>
+<span class="k">OPENAI_API_KEY</span>=<span class="s">sk-...</span>
+        </div>
+      </div>
+      <div style="flex:1;background:#fff;border:var(--border);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-hard);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div class="block block-yellow" style="padding:4px 14px;border-radius:999px;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:900;">04</span>
+          </div>
+          <div style="font-size:24px;font-weight:900;">部署到云</div>
+        </div>
+        <div class="code">
+<span class="c"># 推到 Fly / AWS（自己的云账号）</span><br>
+<span class="k">qm</span> <span class="k">deploy</span><br>
+<span class="c"># qm 仓库本身不带部署 CI</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 步骤 5 - 全宽 -->
+    <div style="background:#fff;border:var(--border);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-hard);margin-bottom: 12px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="block block-green-d" style="padding:4px 14px;border-radius:999px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:900;color:#fff;">05</span>
+        </div>
+        <div style="font-size:24px;font-weight:900;">验证 + 切 harness</div>
+        <div class="tag-chip" style="margin-left:auto;">登录 Web UI · Slack 测消息</div>
+      </div>
+    </div>
+
+    <!-- 小贴士已移至 footer tagline,避免与底部重叠 -->
+
+    <div class="footer">
+      <div class="tagline">qm init 生成 deploy/layers/&lt;org&gt;/ 目录，<span class="accent">公司专属东西放这里</span>。</div>
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · QM 拆解</div>
+    </div>
+  </div>
+</body>
+</html>

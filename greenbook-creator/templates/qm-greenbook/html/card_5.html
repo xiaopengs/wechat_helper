@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>QM · VS OTHERS</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="label-tag orange">VS OTHERS</div>
+      <div class="page-num"><strong>05</strong> / 08</div>
+    </div>
+
+    <div class="chip orange">对比优势</div>
+
+    <h1 class="title">vs 其它方案<br><span class="hl">multiplayer 是分水岭</span></h1>
+
+    <p class="subtitle">qm 是目前唯一为「公司级多人协作 agent」设计的开源 harness — 个人 coding agent 和自建 Bot 框架都解决不了这个。</p>
+
+    <!-- 对比表 -->
+    <div class="banner" style="padding:18px 22px;">
+      <div class="grid-4" style="margin-bottom:8px;">
+        <div></div>
+        <div style="background:var(--green);border:var(--border);border-radius:12px;padding:8px;text-align:center;box-shadow:3px 3px 0 var(--ink);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:900;">QM</div>
+        </div>
+        <div style="background:#fff;border:var(--border);border-radius:12px;padding:8px;text-align:center;box-shadow:3px 3px 0 var(--ink);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:900;">个人 Agent</div>
+        </div>
+        <div style="background:#fff;border:var(--border);border-radius:12px;padding:8px;text-align:center;box-shadow:3px 3px 0 var(--ink);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:900;">自建 Bot</div>
+        </div>
+      </div>
+
+      <!-- 行 1: 多人协作 -->
+      <div class="grid-4" style="margin-bottom:6px;align-items:center;">
+        <div style="font-size:20px;font-weight:700;">多人协作</div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="check" style="font-size:24px;">✓</div><div class="compare-label" style="font-size:15px;">原生 scope 隔离</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="cross" style="font-size:24px;">✗</div><div class="compare-label" style="font-size:15px;">单租户</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="warn" style="font-size:24px;">!</div><div class="compare-label" style="font-size:15px;">需自写</div></div>
+      </div>
+
+      <!-- 行 2: Per-scope 隔离 -->
+      <div class="grid-4" style="margin-bottom:6px;align-items:center;">
+        <div style="font-size:20px;font-weight:700;">Per-scope 隔离</div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="check" style="font-size:24px;">✓</div><div class="compare-label" style="font-size:15px;">每人/每房间</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="cross" style="font-size:24px;">✗</div><div class="compare-label" style="font-size:15px;">无</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="cross" style="font-size:24px;">✗</div><div class="compare-label" style="font-size:15px;">无</div></div>
+      </div>
+
+      <!-- 行 3: Vendor-neutral -->
+      <div class="grid-4" style="margin-bottom:6px;align-items:center;">
+        <div style="font-size:20px;font-weight:700;">Vendor-neutral</div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="check" style="font-size:24px;">✓</div><div class="compare-label" style="font-size:15px;">4 种 harness</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="warn" style="font-size:24px;">!</div><div class="compare-label" style="font-size:15px;">部分锁死</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="warn" style="font-size:24px;">!</div><div class="compare-label" style="font-size:15px;">自己接</div></div>
+      </div>
+
+      <!-- 行 4: Slack 集成 -->
+      <div class="grid-4" style="margin-bottom:6px;align-items:center;">
+        <div style="font-size:20px;font-weight:700;">Slack 原生集成</div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="check" style="font-size:24px;">✓</div><div class="compare-label" style="font-size:15px;">Bolt 插件内嵌</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="cross" style="font-size:24px;">✗</div><div class="compare-label" style="font-size:15px;">无</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="warn" style="font-size:24px;">!</div><div class="compare-label" style="font-size:15px;">需自接</div></div>
+      </div>
+
+      <!-- 行 5: 自部署 -->
+      <div class="grid-4" style="margin-bottom:6px;align-items:center;">
+        <div style="font-size:20px;font-weight:700;">部署在自家云</div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="check" style="font-size:24px;">✓</div><div class="compare-label" style="font-size:15px;">Fly / AWS</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="warn" style="font-size:24px;">!</div><div class="compare-label" style="font-size:15px;">本地为主</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="check" style="font-size:24px;">✓</div><div class="compare-label" style="font-size:15px;">看实现</div></div>
+      </div>
+
+      <!-- 行 6: 开源 + 公司级 -->
+      <div class="grid-4" style="align-items:center;">
+        <div style="font-size:20px;font-weight:700;">开源 + 公司级</div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="check" style="font-size:24px;">✓</div><div class="compare-label" style="font-size:15px;">MIT + Admin</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="warn" style="font-size:24px;">!</div><div class="compare-label" style="font-size:15px;">个人版</div></div>
+        <div class="compare-cell" style="padding:10px 8px;"><div class="warn" style="font-size:24px;">!</div><div class="compare-label" style="font-size:15px;">需自配</div></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="tagline"><span class="accent">multiplayer</span> 唯一选择：个人 agent 解决不了团队问题。</div>
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · QM 拆解</div>
+    </div>
+  </div>
+</body>
+</html>

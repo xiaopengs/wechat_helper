@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>QM · USE CASES</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="label-tag green">USE CASES</div>
+      <div class="page-num"><strong>07</strong> / 08</div>
+    </div>
+
+    <div class="chip green">适用 vs 不适用</div>
+
+    <h1 class="title">4 类场景用得上<br><span class="hl">3 类绕道走</span></h1>
+
+    <p class="subtitle">qm 是公司级多人协作 agent harness，不是个人 coding agent。判断标准：是否需要让 agent 在公司内多人协作 + 数据私有 + 不锁定 LLM。</p>
+
+    <div class="row" style="gap:20px;">
+      <!-- 左：适用 -->
+      <div class="yes-col" style="flex:1;">
+        <div class="col-head yes">
+          <span class="badge">✓</span>
+          <span>适用场景 · 4 类</span>
+        </div>
+        <div class="list-item yes"><span class="marker">✓</span>5-50 人 <b>创业公司</b>，Slack 重度</div>
+        <div class="list-item yes"><span class="marker">✓</span>需要 <b>per-employee 隔离</b>，跨部门不串台</div>
+        <div class="list-item yes"><span class="marker">✓</span>数据敏感 → <b>部署在自家云</b>账号</div>
+        <div class="list-item yes"><span class="marker">✓</span>不想锁定 Anthropic / OpenAI，<b>harness 可换</b></div>
+      </div>
+
+      <!-- 右：不适用 -->
+      <div class="no-col" style="flex:1;">
+        <div class="col-head no">
+          <span class="badge">✗</span>
+          <span>不适用场景 · 3 类</span>
+        </div>
+        <div class="list-item no"><span class="marker">✗</span><b>个人用户</b>：直接用 Claude Code / Codex CLI</div>
+        <div class="list-item no"><span class="marker">✗</span><b>&lt;3 人小团队</b>：overhead 大，单租户够用</div>
+        <div class="list-item no"><span class="marker">✗</span><b>不想管基础设施</b>：用 SaaS 产品更轻</div>
+      </div>
+    </div>
+
+    <!-- 底部一句话 -->
+    <div class="block block-blue" style="margin-top: 24px;padding:18px 24px;text-align:center;">
+      <div style="font-size:28px;font-weight:900;">
+        你是 <span style="background:var(--ylight);padding:2px 10px;">YC 系 / Slack 重度 / 数据敏感</span>
+        → qm <span style="background:var(--ylight);padding:2px 10px;">值得装</span>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="tagline"><span class="accent">multiplayer agent harness</span>是分水岭，需要的人离不开。</div>
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · QM 拆解</div>
+    </div>
+  </div>
+</body>
+</html>

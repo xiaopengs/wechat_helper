@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>QM · RUNTIME ARCHITECTURE</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="label-tag blue">RUNTIME ARCHITECTURE</div>
+      <div class="page-num"><strong>03</strong> / 08</div>
+    </div>
+
+    <div class="chip blue">运行链路</div>
+
+    <h1 class="title title-sm">一次 Slack 消息怎么<br><span class="hl">走完</span></h1>
+
+    <p class="subtitle" style="margin-bottom:24px;font-size:26px;">所有 turn 都过核心 core，core 调 harness，harness 在 scope 自己的沙箱里 execute。Web UI / Slack / Admin 都是 core HTTP API 上的可选插件。</p>
+
+    <!-- 三入口 -->
+    <div class="grid-3" style="margin-bottom: 4px;">
+      <div class="block block-pink" style="padding:18px 22px;">
+        <div class="block-title">Slack</div>
+        <div class="block-sub" style="font-size:20px;">Bolt 插件</div>
+      </div>
+      <div class="block block-yellow" style="padding:18px 22px;">
+        <div class="block-title">Web UI</div>
+        <div class="block-sub" style="font-size:20px;">Vite + Lit</div>
+      </div>
+      <div class="block block-green" style="padding:18px 22px;">
+        <div class="block-title">Admin</div>
+        <div class="block-sub" style="font-size:20px;">可选插件</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin: 2px 0;">
+      <div class="arrow-down" style="height:24px;"></div>
+      <div class="pill" style="background: var(--yellow);font-size:20px;">HTTP API · 全部走 core</div>
+      <div class="arrow-down" style="height:24px;"></div>
+    </div>
+
+    <!-- HEADLESS CORE -->
+    <div class="block block-blue" style="margin-bottom: 4px;display:flex;align-items:center;gap:20px;padding:18px 24px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:900;letter-spacing:2px;">HEADLESS CORE</div>
+      <div style="font-size:22px;font-weight:500;opacity:0.95;">API · identity · policy · scheduler · agent loop</div>
+      <div class="tag-chip" style="margin-left:auto;background:#fff;font-size:16px;">Node + Fastify + TS</div>
+    </div>
+
+    <div style="text-align:center;margin: 2px 0;">
+      <div class="arrow-down" style="height:24px;"></div>
+      <div class="pill" style="background: var(--green);font-size:20px;">harness 接口可换</div>
+      <div class="arrow-down" style="height:24px;"></div>
+    </div>
+
+    <!-- PER-SCOPE SANDBOX -->
+    <div class="block block-green-d" style="margin-bottom: 4px;padding: 18px 22px;">
+      <div style="display:flex;align-items:center;gap:20px;margin-bottom:12px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:900;letter-spacing:2px;color:#fff;">PER-SCOPE SANDBOX</div>
+        <div class="tag-chip" style="margin-left:auto;background:#fff;color:#111;font-size:16px;">每人/每房间一份</div>
+      </div>
+      <div class="grid-3">
+        <div class="block block-white" style="padding:14px 16px;">
+          <div class="block-title-2" style="font-size:20px;">memory</div>
+          <div class="block-sub" style="font-size:16px;color:#666;">scope 隔离</div>
+        </div>
+        <div class="block block-white" style="padding:14px 16px;">
+          <div class="block-title-2" style="font-size:20px;">files + keychain</div>
+          <div class="block-sub" style="font-size:16px;color:#666;">已登录服务</div>
+        </div>
+        <div class="block block-white" style="padding:14px 16px;">
+          <div class="block-title-2" style="font-size:20px;">crons · web apps</div>
+          <div class="block-sub" style="font-size:16px;color:#666;">后台 + 自定义</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin: 2px 0;">
+      <div class="arrow-down" style="height:24px;"></div>
+      <div class="pill" style="background: var(--purple);font-size:20px;">execute 工具调用</div>
+    </div>
+
+    <!-- MODEL ↔ TOOLS -->
+    <div class="row" style="gap: 14px;margin-top:4px;">
+      <div class="block block-purple" style="flex:1;display:flex;align-items:center;gap:12px;padding:18px 22px;">
+        <div class="block-title-2" style="font-family:'JetBrains Mono',monospace;font-size:24px;">HARNESS</div>
+        <div style="font-size:22px;font-weight:900;">Pi · OpenCode · Codex · Claude Code</div>
+      </div>
+      <div style="display:flex;align-items:center;font-size:30px;font-weight:900;">↔</div>
+      <div class="block block-orange" style="flex:1;display:flex;align-items:center;gap:12px;padding:18px 22px;">
+        <div class="block-title-2" style="font-family:'JetBrains Mono',monospace;font-size:24px;">Postgres</div>
+        <div style="font-size:22px;font-weight:900;">sessions · memory · queue</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="tagline">core 通用，<span class="accent">所有公司特定的东西</span>都留在部署目录。</div>
+      <div class="watermark"><span class="watermark-icon">💬</span> 贴图号 · QM 拆解</div>
+    </div>
+  </div>
+</body>
+</html>
