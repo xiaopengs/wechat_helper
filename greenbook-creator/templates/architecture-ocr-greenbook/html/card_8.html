@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>Card 8 · OUTPUT TRIO + 收束 · OCR Review</title>
+  <title>Card 8 · 使用三件套 + 收束 · OCR Review</title>
   <link rel="stylesheet" href="base.css">
 </head>
 <body>
@@ -10,54 +10,55 @@
     <div class="header">
       <div class="label-tag cyan">
         <span class="dot"></span>
-        <span>STAGE 08 · OUTPUT TRIO</span>
+        <span>STAGE 08 · 使用三件套</span>
       </div>
       <div class="page-num">08 / 08</div>
     </div>
 
-    <h1 class="title-sm">OUTPUT TRIO<br>
-      <span style="font-size:48px;color:var(--ink-2);font-weight:500;">输出三件套</span>
+    <h1 class="title-sm">使用三件套<br>
+      <span style="font-size:48px;color:var(--ink-2);font-weight:500;">3 步拆任意架构图</span>
     </h1>
 
-    <div class="section-card cyan" style="margin-bottom: 18px;">
-      <div class="band"><span class="num">01</span>KEY POINTS · 关键点</div>
+    <div class="section-card cyan" style="margin-bottom: 14px;">
+      <div class="band"><span class="num">01</span>分节提取协议 · 截断根因解药</div>
       <div class="body">
-        <h3>三件套各服务一个角色</h3>
-        <div class="zh">用户读评审结果 · 运维盯预算 · 复盘查完整记录</div>
+        <h3>永不截断 · 可重试</h3>
+        <div class="zh">不让 LLM 一次描述整张图，而是逐段独立提取</div>
         <ul class="bullet-list">
-          <li>Text / JSON：评审结果给用户读</li>
-          <li>Warnings / Budget：失败与预算状态给运维盯</li>
-          <li>Session JSONL：完整运行记录给复盘查</li>
+          <li>Stage 1 · 枚举所有视觉区块（≤12 项 JSON）</li>
+          <li>Stage 2 · 逐区块独立提取（每段 ≤300 tokens）</li>
+          <li>Stage 3 · 校验字段长度 / 数量，缺哪个只重跑那段</li>
+          <li>Stage 4 · 合并为 YAML 数据文件</li>
         </ul>
-        <div class="details">三个输出各服务一个角色，互不重叠</div>
+        <div class="details">6 段总和 ≤ 1800 tokens，远低于模型上限，永不截断</div>
       </div>
     </div>
 
-    <div style="margin-bottom: 16px;">
-      <div class="mono" style="margin-bottom: 10px;">OUTPUT TRIO · 输出三件套</div>
+    <div style="margin-bottom: 14px;">
+      <div class="mono" style="margin-bottom: 10px;">使用三件套 · 3 步复制本模板</div>
       <div class="trio">
         <div class="cell blue">
-          <div class="lab">评审结果</div>
-          <div class="sub">Text / JSON</div>
+          <div class="lab">① 复制模板</div>
+          <div class="sub">cp -r 骨架 → 改 YAML</div>
         </div>
         <div class="cell orange">
-          <div class="lab">失败与预算</div>
-          <div class="sub">Warnings / Budget</div>
+          <div class="lab">② 跑协议</div>
+          <div class="sub">Stage 1 → Stage 2 → 校验</div>
         </div>
         <div class="cell purple">
-          <div class="lab">完整记录</div>
-          <div class="sub">Session JSONL</div>
+          <div class="lab">③ 渲染推送</div>
+          <div class="sub">render.py → QQ bot</div>
         </div>
       </div>
     </div>
 
     <div class="closing">
       <span class="dot"></span>
-      <span class="text"><b>分节提取协议 · 无截断 · 可重试</b> · 原图描述卡在 "≥50 lines"，本方案 6 节字段全部完整 ✓</span>
+      <span class="text"><b>分节提取协议 · 无截断 · 可重试</b> · 本卡为「使用方法」卡，替换内容即可复用本模板拆任意架构图</span>
     </div>
 
     <div class="footer">
-      <div class="source">来源：架构图 · OUTPUT TRIO</div>
+      <div class="source">来源：架构图 · 使用三件套</div>
       <div class="label"><span class="icon"></span>OCR Review 架构拆解 · 2026.08</div>
     </div>
   </div>
