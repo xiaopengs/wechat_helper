@@ -1,6 +1,14 @@
 ---
 name: greenbook-creator
-description: 小绿书（微信图文消息）内容创作全流程助手。覆盖选题策划→图片设计→短文撰写→排版发布，专为微信生态内"图片+短文"轻量内容格式打造。触发词：小绿书/绿书/图文消息/微信图文/图片笔记/公众号轮播图/图文卡片/科普海报/信息图海报/poster/carousel。也适用于"把XX做成图"、"生成一套XX图"、"XX风格的轮播图"等自然语言请求。使用时自动读取 references/ 下的设计系统和文案模板。
+description: 小绿书（微信图文消息）内容创作全流程助手。覆盖选题策划→图片设计→短文撰写→排版发布，专为微信生态内"图片+短文"轻量内容格式打造。触发词：小绿书/绿书/图文消息/微信图文/图片笔记/公众号轮播图/图文卡片/科普海报/信息图海报/poster/carousel。也适用于"把XX做成图"、"生成一套XX图"、"XX风格的轮播图"等自然语言请求。
+
+**HTML/Playwright 8 张信息图（规格 3）的三个模板触发词**（二选一时看这个）:
+- **拆架构图 / 流程图 / README+AGENTS** · 工程蓝图风 · 「永不截断」分节提取协议 → `templates/architecture-ocr-greenbook/`
+- **拆 GitHub 项目 + LLM 自动配文** · 卡通风（贴图号·猴子AI笔记） → `templates/tie-tu-hao-monkey-notes/`
+- **拆 GitHub 项目 + 手写 HTML / 最快上手** · 精简骨架无 YAML → `templates/qm-greenbook/`
+- 6 页 Pillow 出图 → `templates/repo-overview/`
+
+决策关键词详细看 SKILL.md 「🧭 模板选择决策树」节。使用时自动读取 references/ 下的设计系统和文案模板。
 ---
 
 # 小绿书创作 — 让信息在滑动中完成传递
@@ -44,6 +52,29 @@ description: 小绿书（微信图文消息）内容创作全流程助手。覆�
   - **精简版** [templates/qm-greenbook/](templates/qm-greenbook/) — 8 张完整示例 + base.css + config.json + scripts/wrapper，无 data/ 或 prompts/
   - **全功能版** [templates/tie-tu-hao-monkey-notes/](templates/tie-tu-hao-monkey-notes/) — 精简版再加 data/ YAML + prompts/，适合需要 LLM 生成配文的工作流
   - **架构图拆解（2026-08-07 新增）** [templates/architecture-ocr-greenbook/](templates/architecture-ocr-greenbook/) — 8 张信息图专门拆架构图 / 项目文档；**核心创新是「分节提取协议」**——不让 LLM 一次描述整张图，而是枚举区块 → 逐块结构化提取 → 校验缺失字段再补，从根上解决 OCR/描述在 "≥50 lines" 处被截断的问题。支持两种数据源（架构图 OCR / README+AGENTS 文档），两实例均已跑通（OCR Review + earendil-works/pi）
+
+### 🧭 模板选择决策树（2026-08-07 加）
+
+```
+「用户想要什么？」
+    │
+    ├── ≤6 页小绿书（图 1:1 / 3:4，发公众号图文消息）
+    │     → 走规格 1 / 2，gpt-image-2 或 cartographer 12P
+    │
+    └── 8P 信息图（规格 3）
+        │
+        ├── 「拆架构图」/「拆流程图」/「拆 README+AGENTS」/「之前 LLM 截断了」
+        │     → ✅ architecture-ocr-greenbook（工程蓝图风 + 分节提取协议）
+        │
+        ├── 「拆 GitHub 项目」+ 想让 LLM 自动配文（喂 README 就出图）
+        │     → ✅ tie-tu-hao-monkey-notes（卡通风 + data YAML + prompts/）
+        │
+        ├── 「拆 GitHub 项目」+ 想自己手写 HTML / 最快上手
+        │     → ✅ qm-greenbook（精简骨架，无 YAML）
+        │
+        └── 只要 6 页 + Pillow 出图
+              → ✅ repo-overview（6P 开源项目全景）
+```
 - 流水线：`html/card_N.html` → `render.py` → `images/card_N.png` → `send_qq.mjs --config config.json` → QQ bot
 
 内容底线：**有干货**——每页必须有读者能带走的具体信息（数字/方法/结论），不堆砌空话

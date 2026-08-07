@@ -4,6 +4,36 @@
 > **素材源**:由「贴图号·猴子AI笔记」公众号出品的视觉风格沉淀而来,适合 AI 工具 / 开源项目 / 知识科普类小绿书。
 > **首次沉淀项目**:Superset(AI Coding Agents 编排型 IDE)。
 
+---
+
+## 🚦 触发词 / 何时用
+
+| 场景 | 该不该用 tie-tu-hao-monkey-notes |
+|---|---|
+| 你要给 **GitHub 项目** 做小绿书拆解，有 README/AGENTS.md 想喂 LLM 自动出配文 | ✅ **用 tthm** |
+| 你想走「贴图号·猴子AI笔记」那种 **卡通信息图风**（粉/黄/绿/蓝/紫/橙） | ✅ **用 tthm** |
+| 8 张能讲清楚的项目（封面/WHAT/ARCH/FEATURES/VS/INSTALL/USES/GOTCHAS） | ✅ **用 tthm** |
+| 你要 **手写 HTML** 不想要 YAML 流程 | ❌ 改用 `qm-greenbook`（精简版） |
+| 你要拆 **架构图 / 流程图** 或担心 LLM 输出截断 | ❌ 改用 `architecture-ocr-greenbook` |
+| 你只要 **6 页**精简版（Pillow 出图） | ❌ 改用 `repo-overview` |
+
+**触发关键词**（用户在 QQ/微信说这些词时自动匹配本模板）：
+- 「做 8 张小绿书」「做一套信息图」「做轮播图」+ **要 LLM 自动配文 / 卡通风 / 贴图号风**
+- 「把 README 转成图」「按贴图号·猴子AI笔记的风格做」「tthm 风格」
+- 「8P 信息图」「卡通信息图」「中文多色块信息图」
+
+---
+
+## 🚀 一句话复用（3 行）
+
+```bash
+cp -r templates/tie-tu-hao-monkey-notes <新主题>-greenbook
+cp <新主题>-greenbook/data/superset.yaml <新主题>-greenbook/data/<新主题>.yaml && # 改 YAML
+python3 <新主题>-greenbook/scripts/render.py && node <新主题>-greenbook/scripts/send_qq.mjs
+```
+
+---
+
 ## 模板结构
 
 ```

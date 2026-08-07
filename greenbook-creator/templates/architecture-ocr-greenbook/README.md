@@ -6,6 +6,36 @@
 
 ---
 
+## 🚦 触发词 / 何时用
+
+| 场景 | 该不该用 architecture-ocr-greenbook |
+|---|---|
+| 你要拆 **架构图 / 流程图**（PNG/JPG OCR 提取） | ✅ **用本模板** |
+| 你要拆 **README + AGENTS.md**（长文档提取） | ✅ **用本模板** |
+| 之前 LLM 拆架构图**在「≥50 lines」处被截断** | ✅ **用本模板**（根因解药） |
+| 你想要 **工程蓝图风**（冷灰底 + 黑色硬阴影 + 章节色块） | ✅ **用本模板** |
+| 你要拆 GitHub 项目但只要 **8P 卡通风** | ❌ 改用 `tie-tu-hao-monkey-notes` |
+| 你想 **手写 HTML 不想要分节协议** | ❌ 改用 `qm-greenbook`（精简版） |
+| 你只要 **6 页** Pillow 出图 | ❌ 改用 `repo-overview` |
+
+**触发关键词**（用户在 QQ/微信说这些词时自动匹配本模板）：
+- 「拆架构图」「拆流程图」「OCR 这张架构图」「把架构图做成小绿书」
+- 「拆 README」「拆 AGENTS.md」「拆项目文档」「拆长文」
+- 「工程蓝图风」「冷灰底」「分节提取协议」「不截断」「永不截断」
+- 「OCR Review 风格」「earendil-works/pi 风格」「6 节章节卡」
+
+---
+
+## 🚀 一句话复用（3 行）
+
+```bash
+cp -r templates/architecture-ocr-greenbook <新主题>-greenbook
+cp data/ocr-review.yaml data/<新主题>.yaml && # 按 prompts/section-enumerate.md 改 YAML
+python3 <新主题>-greenbook/scripts/render.py && node <新主题>-greenbook/scripts/send_qq.mjs
+```
+
+---
+
 ## 🚀 快速上手（3 步）
 
 ```
