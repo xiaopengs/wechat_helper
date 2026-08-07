@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Card 5 · PI-AGENT-CORE · pi</title>
+  <link rel="stylesheet" href="../../../html/base.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="label-tag purple">
+        <span class="dot"></span>
+        <span>STAGE 05 · PI-AGENT-CORE</span>
+      </div>
+      <div class="page-num">05 / 08</div>
+    </div>
+
+    <h1 class="title-sm">PI-AGENT-CORE<br>
+      <span style="font-size:48px;color:var(--ink-2);font-weight:500;">Agent 运行时</span>
+    </h1>
+
+    <div class="section-card purple" style="margin-bottom: 18px;">
+      <div class="band"><span class="num">01</span>KEY POINTS · 关键点</div>
+      <div class="body">
+        <h3>核心抽象</h3>
+        <div class="zh">工具调用 / 状态管理 / Agent loop / 可被多个上层复用</div>
+        <ul class="bullet-list">
+          <li>工具调用（tool calling）</li>
+          <li>状态管理（session / messages）</li>
+          <li>Agent loop 调度</li>
+          <li>可被多个上层（CLI / chat）复用</li>
+        </ul>
+        <div class="details">agent 的核心抽象，与 provider / UI 解耦</div>
+      </div>
+    </div>
+
+    <div class="section-card purple">
+      <div class="band"><span class="num">02</span>SUB-BLOCKS · 子块</div>
+      <div class="body">
+        <div class="sub-grid cols-4">
+          <div class="sub-block"><div class="label">tool call</div><div class="desc">工具调用</div></div>
+          <div class="sub-block"><div class="label">state mgmt</div><div class="desc">会话状态</div></div>
+          <div class="sub-block"><div class="label">agent loop</div><div class="desc">循环调度</div></div>
+          <div class="sub-block"><div class="label">reusable</div><div class="desc">上层复用</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="source">来源：github.com/earendil-works/pi · packages/agent</div>
+      <div class="label"><span class="icon"></span>Pi Agent Harness 架构拆解 · 2026.08</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+# Open Code Review (OCR Review) · 架构拆解实例
+# 提取协议：分节提取（section-enumerate + section-extract），从架构图手动按区块逐段提取
+# 验证：原图描述在 ≥50 lines 处被截断，本 YAML 6 个 section 字段全部完整 ✓
+
+meta:
+  name: "Open Code Review"
+  kicker: "架构拆解 · 2026.08"
+  stars_text: ""
+  version: "实现架构图"
+  source: "github.com/.../ocr-review（实现架构图）"
+  source_date: ""
+  source_kind: "架构图"
+
+cover:
+  tagline_left: "给 AI 写一份"
+  tagline_right: "可拆解的代码评审流水线"
+  subline: "OCR Review · 6 阶段流水线 · 分节提取协议 | 截断问题的根因解药"
+  central_node_label: "ocr-review"
+  central_node_color: "blue"
+  central_node_desc: "代码评审流水线"
+  side_nodes:
+    - { label: "BOOTSTRAP",   sub: "启动装配",   color: "green" }
+    - { label: "DIFF READ",   sub: "Git 变更",   color: "blue" }
+    - { label: "FILTER",      sub: "过滤规则",   color: "purple" }
+    - { label: "OUTPUT",      sub: "三件套",     color: "orange" }
+
+overview:
+  title: "6 阶段流水线，从启动到输出"
+  description: "自上而下的单次评审流水线：先装配环境，读取变更，过滤文件，并发评审，最后评论后处理。"
+  flow_steps:
+    - { name: "BOOTSTRAP",       color: "green" }
+    - { name: "DIFF",            color: "blue" }
+    - { name: "FILTER",          color: "purple" }
+    - { name: "REVIEW LOOP",     color: "orange" }
+    - { name: "POST",            color: "red" }
+    - { name: "OUTPUT",          color: "cyan" }
+  key_path: "Git 变更 → 逐文件并发评审 → 评论聚合 → 三件套输出"
+
+sections:
+  - section_index: 1
+    title_en: "BOOTSTRAP"
+    title_zh: "装配运行环境"
+    color: "green"
+    bullets:
+      - "解析模型端点（OpenAI / Anthropic / 自定义）"
+      - "加载评审提示词模板"
+      - "注册可用工具（file_read / code_search / ...）"
+      - "应用项目级系统规则"
+    details: "启动时一次性完成，无运行时副作用"
+    sub_blocks:
+      - { label: "model endpoint", desc: "LLM 连接" }
+      - { label: "templates",      desc: "提示词模板" }
+      - { label: "tools",          desc: "工具注册表" }
+      - { label: "system rules",   desc: "系统规则" }
+
+  - section_index: 2
+    title_en: "DIFF PROVIDER"
+    title_zh: "读取 Git 变更"
+    color: "blue"
+    bullets:
+      - "Workspace 模式：当前未提交变更"
+      - "单 commit 模式：评审一次提交"
+      - "Commit range 模式：评审一段提交历史"
+    details: "三种模式覆盖绝大多数 PR / MR 评审场景"
+    sub_blocks:
+      - { label: "Workspace", desc: "未提交改动" }
+      - { label: "Commit",    desc: "单次提交" }
+      - { label: "Range",     desc: "提交区间" }
+
+  - section_index: 3
+    title_en: "FILTER & RULES"
+    title_zh: "过滤文件、匹配规则"
+    color: "purple"
+    bullets:
+      - "按文件类型过滤（跳过二进制）"
+      - "按路径前缀过滤（如 dist/ / node_modules/）"
+      - "按扩展名过滤（如 .lock / .min.js）"
+      - "应用项目自定义规则"
+    details: "提前剔除 80% 无意义文件，省下模型调用预算"
+    sub_blocks:
+      - { label: "binary",  desc: "二进制过滤" }
+      - { label: "path",    desc: "路径前缀" }
+      - { label: "ext",     desc: "扩展名" }
+      - { label: "project", desc: "项目规则" }
+
+  - section_index: 4
+    title_en: "PER-FILE LOOP"
+    title_zh: "逐文件并发子任务"
+    color: "orange"
+    bullets:
+      - "默认 concurrency = 8 并发"
+      - "可选 PLAN 阶段处理 ≥50 行大 diff（不开放工具）"
+      - "MAIN AGENT 最多 30 轮取证，调用 task_done 才算完成"
+      - "模型压缩：60% 上下文异步触发，80% 同步触发"
+      - "预算超限时由程序继续分发文件"
+    details: "单文件独立评审，互不阻塞；模型压缩让长会话可控"
+    sub_blocks:
+      - { label: "file_read",      desc: "读文件全文" }
+      - { label: "code_search",    desc: "代码搜索" }
+      - { label: "file_read_diff", desc: "读 diff" }
+      - { label: "code_comment",   desc: "写评论" }
+
+  - section_index: 5
+    title_en: "COMMENT PIPELINE"
+    title_zh: "评论后处理"
+    color: "red"
+    bullets:
+      - "行号解析：用 existing_code 匹配 diff"
+      - "可选重定位（模型）：匹配失败才调用"
+      - "Review Filter（模型）：只删能证明的误报"
+      - "二次解析：汇总后再校准行号"
+    details: "4 步流水线把原始评论打磨成结构化、可发布的最终产物"
+    sub_blocks:
+      - { label: "解析",   desc: "existing_code 匹配" }
+      - { label: "重定位", desc: "模型校准（按需）" }
+      - { label: "过滤",   desc: "剔除能证明的误报" }
+      - { label: "校准",   desc: "汇总后再解析" }
+
+  - section_index: 6
+    title_en: "OUTPUT TRIO"
+    title_zh: "输出三件套"
+    color: "cyan"
+    bullets:
+      - "Text / JSON：评审结果给用户读"
+      - "Warnings / Budget：失败与预算状态给运维盯"
+      - "Session JSONL：完整运行记录给复盘查"
+    details: "三个输出各服务一个角色：用户、运维、复盘"
+    sub_blocks:
+      - { label: "评审结果",   sub: "Text / JSON" }
+      - { label: "失败与预算", sub: "Warnings / Budget" }
+      - { label: "完整记录",   sub: "Session JSONL" }
+
+output_trio:
+  - { label: "评审结果",   sub: "Text / JSON",       color: "blue" }
+  - { label: "失败与预算", sub: "Warnings / Budget", color: "orange" }
+  - { label: "完整记录",   sub: "Session JSONL",     color: "purple" }
+
+closing:
+  one_liner: "分节提取协议 · 无截断 · 可重试 · 可见即可复制"
+  protocol_note: "OCR 拆解示例：原图描述在 ≥50 lines 处被截断，本方案 6 个 section 字段全部完整 ✓"
+
+footer_label: "OCR Review 架构拆解 · 2026.08"

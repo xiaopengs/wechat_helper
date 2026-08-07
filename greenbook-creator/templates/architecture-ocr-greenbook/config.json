@@ -1,0 +1,15 @@
+{
+  "openid": "5588AB8B76D9A22624886F0B90FE98C1",
+  "img_dir": "images",
+  "cover_text": "把架构图做成可拆解的小绿书 · 一张图 8 节，无截断、可重试。\n下面这张是 Open Code Review（OCR Review）的实现架构。",
+  "captions": [
+    "## P1 ｜封面\n> Open Code Review：把代码评审做成可截断、可重试的流水线。\n封面一句话：分节提取协议，让 AI 描述架构图再也不会停在「≥50 lines」。\n\n",
+    "## P2 ｜全局视角\n> 整体架构：6 阶段流水线，从 BOOTSTRAP 到输出三件套。\n主路径：Git 变更 → 逐文件并发 → 评论聚合 → 三件套输出。共 6 个阶段，下滑逐节拆给你看。\n\n",
+    "## P3 ｜BOOTSTRAP\n> 装配运行环境。\n解析模型端点、加载模板和工具注册表、应用系统规则。\n启动时一次性完成，无运行时副作用。\n\n",
+    "## P4 ｜DIFF PROVIDER\n> 读取 Git 变更。\n支持 workspace / 单 commit / commit range 三种模式。\n三种模式覆盖绝大多数 PR/MR 评审场景。\n\n",
+    "## P5 ｜FILTER & RULES\n> 过滤文件、匹配规则。\n按二进制、路径、扩展名、项目规则过滤。\n提前剔除 80% 无意义文件，避免浪费模型调用预算。\n\n",
+    "## P6 ｜逐文件并发子任务\n> 并发评审：默认 concurrency = 8。\n可选 PLAN 处理 ≥50 行大 diff，MAIN AGENT 最多 30 轮取证并产出评论。\n模型压缩：上下文到 60% 异步触发，到 80% 同步触发。\n\n",
+    "## P7 ｜COMMENT PIPELINE\n> 评论后处理：4 步流水线。\n行号解析 → 可选重定位（模型）→ Review Filter（模型）→ 二次解析。\n把原始评论打磨成结构化、可发布的最终产物。\n\n",
+    "## P8 ｜OUTPUT TRIO + 收束\n> 输出三件套：评审结果 / 失败与预算 / 完整记录。\nText/JSON 给用户读，Warnings/Budget 给运维盯，Session JSONL 给复盘查。\n分节提取协议 · 无截断 · 可重试。\n"
+  ]
+}

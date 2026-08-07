@@ -1,0 +1,15 @@
+{
+  "openid": "5588AB8B76D9A22624886F0B90FE98C1",
+  "img_dir": "images",
+  "cover_text": "把架构图做成可拆解的小绿书 · 验证用 pi（earendil-works/pi，84k stars）\n同一套模板吃 README + AGENTS.md，照样 8 节干净产出。",
+  "captions": [
+    "## P1 ｜封面\n> earendil-works/pi：5 包 monorepo，TypeScript + MIT，84.8k stars。\n封面一句话：给 AI Coding 一套可拼装的 agent 工具包，从终端到模型层全栈。\n\n",
+    "## P2 ｜全局视角\n> 整体架构：5 包分层 monorepo。\n主路径：终端输入 → Coding Agent → Agent Core → pi-ai LLM 调用 → 反馈渲染。\n共 6 节，下滑逐包拆给你看。\n\n",
+    "## P3 ｜PI-TUI\n> 终端 UI 库：差分渲染、声明式组件。\n低开销，支持大型对话历史，可独立于 pi 使用。\n终端 UI 与 agent 逻辑解耦，可被任何 TUI 项目复用。\n\n",
+    "## P4 ｜PI-CODING-AGENT\n> 交互式编码代理 CLI。\n自扩展、本地优先、模型无关（BYO API key）。\n顶层 CLI 包装 Agent Core，AGENTS.md 读项目级规则。\n\n",
+    "## P5 ｜PI-AGENT-CORE\n> Agent 运行时：工具调用 + 状态管理。\nagent loop 调度，可被多个上层（CLI / chat）复用。\nagent 的核心抽象，与 provider / UI 解耦。\n\n",
+    "## P6 ｜PI-AI\n> 统一多 provider LLM API。\nOpenAI / Anthropic / Google 统一接口 + 流式响应 + function calling 一致行为。\n切换 LLM provider 不用改业务代码。\n\n",
+    "## P7 ｜PI-TELEMETRY\n> 供应商中立遥测：telemetry 契约 + 参考 adapter。\n类型化 schema + 一致性测试。\n监控栈随便换：Sentry / OTel / 自建。\n\n",
+    "## P8 ｜DEPLOY TRIO + 收束\n> 分发三件套：安装 / 构建 / 分享。\nnpm i -g 或 pi-test.sh → build:offline → pi-share-hf 上 Hugging Face。\n模板验证：README + AGENTS.md 也能拆，无截断。\n"
+  ]
+}

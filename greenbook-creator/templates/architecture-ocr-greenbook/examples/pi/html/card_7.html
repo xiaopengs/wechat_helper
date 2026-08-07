@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Card 7 · PI-TELEMETRY · pi</title>
+  <link rel="stylesheet" href="../../../html/base.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="label-tag red">
+        <span class="dot"></span>
+        <span>STAGE 07 · PI-TELEMETRY</span>
+      </div>
+      <div class="page-num">07 / 08</div>
+    </div>
+
+    <h1 class="title-sm">PI-TELEMETRY<br>
+      <span style="font-size:48px;color:var(--ink-2);font-weight:500;">供应商中立遥测</span>
+    </h1>
+
+    <div class="section-card red" style="margin-bottom: 18px;">
+      <div class="band"><span class="num">01</span>KEY POINTS · 关键点</div>
+      <div class="body">
+        <h3>观测解耦</h3>
+        <div class="zh">telemetry 契约 + 类型化 schema + 一致性测试 + 厂商可替换</div>
+        <ul class="bullet-list">
+          <li>telemetry 契约 + 参考 adapter</li>
+          <li>类型化 schema</li>
+          <li>一致性测试（conformance）</li>
+          <li>替换厂商：Sentry / OTel / 自建</li>
+        </ul>
+        <div class="details">把遥测从 agent 解耦，监控栈随便换</div>
+      </div>
+    </div>
+
+    <div class="section-card red">
+      <div class="band"><span class="num">02</span>SUB-BLOCKS · 子块</div>
+      <div class="body">
+        <div class="sub-grid cols-4">
+          <div class="sub-block"><div class="label">contracts</div><div class="desc">遥测契约</div></div>
+          <div class="sub-block"><div class="label">adapters</div><div class="desc">参考实现</div></div>
+          <div class="sub-block"><div class="label">schemas</div><div class="desc">类型化</div></div>
+          <div class="sub-block"><div class="label">conformance</div><div class="desc">一致性</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="source">来源：github.com/earendil-works/pi · packages/telemetry</div>
+      <div class="label"><span class="icon"></span>Pi Agent Harness 架构拆解 · 2026.08</div>
+    </div>
+  </div>
+</body>
+</html>

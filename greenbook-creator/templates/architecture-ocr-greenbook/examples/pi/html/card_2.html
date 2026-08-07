@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Card 2 · 全局视角 · pi</title>
+  <link rel="stylesheet" href="../../../html/base.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="label-tag purple">
+        <span class="dot"></span>
+        <span>OVERVIEW · 全局视角</span>
+      </div>
+      <div class="page-num">02 / 08</div>
+    </div>
+
+    <h1 class="title">整体架构<br><span class="hl">5 包 monorepo</span></h1>
+    <p class="subtitle">分层 monorepo：TUI 渲染 → Coding Agent 顶层 → Agent Core 运行时 → pi-ai 多 provider → pi-telemetry 观测。</p>
+
+    <div style="margin: 24px 0 28px;">
+      <div class="mono" style="margin-bottom: 12px;">PIPELINE · 5 包 + 落地</div>
+      <div class="pipeline">
+        <div class="node green">
+          <div class="n">01</div>
+          <div class="lbl">TUI</div>
+        </div>
+        <div class="arrow"></div>
+        <div class="node blue">
+          <div class="n">02</div>
+          <div class="lbl">CODING</div>
+        </div>
+        <div class="arrow"></div>
+        <div class="node purple">
+          <div class="n">03</div>
+          <div class="lbl">AGENT</div>
+        </div>
+        <div class="arrow"></div>
+        <div class="node orange">
+          <div class="n">04</div>
+          <div class="lbl">PI-AI</div>
+        </div>
+        <div class="arrow"></div>
+        <div class="node red">
+          <div class="n">05</div>
+          <div class="lbl">TELEM</div>
+        </div>
+        <div class="arrow"></div>
+        <div class="node cyan">
+          <div class="n">06</div>
+          <div class="lbl">DEPLOY</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card purple">
+      <div class="band"><span class="num">★</span>KEY PATH · 主路径</div>
+      <div class="body">
+        <p style="font-size: 28px; line-height: 1.5; font-weight: 500;">
+          终端输入 → Coding Agent → Agent Core → pi-ai LLM 调用 → 反馈渲染
+        </p>
+      </div>
+    </div>
+
+    <div style="margin-top: 28px;">
+      <div class="mono" style="margin-bottom: 10px;">DECK · 本套共 6 节</div>
+      <div class="grid-3">
+        <div class="sub-block"><div class="label">03 · PI-TUI</div><div class="desc">终端 UI 库</div></div>
+        <div class="sub-block"><div class="label">04 · CODING</div><div class="desc">交互 CLI</div></div>
+        <div class="sub-block"><div class="label">05 · AGENT</div><div class="desc">运行时</div></div>
+        <div class="sub-block"><div class="label">06 · PI-AI</div><div class="desc">LLM 抽象</div></div>
+        <div class="sub-block"><div class="label">07 · TELEM</div><div class="desc">遥测</div></div>
+        <div class="sub-block"><div class="label">08 · DEPLOY</div><div class="desc">分发</div></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="source">来源：github.com/earendil-works/pi · 全局视角</div>
+      <div class="label"><span class="icon"></span>Pi Agent Harness 架构拆解 · 2026.08</div>
+    </div>
+  </div>
+</body>
+</html>

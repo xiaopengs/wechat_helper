@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Card 3 · 章节卡 1</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <!-- 模板骨架 · 章节卡 (card_3 ~ card_7 同一布局，仅 color 不一样) -->
+  <div class="card">
+    <div class="header">
+      <div class="label-tag green">
+        <span class="dot"></span>
+        <span>STAGE 03 · TODO · 章节英文标签</span>
+      </div>
+      <div class="page-num">03 / 08</div>
+    </div>
+
+    <h1 class="title-sm">TODO · 章节英文<br>
+      <span style="font-size:48px;color:var(--ink-2);font-weight:500;">TODO · 中文小标（4-12 字）</span>
+    </h1>
+
+    <!-- 章节主卡 -->
+    <div class="section-card green" style="margin-bottom: 18px;">
+      <div class="band"><span class="num">01</span>KEY POINTS · 关键点</div>
+      <div class="body">
+        <h3>TODO · 章节主标题</h3>
+        <div class="zh">TODO · 一句话中文描述（≤30 字）</div>
+        <ul class="bullet-list">
+          <li>TODO · bullet 1（具体动作 / 可观察产物，5-20 字）</li>
+          <li>TODO · bullet 2</li>
+          <li>TODO · bullet 3</li>
+          <li>TODO · bullet 4（可选，4-5 条）</li>
+        </ul>
+        <div class="details">TODO · details（1 句话总结，10-30 字）</div>
+      </div>
+    </div>
+
+    <!-- 子块网格（可选） -->
+    <div class="section-card green">
+      <div class="band"><span class="num">02</span>SUB-BLOCKS · 子块</div>
+      <div class="body">
+        <div class="sub-grid cols-3">
+          <div class="sub-block"><div class="label">TODO · label 1</div><div class="desc">TODO · desc</div></div>
+          <div class="sub-block"><div class="label">TODO · label 2</div><div class="desc">TODO · desc</div></div>
+          <div class="sub-block"><div class="label">TODO · label 3</div><div class="desc">TODO · desc</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="source">来源：github.com/owner/repo · TODO · section path</div>
+      <div class="label"><span class="icon"></span>TODO · footer label</div>
+    </div>
+  </div>
+</body>
+</html>

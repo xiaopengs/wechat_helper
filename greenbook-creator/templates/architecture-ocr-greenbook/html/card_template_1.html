@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Card 1 · 封面</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <!-- 模板骨架 · 封面 (card_1) · 中心节点 + 4 个侧节点 -->
+  <div class="card">
+    <div class="header">
+      <div class="label-tag blue">
+        <span class="dot"></span>
+        <span>TODO · 顶部英文标签</span>
+      </div>
+      <div class="page-num">01 / 08</div>
+    </div>
+
+    <!-- 主标题 -->
+    <div style="margin-top: 12px; margin-bottom: 28px;">
+      <h1 class="title">TODO · 主标左半<br>
+        <span class="hl">TODO · 主标右半</span>
+      </h1>
+      <p class="subtitle">TODO · 一行副标说明，30px，灰色</p>
+    </div>
+
+    <!-- 中央节点 + 4 个侧节点 -->
+    <div style="position: relative; margin-bottom: 36px;">
+      <!-- 中央 -->
+      <div style="display:flex;justify-content:center;margin-bottom:32px;">
+        <div class="central-node">
+          <div class="label">TODO · 中央节点（如 ocr-review）</div>
+          <div class="desc">TODO · 中央节点副标（如 代码评审流水线）</div>
+        </div>
+      </div>
+
+      <!-- 4 角侧节点 -->
+      <div class="grid-4">
+        <div class="side-node blue">
+          <div class="lab">TODO · 侧节点 1</div>
+          <div class="sub">TODO · 副标</div>
+        </div>
+        <div class="side-node green">
+          <div class="lab">TODO · 侧节点 2</div>
+          <div class="sub">TODO · 副标</div>
+        </div>
+        <div class="side-node purple">
+          <div class="lab">TODO · 侧节点 3</div>
+          <div class="sub">TODO · 副标</div>
+        </div>
+        <div class="side-node orange">
+          <div class="lab">TODO · 侧节点 4</div>
+          <div class="sub">TODO · 副标</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 数据徽章行 -->
+    <div class="row" style="margin-bottom: 18px;">
+      <div class="chip green">TODO · 数据点 1（如 MIT）</div>
+      <div class="chip blue">TODO · 数据点 2（如 v0.1.0）</div>
+      <div class="chip purple">TODO · 数据点 3（如 12,309 Stars）</div>
+    </div>
+
+    <!-- 一句话定位 -->
+    <div class="closing">
+      <span class="dot"></span>
+      <span class="text"><b>TODO · 一句话定位</b>（如 分节提取协议 · 无截断 · 可重试）</span>
+    </div>
+
+    <div class="footer">
+      <div class="source">来源：github.com/owner/repo</div>
+      <div class="label"><span class="icon"></span>TODO · footer label（如 架构拆解 · 2026.08）</div>
+    </div>
+  </div>
+</body>
+</html>

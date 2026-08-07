@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Card 7 · COMMENT PIPELINE · OCR Review</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="label-tag red">
+        <span class="dot"></span>
+        <span>STAGE 07 · COMMENT PIPELINE</span>
+      </div>
+      <div class="page-num">07 / 08</div>
+    </div>
+
+    <h1 class="title-sm">COMMENT PIPELINE<br>
+      <span style="font-size:48px;color:var(--ink-2);font-weight:500;">评论后处理</span>
+    </h1>
+
+    <div class="section-card red" style="margin-bottom: 18px;">
+      <div class="band"><span class="num">01</span>KEY POINTS · 关键点</div>
+      <div class="body">
+        <h3>4 步评论流水线</h3>
+        <div class="zh">行号解析 → 可选重定位 → Review Filter → 二次解析</div>
+        <ul class="bullet-list">
+          <li>行号解析：用 existing_code 匹配 diff</li>
+          <li>可选重定位（模型）：匹配失败才调用</li>
+          <li>Review Filter（模型）：只删能证明的误报</li>
+          <li>二次解析：汇总后再校准行号</li>
+        </ul>
+        <div class="details">4 步流水线把原始评论打磨成结构化、可发布的最终产物</div>
+      </div>
+    </div>
+
+    <div class="section-card red">
+      <div class="band"><span class="num">02</span>SUB-BLOCKS · 4 步</div>
+      <div class="body">
+        <div class="sub-grid cols-2">
+          <div class="sub-block"><div class="label">解析</div><div class="desc">existing_code 匹配 diff</div></div>
+          <div class="sub-block"><div class="label">重定位</div><div class="desc">模型校准（按需调用）</div></div>
+          <div class="sub-block"><div class="label">过滤</div><div class="desc">剔除能证明的误报</div></div>
+          <div class="sub-block"><div class="label">校准</div><div class="desc">汇总后再解析行号</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="source">来源：架构图 · STAGE 05 COMMENT PIPELINE</div>
+      <div class="label"><span class="icon"></span>OCR Review 架构拆解 · 2026.08</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Card 2 · 全局视角 · OCR Review</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="label-tag purple">
+        <span class="dot"></span>
+        <span>OVERVIEW · 全局视角</span>
+      </div>
+      <div class="page-num">02 / 08</div>
+    </div>
+
+    <h1 class="title">整体架构<br><span class="hl">6 阶段流水线</span></h1>
+    <p class="subtitle">自上而下的单次评审流水线：先装配环境，读取变更，过滤文件，并发评审，最后评论后处理。</p>
+
+    <div style="margin: 24px 0 28px;">
+      <div class="mono" style="margin-bottom: 12px;">PIPELINE · 核心流水线</div>
+      <div class="pipeline">
+        <div class="node green">
+          <div class="n">01</div>
+          <div class="lbl">BOOTSTRAP</div>
+        </div>
+        <div class="arrow"></div>
+        <div class="node blue">
+          <div class="n">02</div>
+          <div class="lbl">DIFF</div>
+        </div>
+        <div class="arrow"></div>
+        <div class="node purple">
+          <div class="n">03</div>
+          <div class="lbl">FILTER</div>
+        </div>
+        <div class="arrow"></div>
+        <div class="node orange">
+          <div class="n">04</div>
+          <div class="lbl">REVIEW</div>
+        </div>
+        <div class="arrow"></div>
+        <div class="node red">
+          <div class="n">05</div>
+          <div class="lbl">POST</div>
+        </div>
+        <div class="arrow"></div>
+        <div class="node cyan">
+          <div class="n">06</div>
+          <div class="lbl">OUTPUT</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card purple">
+      <div class="band"><span class="num">★</span>KEY PATH · 主路径</div>
+      <div class="body">
+        <p style="font-size: 28px; line-height: 1.5; font-weight: 500;">
+          Git 变更 → 逐文件并发评审 → 评论聚合 → 三件套输出
+        </p>
+      </div>
+    </div>
+
+    <div style="margin-top: 28px;">
+      <div class="mono" style="margin-bottom: 10px;">DECK · 本套共 6 节</div>
+      <div class="grid-3">
+        <div class="sub-block"><div class="label">03 · BOOTSTRAP</div><div class="desc">启动装配</div></div>
+        <div class="sub-block"><div class="label">04 · DIFF</div><div class="desc">数据源</div></div>
+        <div class="sub-block"><div class="label">05 · FILTER</div><div class="desc">过滤</div></div>
+        <div class="sub-block"><div class="label">06 · LOOP</div><div class="desc">并发评审</div></div>
+        <div class="sub-block"><div class="label">07 · POST</div><div class="desc">后处理</div></div>
+        <div class="sub-block"><div class="label">08 · OUTPUT</div><div class="desc">输出</div></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="source">来源：架构图 · 全局视角</div>
+      <div class="label"><span class="icon"></span>OCR Review 架构拆解 · 2026.08</div>
+    </div>
+  </div>
+</body>
+</html>

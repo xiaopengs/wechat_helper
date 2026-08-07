@@ -43,6 +43,7 @@ description: 小绿书（微信图文消息）内容创作全流程助手。覆�
 - 模板库：
   - **精简版** [templates/qm-greenbook/](templates/qm-greenbook/) — 8 张完整示例 + base.css + config.json + scripts/wrapper，无 data/ 或 prompts/
   - **全功能版** [templates/tie-tu-hao-monkey-notes/](templates/tie-tu-hao-monkey-notes/) — 精简版再加 data/ YAML + prompts/，适合需要 LLM 生成配文的工作流
+  - **架构图拆解（2026-08-07 新增）** [templates/architecture-ocr-greenbook/](templates/architecture-ocr-greenbook/) — 8 张信息图专门拆架构图 / 项目文档；**核心创新是「分节提取协议」**——不让 LLM 一次描述整张图，而是枚举区块 → 逐块结构化提取 → 校验缺失字段再补，从根上解决 OCR/描述在 "≥50 lines" 处被截断的问题。支持两种数据源（架构图 OCR / README+AGENTS 文档），两实例均已跑通（OCR Review + earendil-works/pi）
 - 流水线：`html/card_N.html` → `render.py` → `images/card_N.png` → `send_qq.mjs --config config.json` → QQ bot
 
 内容底线：**有干货**——每页必须有读者能带走的具体信息（数字/方法/结论），不堆砌空话
@@ -215,6 +216,7 @@ description: 小绿书（微信图文消息）内容创作全流程助手。覆�
 - **HTML 卡模板（精简版，2026-08-05 新增）**：[templates/qm-greenbook/](templates/qm-greenbook/) — 8 页项目拆解默认骨架，HTML+CSS+config.json+scripts/wrapper，无 data/ 子目录
 - **HTML 卡模板（全功能版，2026-08-05 接入 _lib/）**：[templates/tie-tu-hao-monkey-notes/](templates/tie-tu-hao-monkey-notes/) — 精简版再加 data/ YAML + prompts/，适合需要 LLM 生成配文的工作流
 - **HTML 卡共享脚本（2026-08-05 新增）**：[templates/_lib/](templates/_lib/) — 参数化 `render.py` + `send_qq.mjs`，所有 HTML 卡模板共用（`--base-dir` / `--config` / `--only N`），OPENID 与文案统一从 `config.json` 读
+- **架构图拆解模板（2026-08-07 新增）**：[templates/architecture-ocr-greenbook/](templates/architecture-ocr-greenbook/) — 工程蓝图风，6 节章节卡 + 截断问题根因解药。`prompts/section-enumerate.md`（Stage 1 枚举）+ `prompts/section-extract.md`（Stage 2 逐块提取）+ Stage 3 校验脚本 = 永不截断的可重试协议。两实例：OCR Review（架构图）+ earendil-works/pi（README+AGENTS.md）
 - **Prompt 哲学**：[references/prompt-philosophy.md](references/prompt-philosophy.md) — 严守原意 vs 走 LLM 美化的决策表(2026-06-17 新增)
 - Skill 设计规约：[references/skill-design-spec.md](references/skill-design-spec.md) — 复旦-微软论文三维质量标准
 - 生图脚本：[scripts/gen_media.sh](scripts/gen_media.sh) — 多模型 + 图像/视频/编辑，`--model gpt-image-2|gemini-*|doubao-seedance-*`

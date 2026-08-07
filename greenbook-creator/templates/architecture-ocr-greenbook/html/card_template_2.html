@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Card 2 · 全局视角</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body>
+  <!-- 模板骨架 · 全局视角 (card_2) · 流水线 + 一句话架构 -->
+  <div class="card">
+    <div class="header">
+      <div class="label-tag purple">
+        <span class="dot"></span>
+        <span>OVERVIEW · 全局视角</span>
+      </div>
+      <div class="page-num">02 / 08</div>
+    </div>
+
+    <h1 class="title">整体架构<br><span class="hl">TODO · 一句话定位</span></h1>
+    <p class="subtitle">TODO · 1-2 句整体描述（含输入→处理→输出的主线），30-50 字</p>
+
+    <!-- 流水线 5 节点 -->
+    <div style="margin: 24px 0 28px;">
+      <div class="mono" style="margin-bottom: 12px;">PIPELINE · 核心流水线</div>
+      <div class="pipeline">
+        <div class="node green">
+          <div class="n">01</div>
+          <div class="lbl">TODO · STAGE 1</div>
+        </div>
+        <div class="arrow"></div>
+        <div class="node blue">
+          <div class="n">02</div>
+          <div class="lbl">TODO · STAGE 2</div>
+        </div>
+        <div class="arrow"></div>
+        <div class="node purple">
+          <div class="n">03</div>
+          <div class="lbl">TODO · STAGE 3</div>
+        </div>
+        <div class="arrow"></div>
+        <div class="node orange">
+          <div class="n">04</div>
+          <div class="lbl">TODO · STAGE 4</div>
+        </div>
+        <div class="arrow"></div>
+        <div class="node red">
+          <div class="n">05</div>
+          <div class="lbl">TODO · STAGE 5</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主路径说明 -->
+    <div class="section-card purple">
+      <div class="band"><span class="num">★</span>KEY PATH · 主路径</div>
+      <div class="body">
+        <p style="font-size: 28px; line-height: 1.5; font-weight: 500;">
+          TODO · 用一句话（30 字内）说清楚主路径。如：「Git 变更 → 逐文件并发 → 评论聚合 → 三件套输出」
+        </p>
+      </div>
+    </div>
+
+    <!-- 共 6 个阶段 → 拆 6 张图 -->
+    <div style="margin-top: 28px;">
+      <div class="mono" style="margin-bottom: 10px;">DECK · 本套共 6 节</div>
+      <div class="grid-3">
+        <div class="sub-block"><div class="label">03 · TODO</div><div class="desc">入口</div></div>
+        <div class="sub-block"><div class="label">04 · TODO</div><div class="desc">数据</div></div>
+        <div class="sub-block"><div class="label">05 · TODO</div><div class="desc">过滤</div></div>
+        <div class="sub-block"><div class="label">06 · TODO</div><div class="desc">核心</div></div>
+        <div class="sub-block"><div class="label">07 · TODO</div><div class="desc">后处理</div></div>
+        <div class="sub-block"><div class="label">08 · TODO</div><div class="desc">输出</div></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="source">来源：github.com/owner/repo · architecture overview</div>
+      <div class="label"><span class="icon"></span>TODO · footer label</div>
+    </div>
+  </div>
+</body>
+</html>

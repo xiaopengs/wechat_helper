@@ -1,0 +1,143 @@
+# pi (earendil-works/pi) · 架构拆解实例
+# 提取协议：分节提取（section-enumerate + section-extract），从 README + AGENTS.md 按区块逐段提取
+# 验证：模板同时支持「架构图 OCR」与「README + AGENTS.md」两种数据源 ✓
+
+meta:
+  name: "Pi Agent Harness"
+  kicker: "架构拆解 · 2026.08"
+  stars_text: "84,811 Stars"
+  version: "active development"
+  source: "github.com/earendil-works/pi"
+  source_date: "2026-08-07"
+  source_kind: "README + AGENTS.md"
+
+cover:
+  tagline_left: "给 AI Coding"
+  tagline_right: "一套可拼装的 agent 工具包"
+  subline: "earendil-works 开源 · 84k stars · 5 包 monorepo | TypeScript + MIT"
+  central_node_label: "pi"
+  central_node_color: "blue"
+  central_node_desc: "AI agent harness · 5 包"
+  side_nodes:
+    - { label: "TUI",      sub: "终端渲染",   color: "green" }
+    - { label: "CODING",   sub: "交互 CLI",   color: "blue" }
+    - { label: "AGENT",    sub: "运行时",     color: "purple" }
+    - { label: "AI",       sub: "LLM 抽象",   color: "orange" }
+
+overview:
+  title: "5 包 monorepo，从终端到模型层"
+  description: "分层 monorepo：TUI 渲染 → Coding Agent 顶层 → Agent Core 运行时 → pi-ai 多 provider → pi-telemetry 观测。"
+  flow_steps:
+    - { name: "TUI",         color: "green" }
+    - { name: "CODING",      color: "blue" }
+    - { name: "AGENT CORE",  color: "purple" }
+    - { name: "PI-AI",       color: "orange" }
+    - { name: "TELEMETRY",   color: "red" }
+    - { name: "DEPLOY",      color: "cyan" }
+  key_path: "终端输入 → Coding Agent → Agent Core → pi-ai LLM 调用 → 反馈渲染"
+
+sections:
+  - section_index: 1
+    title_en: "PI-TUI"
+    title_zh: "终端 UI 库"
+    color: "green"
+    bullets:
+      - "差分渲染（diff rendering）"
+      - "低开销，支持大型对话历史"
+      - "声明式组件接口"
+      - "可独立于 pi 使用"
+    details: "终端 UI 与 agent 逻辑解耦，可被任何 TUI 项目复用"
+    sub_blocks:
+      - { label: "diff render", desc: "增量绘制" }
+      - { label: "components",  desc: "声明式组件" }
+      - { label: "low overhead", desc: "低 CPU" }
+      - { label: "standalone",   desc: "可独立使用" }
+
+  - section_index: 2
+    title_en: "PI-CODING-AGENT"
+    title_zh: "交互式编码代理 CLI"
+    color: "blue"
+    bullets:
+      - "交互式 CLI：npm i -g @earendil-works/pi-coding-agent"
+      - "自扩展（self extensible）"
+      - "AGENTS.md 项目级规则"
+      - "本地优先 / 模型无关（BYO API key）"
+    details: "用户直接打交道的顶层 CLI，包装 Agent Core"
+    sub_blocks:
+      - { label: "npm i -g",  desc: "一键安装" }
+      - { label: "self-ext",  desc: "可扩展" }
+      - { label: "AGENTS.md", desc: "项目规则" }
+      - { label: "BYO key",   desc: "模型无关" }
+
+  - section_index: 3
+    title_en: "PI-AGENT-CORE"
+    title_zh: "Agent 运行时"
+    color: "purple"
+    bullets:
+      - "工具调用（tool calling）"
+      - "状态管理（session / messages）"
+      - "Agent loop 调度"
+      - "可被多个上层（CLI / chat）复用"
+    details: "agent 的核心抽象，与 provider / UI 解耦"
+    sub_blocks:
+      - { label: "tool call",    desc: "工具调用" }
+      - { label: "state mgmt",   desc: "会话状态" }
+      - { label: "agent loop",   desc: "循环调度" }
+      - { label: "reusable",     desc: "上层复用" }
+
+  - section_index: 4
+    title_en: "PI-AI"
+    title_zh: "统一多 provider LLM API"
+    color: "orange"
+    bullets:
+      - "OpenAI / Anthropic / Google 统一接口"
+      - "流式响应（streaming）"
+      - "function calling 一致行为"
+      - "新 provider 一处接入"
+    details: "切换 LLM provider 不用改业务代码"
+    sub_blocks:
+      - { label: "OpenAI",     desc: "GPT 系列" }
+      - { label: "Anthropic",  desc: "Claude 系列" }
+      - { label: "Google",     desc: "Gemini 系列" }
+      - { label: "streaming",  desc: "流式响应" }
+
+  - section_index: 5
+    title_en: "PI-TELEMETRY"
+    title_zh: "供应商中立遥测"
+    color: "red"
+    bullets:
+      - "telemetry 契约 + 参考 adapter"
+      - "类型化 schema"
+      - "一致性测试（conformance）"
+      - "替换厂商：Sentry / OTel / 自建"
+    details: "把遥测从 agent 解耦，监控栈随便换"
+    sub_blocks:
+      - { label: "contracts",   desc: "遥测契约" }
+      - { label: "adapters",    desc: "参考实现" }
+      - { label: "schemas",     desc: "类型化" }
+      - { label: "conformance", desc: "一致性" }
+
+  - section_index: 6
+    title_en: "DEPLOY TRIO"
+    title_zh: "分发三件套"
+    color: "cyan"
+    bullets:
+      - "安装：npm i -g 或 ./pi-test.sh"
+      - "构建：npm run build:offline（离线模型数据）"
+      - "分享：pi-share-hf → Hugging Face"
+    details: "三件套各覆盖一个阶段：开发 → 离线构建 → 公开 session"
+    sub_blocks:
+      - { label: "安装",   sub: "npm / 脚本" }
+      - { label: "构建",   sub: "offline 模式" }
+      - { label: "分享",   sub: "Hugging Face" }
+
+output_trio:
+  - { label: "安装",   sub: "npm i -g / pi-test.sh",       color: "blue" }
+  - { label: "构建",   sub: "build:offline + standalone",  color: "orange" }
+  - { label: "分享",   sub: "pi-share-hf → HuggingFace",   color: "purple" }
+
+closing:
+  one_liner: "5 包 monorepo · 终端到模型全栈 · 可拼装"
+  protocol_note: "pi 验证：模板同时支持「README + AGENTS.md」数据源（无需架构图也能拆）✓"
+
+footer_label: "Pi Agent Harness 架构拆解 · 2026.08"

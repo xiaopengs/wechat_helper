@@ -1,0 +1,658 @@
+/* architecture-ocr-greenbook · 工程蓝图风
+   1080×1440 竖图，淡冷灰底 + 极淡网格 + 强色块章节卡 + 黑色硬阴影
+   复用：复制 card_1~8.html，改 innerHTML + 配色变量，跑 render.py 即出新图 */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* 底色与墨色 */
+  --bg:        #F8FAFC;
+  --bg-card:   #FFFFFF;
+  --grid:      #E2E8F0;
+  --ink:       #0F172A;
+  --ink-2:     #475569;
+  --ink-3:     #94A3B8;
+  --ink-mute:  #CBD5E1;
+
+  /* 6 个章节主色（按图中常见标签底色选） */
+  --green:     #10B981;  --green-d:   #047857;  --green-l:   #D1FAE5;
+  --blue:      #3B82F6;  --blue-d:    #1D4ED8;  --blue-l:    #DBEAFE;
+  --purple:    #8B5CF6;  --purple-d:  #6D28D9;  --purple-l:  #EDE9FE;
+  --orange:    #F59E0B;  --orange-d:  #B45309;  --orange-l:  #FEF3C7;
+  --red:       #EF4444;  --red-d:     #B91C1C;  --red-l:     #FEE2E2;
+  --cyan:      #06B6D4;  --cyan-d:    #0E7490;  --cyan-l:    #CFFAFE;
+  --pink:      #EC4899;  --pink-d:    #BE185D;  --pink-l:    #FCE7F3;
+  --gray:      #6B7280;  --gray-d:    #374151;  --gray-l:    #F3F4F6;
+
+  --border:    3px solid #0F172A;
+  --shadow-hard: 0 6px 0 #0F172A;
+  --shadow-soft: 4px 4px 0 rgba(15, 23, 42, 0.15);
+}
+
+html, body { width: 1080px; height: 1440px; overflow: hidden; }
+
+body {
+  font-family: 'Noto Sans SC', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  position: relative;
+}
+
+/* 极淡网格底 */
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.5;
+  z-index: 0;
+}
+
+/* 右上小圆点装饰（蓝图感） */
+body::after {
+  content: '';
+  position: absolute;
+  top: 36px;
+  right: 36px;
+  width: 80px;
+  height: 80px;
+  background-image: radial-gradient(circle, var(--ink-mute) 2px, transparent 2.5px);
+  background-size: 16px 16px;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 56px 64px;
+  z-index: 1;
+}
+
+/* ============ Header ============ */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.label-tag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 1.5px;
+  padding: 8px 18px;
+  background: var(--bg-card);
+  border: var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+}
+
+.label-tag .dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+}
+
+.label-tag.green .dot { background: var(--green); }
+.label-tag.blue .dot { background: var(--blue); }
+.label-tag.purple .dot { background: var(--purple); }
+.label-tag.orange .dot { background: var(--orange); }
+.label-tag.red .dot { background: var(--red); }
+.label-tag.cyan .dot { background: var(--cyan); }
+.label-tag.pink .dot { background: var(--pink); }
+.label-tag.gray .dot { background: var(--gray); }
+
+.page-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 12px;
+  letter-spacing: 2px;
+}
+
+/* ============ Chip / Badge ============ */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background: var(--bg-card);
+  color: var(--ink);
+  font-size: 22px;
+  font-weight: 700;
+  border: var(--border);
+  border-radius: 999px;
+  box-shadow: var(--shadow-soft);
+}
+
+.chip.green { background: var(--green-l); border-color: var(--green-d); }
+.chip.blue { background: var(--blue-l); border-color: var(--blue-d); }
+.chip.purple { background: var(--purple-l); border-color: var(--purple-d); }
+.chip.orange { background: var(--orange-l); border-color: var(--orange-d); }
+.chip.red { background: var(--red-l); border-color: var(--red-d); }
+.chip.cyan { background: var(--cyan-l); border-color: var(--cyan-d); }
+
+/* ============ Title ============ */
+.title {
+  font-size: 86px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.title .hl {
+  position: relative;
+  display: inline-block;
+}
+.title .hl::after {
+  content: '';
+  position: absolute;
+  left: -4px; right: -4px;
+  bottom: 8px;
+  height: 18px;
+  background: var(--green-l);
+  z-index: -1;
+  border-radius: 4px;
+}
+
+.title-sm {
+  font-size: 64px;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  font-weight: 900;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+
+.subtitle {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin-bottom: 32px;
+  max-width: 920px;
+}
+
+/* ============ Section Card（大色块章节卡） ============ */
+.section-card {
+  border: var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-hard);
+  background: var(--bg-card);
+  margin-bottom: 18px;
+}
+
+.section-card .band {
+  padding: 14px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-card .band.green { background: var(--green-d); }
+.section-card .band.blue { background: var(--blue-d); }
+.section-card .band.purple { background: var(--purple-d); }
+.section-card .band.orange { background: var(--orange-d); }
+.section-card .band.red { background: var(--red-d); }
+.section-card .band.cyan { background: var(--cyan-d); }
+.section-card .band.gray { background: var(--gray-d); }
+
+.section-card .band .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 50%;
+  font-size: 16px;
+  color: #fff;
+}
+
+.section-card .body {
+  padding: 20px 24px 24px;
+}
+
+.section-card .body h3 {
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.section-card .body .zh {
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--ink-2);
+  margin-bottom: 14px;
+}
+
+.section-card .body ul {
+  list-style: none;
+  padding: 0;
+}
+
+.section-card .body ul li {
+  font-size: 24px;
+  line-height: 1.55;
+  padding: 4px 0 4px 28px;
+  position: relative;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.section-card .body ul li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 16px;
+  width: 10px;
+  height: 10px;
+  background: var(--ink);
+  border-radius: 2px;
+}
+
+.section-card.green .body ul li::before { background: var(--green-d); }
+.section-card.blue .body ul li::before { background: var(--blue-d); }
+.section-card.purple .body ul li::before { background: var(--purple-d); }
+.section-card.orange .body ul li::before { background: var(--orange-d); }
+.section-card.red .body ul li::before { background: var(--red-d); }
+.section-card.cyan .body ul li::before { background: var(--cyan-d); }
+
+.section-card .details {
+  margin-top: 14px;
+  padding: 10px 16px;
+  background: var(--gray-l);
+  border-left: 4px solid var(--ink);
+  border-radius: 6px;
+  font-size: 22px;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
+/* 子块网格 */
+.sub-grid {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+.sub-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.sub-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.sub-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+.sub-block {
+  background: var(--bg-card);
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.sub-block .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.sub-block .desc {
+  font-size: 18px;
+  color: var(--ink-2);
+  line-height: 1.3;
+}
+
+/* ============ Pipeline / Flow ============ */
+.pipeline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 18px;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.pipeline .node {
+  flex: 1;
+  background: var(--bg-card);
+  border: var(--border);
+  border-radius: 14px;
+  padding: 14px 8px;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+}
+
+.pipeline .node .n {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink-3);
+}
+
+.pipeline .node .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.pipeline .node.green { background: var(--green-l); border-color: var(--green-d); }
+.pipeline .node.green .lbl { color: var(--green-d); }
+.pipeline .node.blue { background: var(--blue-l); border-color: var(--blue-d); }
+.pipeline .node.blue .lbl { color: var(--blue-d); }
+.pipeline .node.purple { background: var(--purple-l); border-color: var(--purple-d); }
+.pipeline .node.purple .lbl { color: var(--purple-d); }
+.pipeline .node.orange { background: var(--orange-l); border-color: var(--orange-d); }
+.pipeline .node.orange .lbl { color: var(--orange-d); }
+.pipeline .node.red { background: var(--red-l); border-color: var(--red-d); }
+.pipeline .node.red .lbl { color: var(--red-d); }
+
+.pipeline .arrow {
+  flex: 0 0 18px;
+  height: 4px;
+  background: var(--ink);
+  position: relative;
+  border-radius: 2px;
+}
+
+.pipeline .arrow::after {
+  content: '';
+  position: absolute;
+  right: -2px;
+  top: -6px;
+  width: 0; height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 12px solid var(--ink);
+}
+
+/* ============ 横向数据 / grid ============ */
+.row {
+  display: flex;
+  gap: 14px;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+/* ============ Trio（输出三件套） ============ */
+.trio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.trio .cell {
+  background: var(--bg-card);
+  border: var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow-hard);
+  padding: 22px 18px;
+  text-align: center;
+}
+
+.trio .cell .lab {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.trio .cell .sub {
+  font-size: 20px;
+  color: var(--ink-2);
+  line-height: 1.4;
+}
+
+.trio .cell.blue { background: var(--blue-l); border-color: var(--blue-d); }
+.trio .cell.blue .lab { color: var(--blue-d); }
+.trio .cell.purple { background: var(--purple-l); border-color: var(--purple-d); }
+.trio .cell.purple .lab { color: var(--purple-d); }
+.trio .cell.orange { background: var(--orange-l); border-color: var(--orange-d); }
+.trio .cell.orange .lab { color: var(--orange-d); }
+.trio .cell.green { background: var(--green-l); border-color: var(--green-d); }
+.trio .cell.green .lab { color: var(--green-d); }
+.trio .cell.cyan { background: var(--cyan-l); border-color: var(--cyan-d); }
+.trio .cell.cyan .lab { color: var(--cyan-d); }
+.trio .cell.red { background: var(--red-l); border-color: var(--red-d); }
+.trio .cell.red .lab { color: var(--red-d); }
+
+/* ============ Closing strip（底部收束条） ============ */
+.closing {
+  background: var(--ink);
+  color: #fff;
+  border-radius: 18px;
+  padding: 18px 22px;
+  font-size: 22px;
+  line-height: 1.5;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.closing .dot {
+  width: 36px;
+  height: 36px;
+  background: var(--green);
+  border-radius: 50%;
+  border: 3px solid #fff;
+  flex-shrink: 0;
+}
+
+.closing .text b { color: var(--green-l); font-weight: 900; }
+
+/* ============ Code (mono terminal) ============ */
+.code {
+  background: var(--ink);
+  color: #E2E8F0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  border: 3px solid var(--ink);
+  line-height: 1.5;
+}
+
+.code .k { color: var(--orange); }
+.code .s { color: var(--green); }
+.code .c { color: var(--ink-3); font-style: italic; }
+.code .p { color: var(--cyan); }
+
+/* ============ Footer ============ */
+.footer {
+  position: absolute;
+  bottom: 48px;
+  left: 64px;
+  right: 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-size: 18px;
+  color: var(--ink-3);
+}
+
+.footer .source {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+
+.footer .label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  color: var(--ink-2);
+  font-weight: 700;
+}
+
+.footer .label .icon {
+  width: 22px;
+  height: 22px;
+  background: var(--green);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+}
+
+/* ============ Warn row ============ */
+.warn-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--orange-l);
+  border: var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-soft);
+}
+
+.warn-row .icon {
+  width: 40px;
+  height: 40px;
+  background: var(--orange);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.warn-row .text {
+  font-size: 22px;
+  line-height: 1.45;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.warn-row .text b {
+  color: var(--orange-d);
+  font-weight: 900;
+}
+
+/* ============ Bullet list (普通卡片用) ============ */
+.bullet-list {
+  list-style: none;
+  padding: 0;
+}
+.bullet-list li {
+  font-size: 24px;
+  line-height: 1.5;
+  padding: 6px 0 6px 28px;
+  position: relative;
+  font-weight: 500;
+}
+.bullet-list li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 18px;
+  width: 10px;
+  height: 10px;
+  background: var(--ink);
+  border-radius: 50%;
+}
+.bullet-list.green li::before { background: var(--green-d); }
+.bullet-list.blue li::before { background: var(--blue-d); }
+.bullet-list.purple li::before { background: var(--purple-d); }
+.bullet-list.orange li::before { background: var(--orange-d); }
+.bullet-list.cyan li::before { background: var(--cyan-d); }
+
+/* 等宽小字 */
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  color: var(--ink-2);
+}
+
+/* 中心节点（封面用） */
+.central-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-card);
+  border: var(--border);
+  border-radius: 24px;
+  padding: 22px 32px;
+  box-shadow: var(--shadow-hard);
+}
+
+.central-node .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 1px;
+}
+
+.central-node .desc {
+  font-size: 20px;
+  color: var(--ink-2);
+  margin-top: 4px;
+}
+
+/* 侧节点（封面四角） */
+.side-node {
+  background: var(--bg-card);
+  border: 3px solid var(--ink);
+  border-radius: 16px;
+  padding: 14px 18px;
+  box-shadow: var(--shadow-soft);
+}
+
+.side-node .lab {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.side-node .sub {
+  font-size: 18px;
+  color: var(--ink-2);
+  margin-top: 2px;
+}
+
+.side-node.green { background: var(--green-l); border-color: var(--green-d); }
+.side-node.green .lab { color: var(--green-d); }
+.side-node.blue { background: var(--blue-l); border-color: var(--blue-d); }
+.side-node.blue .lab { color: var(--blue-d); }
+.side-node.purple { background: var(--purple-l); border-color: var(--purple-d); }
+.side-node.purple .lab { color: var(--purple-d); }
+.side-node.orange { background: var(--orange-l); border-color: var(--orange-d); }
+.side-node.orange .lab { color: var(--orange-d); }

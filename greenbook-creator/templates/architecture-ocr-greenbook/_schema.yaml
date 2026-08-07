@@ -1,0 +1,96 @@
+# architecture-ocr-greenbook · 数据 schema
+# 8 张信息图：1 封面 + 1 全局视角 + 6 章节卡 + 1 输出总结
+# 输入源：架构图（OCR 提取） / README+AGENTS（文档提取） / 两者混合
+
+# ============================================================
+# meta · 项目元数据（封面 / 全局用）
+# ============================================================
+meta:
+  name: "项目名（必填，如 Open Code Review）"  # P1 中央大字
+  kicker: "顶部小标，10 字以内（架构拆解 · 2026.08）"
+  stars_text: "12,309 Stars*（可选，* 表示数据源截止日期）"
+  version: "v0.1.0（可选）"
+  source: "github.com/owner/repo（每页 footer 显示）"
+  source_date: "2026-08-07（仅当 stars_text 含 * 时显示）"
+  source_kind: "架构图 | README+AGENTS | 混合"
+
+# ============================================================
+# cover · 封面自由字段
+# ============================================================
+cover:
+  tagline_left: "封面左半主标，6-12 字（如 给 AI 写一份）"
+  tagline_right: "封面右半主标，强调色，6-14 字（如 可审计的代码评审）"
+  subline: "封面底部一行注解，建议两短句用 ｜ 或 ，分隔"
+  central_node_label: "中央图标文字（如 ocr review / pi-agent-harness）"
+  central_node_color: "blue|purple|green|orange|red|cyan（默认 blue）"
+  side_nodes:                # 4 个侧节点（颜色映射图中的关键产出）
+    - { label: "入口",   sub: "CLI / API",   color: "blue" }
+    - { label: "数据源", sub: "Git / 文件",  color: "green" }
+    - { label: "运行时", sub: "Agent 循环", color: "purple" }
+    - { label: "输出",   sub: "报告 / 日志", color: "orange" }
+
+# ============================================================
+# overview · 全局视角（P2）
+# ============================================================
+overview:
+  title: "整体架构：一句话定位（不超过 18 字）"
+  description: "1-2 句整体描述，30-50 字，含输入→处理→输出的主线"
+  flow_steps:                 # 3-5 个核心节点（流水线大写名词）
+    - { name: "BOOTSTRAP",   color: "green" }
+    - { name: "DIFF READ",   color: "blue" }
+    - { name: "FILTER",      color: "purple" }
+    - { name: "REVIEW LOOP", color: "orange" }
+    - { name: "OUTPUT",      color: "red" }
+  key_path: "一句话总结主路径（30 字内）"
+
+# ============================================================
+# sections · 6 张章节卡（P3-P8，对应图中所有可视区块）
+# 字段语义见 prompts/section-extract.md 的 Stage 2 输出
+# ============================================================
+sections:
+  - section_index: 1
+    title_en: "BOOTSTRAP"
+    title_zh: "装配运行环境"
+    color: "green"
+    bullets:                    # 3-5 条要点，每条 5-20 字
+      - "解析模型端点"
+      - "加载模板和工具注册表"
+      - "应用系统规则"
+    details: "启动时一次性完成，无运行时副作用"  # 1 句话总结，10-30 字
+    sub_blocks:                 # 可选：图中此区块内的子块
+      - { label: "templates", desc: "提示词模板" }
+      - { label: "tools",     desc: "工具注册表" }
+
+  - section_index: 2
+    title_en: "DIFF PROVIDER"
+    title_zh: "读取 Git 变更"
+    color: "blue"
+    bullets:
+      - "支持 workspace 模式"
+      - "支持单 commit"
+      - "支持 commit range"
+    details: "三种模式覆盖绝大多数 PR/MR 评审场景"
+    sub_blocks: []
+
+  # ... 6 个 section 字段完全一致，逐项对应 P3-P8 ...
+
+# ============================================================
+# output_trio · P8 末尾的"输出三件套"
+# 对应原图底部三栏（OCR Review 的 Text/JSON + Warnings/Budget + Session JSONL）
+# ============================================================
+output_trio:
+  - { label: "评审结果",   sub: "Text / JSON", color: "blue" }
+  - { label: "失败与预算", sub: "Warnings / Budget", color: "orange" }
+  - { label: "完整记录",   sub: "Session JSONL", color: "purple" }
+
+# ============================================================
+# closing · 末页底部收束
+# ============================================================
+closing:
+  one_liner: "一句话总结这套架构的最大特点（如：分节提取协议 · 无截断 · 可重试）"
+  protocol_note: "如适用，可加一行方法论说明（OCR Review 这张图无）"
+
+# ============================================================
+# footer
+# ============================================================
+footer_label: "Open Code Review 架构拆解（默认，可改成 项目名 + 第几期）"
