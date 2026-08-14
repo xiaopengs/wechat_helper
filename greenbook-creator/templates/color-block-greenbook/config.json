@@ -1,0 +1,17 @@
+{
+  "openid": "5588AB8B76D9A22624886F0B90FE98C1",
+  "img_dir": "images",
+  "cover_text": "🟨 色块模板 · 示例（Codex 国产平替 10 选）\n\nClaude Code / Codex 好用，但不一定好开始——访问、账号、费用、门槛绕不开。\n这份清单按工作场景挑国内 Agent：编程主力 / 日常提效 / 办公自动化 / 智能体应用 / 国内版 OpenClaw。\n\n10 张图速通👇\n1️⃣ 封面｜10 个国产平替清单\n2️⃣ 痛点｜国外工具 4 件事绕不开\n3️⃣ 背景｜分别是谁家的\n4️⃣ 编程主力｜Trae / CodeBuddy / Qoder\n5️⃣ 日常提效｜Comate / ZCode\n6️⃣ 办公 Agent｜WorkBuddy / Marvis\n7️⃣ 平台 Agent｜扣子 / 扣子编程\n8️⃣ 对照｜QClaw = 国内版 OpenClaw\n9️⃣ 建议｜按工作选，不按热度选\n🔟 提醒｜别神化也别低估",
+  "captions": [
+    "01/10 封面｜10 个国产平替\nClaude Code / Codex 好用，但不一定好开始。\n国外 Agent 常卡在访问、账号、费用和门槛，先用国内工具跑起来更现实。\nWorkBuddy / QClaw / Trae / 扣子 / 扣子编程 / Qoder / CodeBuddy / Comate / ZCode / Marvis",
+    "02/10 痛点｜国外工具强，但这 4 件事绕不开\n① 访问限制不稳定 ② 账号订阅麻烦 ③ 模型费用不低 ④ 使用门槛偏高\n找平替不是国外工具不好，而是你需要更容易开始、能长期稳定用的工具。",
+    "03/10 背景｜先看是谁家的\n腾讯系：WorkBuddy / QClaw / CodeBuddy / Marvis\n字节系：Trae / 扣子 / 扣子编程\n阿里：Qoder ｜ 百度：Comate ｜ 智谱：ZCode\n公司背景只做参考，真正要看任务能不能稳定跑完。",
+    "04/10 编程主力｜想让 AI 改代码先看这 3 个\nTrae（字节）更像 AI IDE，适合前端/小工具/Vibe Coding 入门\nCodeBuddy（腾讯云）全链路开发感更强，适合业务原型和活动页\nQoder（阿里）适合测 agentic coding，可当更大任务的候选",
+    "05/10 日常提效｜不一定要全自动\nBaidu Comate：代码补全、智能问答、单测生成\nZCode：放候选池做对比测试\n能读懂老代码、修报错、补单测，就已经很值。",
+    "06/10 办公 Agent｜别和编程工具硬比\nWorkBuddy：更像个人工作 Agent\nMarvis：办公自动化候选，用真实工作流测\n场景：整理资料 / 写文案总结 / 表格分析 / 自动执行重复任务",
+    "07/10 平台型 Agent｜想搭应用看扣子\n扣子：智能体、工作流、插件调用、知识库问答\n扣子编程：更偏应用搭建 + 代码结合\n适合做客服机器人 / 内容工作流 / AI 小应用",
+    "08/10 对照｜QClaw 就是国内版 OpenClaw\n适合想要 OpenClaw / Claude Code 那种 agentic coding 工作流的人。\n重点看：读项目 / 改文件 / 跑任务 / 真实仓库验证 / 连续修正能力",
+    "09/10 建议｜按你的工作来选\n编程主力 → Trae / CodeBuddy / Qoder\n日常提效 → Comate / ZCode\n办公自动化 → WorkBuddy / Marvis\n智能体应用 → 扣子 / 扣子编程\n国内版 OpenClaw → QClaw",
+    "10/10 提醒｜别神化也别低估\n小项目多让 AI 做 · 大项目先改局部 · 每次看 diff · 关键路径自己验收 · 能跑测试就跑测试\nAI Agent 不是魔法按钮，是速度很快、需要你会验收的实习生。"
+  ]
+}

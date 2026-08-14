@@ -7,6 +7,7 @@ description: 小绿书（微信图文消息）内容创作全流程助手。覆�
 - 🌿 **「小清新」** → `templates/qm-greenbook/`（同款卡通精简版 · 手写 HTML 最快上手 · 无 YAML）
 - 📐 **「蓝图 / 结构化美学」** → `templates/architecture-ocr-greenbook/`（工程冷灰风 · 拆架构图/文档 · 分节提取协议永不截断）
 - 🗺️ **「全景」** → `templates/repo-overview/`（6P Pillow 数据风 · 开源项目元信息全景）
+- 🟨 **「色块」** → `templates/color-block-greenbook/`（米黄底复古网格 · 黑黄强调 · 选型/盘点/对比清单风 · 2026-08-14 新增）
 
 决策规则详细看 SKILL.md 「🧭 模板选择」节。使用时自动读取 references/ 下的设计系统和文案模板。
 ---
@@ -63,6 +64,7 @@ description: 小绿书（微信图文消息）内容创作全流程助手。覆�
 | 🌿 **小清新** | `qm-greenbook/` | 同款卡通精简版 · 手写 HTML · 无 YAML | 「用小清新做个 XX」「精简版」 |
 | 📐 **蓝图 / 结构化美学** | `architecture-ocr-greenbook/` | 工程冷灰 · 拆架构图/文档 · 永不截断 | 「拆架构图」「结构化美学风」 |
 | 🗺️ **全景** | `repo-overview/` | 6P Pillow 数据风 · 开源项目元信息 | 「全景拆解」「6P 项目图」 |
+| 🟨 **色块** | `color-block-greenbook/` | 米黄底复古网格 · 黑黄强调 · 选型/盘点/对比清单 | 「色块模板」「10 个平替」「怎么选」 |
 
 **场景兜底**（用户没说昵称时说功能）：
 
@@ -71,6 +73,7 @@ description: 小绿书（微信图文消息）内容创作全流程助手。覆�
 拆 GitHub 项目 + 想让 LLM 自动配文                 → 🐒 猴子
 拆 GitHub 项目 + 想手写 HTML / 最快上手           → 🌿 小清新
 只要 6 页 + Pillow 数据风                         → 🗺️ 全景
+选型盘点 / 工具对比 / 国产平替 / 清单类内容         → 🟨 色块
 ```
 - 流水线：`html/card_N.html` → `render.py` → `images/card_N.png` → `send_qq.mjs --config config.json` → QQ bot
 
@@ -245,6 +248,7 @@ description: 小绿书（微信图文消息）内容创作全流程助手。覆�
 - **HTML 卡模板（全功能版，2026-08-05 接入 _lib/）**：[templates/tie-tu-hao-monkey-notes/](templates/tie-tu-hao-monkey-notes/) — 精简版再加 data/ YAML + prompts/，适合需要 LLM 生成配文的工作流
 - **HTML 卡共享脚本（2026-08-05 新增）**：[templates/_lib/](templates/_lib/) — 参数化 `render.py` + `send_qq.mjs`，所有 HTML 卡模板共用（`--base-dir` / `--config` / `--only N`），OPENID 与文案统一从 `config.json` 读
 - **架构图拆解模板（2026-08-07 新增）**：[templates/architecture-ocr-greenbook/](templates/architecture-ocr-greenbook/) — 工程蓝图风，6 节章节卡 + 截断问题根因解药。`prompts/section-enumerate.md`（Stage 1 枚举）+ `prompts/section-extract.md`（Stage 2 逐块提取）+ Stage 3 校验脚本 = 永不截断的可重试协议。两实例：OCR Review（架构图）+ earendil-works/pi（README+AGENTS.md）
+- **色块模板（2026-08-14 新增）**：[templates/color-block-greenbook/](templates/color-block-greenbook/) — 米黄底复古网格 · 黑黄强调 · 选型/盘点/对比清单风。由「小克碎碎谈」《Codex 国产平替》10 页沉淀，10 张示例卡已填好，页数灵活（5-12 页），组件：tag-grid / tool-box / pair-row / pick-row / check-list / conclusion / quote
 - **Prompt 哲学**：[references/prompt-philosophy.md](references/prompt-philosophy.md) — 严守原意 vs 走 LLM 美化的决策表(2026-06-17 新增)
 - Skill 设计规约：[references/skill-design-spec.md](references/skill-design-spec.md) — 复旦-微软论文三维质量标准
 - 生图脚本：[scripts/gen_media.sh](scripts/gen_media.sh) — 多模型 + 图像/视频/编辑，`--model gpt-image-2|gemini-*|doubao-seedance-*`
