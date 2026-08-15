@@ -3,6 +3,7 @@
 > **设计哲学**:米黄底 + 复古网格 + 黑黄强调 + 色块标签 + 硬阴影描边。「清单式选型 / 盘点 / 对比」类内容的默认模板。
 > **素材源**:由公众号「问一问·小克碎碎谈」《推荐 10 个 Codex 国产平替》系列 10 页视觉风格沉淀而来。
 > **首次沉淀项目**:Codex 国产平替 10 选（10 页完整示例已填好）。
+> **左下角水印**:默认 `铁爪爪Ai`（2026-08-15 起），做新项目时如需要可改成自己的品牌名。
 
 ---
 
@@ -134,6 +135,7 @@ node scripts/send_qq.mjs --only 3     # 只重发第 3 张
 ## 注意事项
 
 - **页码必须手改**：`<div class="page-num"><strong>02</strong> / 10</div>` 的 `/10` 要跟随总页数
+- **左下角水印**：每页 `.watermark` 默认 `铁爪爪Ai`，替换成自己品牌时全局搜 `铁爪爪Ai` 改掉即可
 - **复制到 output/ 后必须改 wrapper 绝对路径**（2026-08-14 踩坑）：`templates/` 里的 `scripts/render.py` / `send_qq.mjs` 用相对路径找 `_lib/`，模板内能跑；但 `cp -r` 到 workspace 根或 `output/` 下后 `parent.parent.parent` 指向错位 → 报 `can't open file .../_lib/render.py`。**复制后把两个 wrapper 改成指向 `templates/_lib/` 的绝对路径**（参照 output/dsh-greenbook 的写法）
 - **字体**：Noto Sans SC + JetBrains Mono（Google Fonts），首次渲染需联网；沙箱限速时可能白字，可本地化
 - **对比模板**：qm-greenbook 是白底圆角卡通风（多色块），色块模板是米黄底复古网格风（黑黄强调）——两者组件 class 不通用，别混用
