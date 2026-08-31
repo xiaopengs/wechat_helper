@@ -5,3 +5,4 @@
 | 2026-05-18~2026-05-24 | [report.jpg](weekly/2026-05-18~2026-05-24/report.jpg) | [data.json](weekly/2026-05-18~2026-05-24/data.json) | [diagnosis.md](weekly/2026-05-18~2026-05-24/diagnosis.md) |  |
 | 2026-06-01~2026-06-07 | [report.jpg](weekly/2026-06-01~2026-06-07/report.jpg) | [data.json](weekly/2026-06-01~2026-06-07/data.json) | [diagnosis.md](weekly/2026-06-01~2026-06-07/diagnosis.md) |  |
 | 2026-06-08~2026-06-14 | [report.jpg](weekly/2026-06-08~2026-06-14/report.jpg) | [data.json](weekly/2026-06-08~2026-06-14/data.json) | [diagnosis.md](weekly/2026-06-08~2026-06-14/diagnosis.md) |  |
+| 2026-08-10~2026-08-16 | [report.jpg](weekly/2026-08-10~2026-08-16/report.jpg) | [data.json](weekly/2026-08-10~2026-08-16/data.json) | [diagnosis.md](weekly/2026-08-10~2026-08-16/diagnosis.md) | 推荐占比回升至36%，截图来源被截断 |

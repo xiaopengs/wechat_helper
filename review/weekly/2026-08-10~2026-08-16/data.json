@@ -1,0 +1,61 @@
+{
+  "account": "AI知识体系礼记",
+  "week_range": "2026-08-10~2026-08-16",
+  "week_label": "2026-W33",
+  "report_source": "创作者周报",
+  "extracted_at": "2026-09-01T07:28:00+08:00",
+  "raw_image": "report.jpg",
+  "output": {
+    "total_posts": 2,
+    "original_articles": 2,
+    "image_posts": null
+  },
+  "traffic": {
+    "total_views": 75,
+    "prev_week_views": 158,
+    "wow_change_pct": -52.5,
+    "source_breakdown": {
+      "recommend": { "views": 27, "pct": 36.0 },
+      "chat_session": { "views": null, "pct": 29.3 },
+      "search": { "views": null, "pct": null },
+      "subscription_msg": { "views": null, "pct": null },
+      "friend_share": { "views": null, "pct": null },
+      "profile": { "views": null, "pct": null },
+      "other": { "views": null, "pct": 16.0 }
+    },
+    "source_note": "截图底部被截断，来源合计仅 81.3%（推荐36.0+聊天会话29.3+其它16.0），搜索/订阅等来源未显示"
+  },
+  "recommendation": {
+    "recommended_contents": 4,
+    "recommended_views": 27,
+    "top_recommended_article": {
+      "title": "google IO-模型正在从云端\"下凡\"",
+      "weekly_views": 31,
+      "recommend_views": 19
+    }
+  },
+  "top_articles": [
+    {
+      "rank": 1,
+      "title": "google IO-模型正在从云端\"下凡\"",
+      "total_views": 31,
+      "recommend_views": 19,
+      "shares": null
+    }
+  ],
+  "shares": {
+    "total": null,
+    "top_article_shares": null
+  },
+  "followers": {
+    "total": null,
+    "net_change": null,
+    "wow_change_pct": null,
+    "top_interests": null
+  },
+  "comments": {
+    "reserved_count": null,
+    "hot_topics": []
+  },
+  "notes": "周报截图仅露出上半部分：发布2篇（全原创）、4篇获推荐带来27阅读、头部文章31阅（推荐来源19）。总阅读75，较上周158下降52.5%。推荐占比回升至36%（相对6月W23的11.6%），但绝对量仍低。账号名截图显示「礼记」。"
+}
