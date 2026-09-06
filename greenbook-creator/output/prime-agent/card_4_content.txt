@@ -1,0 +1,13 @@
+[标题] 原理架构:两大核心抽象
+[副标题] RLM + Continual Harness
+[架构图 - 流程]
+任务+上下文 → 父模型 → 持久 IPython Kernel → 文件/数据/Shell
+                        ↓ 调用 ↓ 派生
+                  Python Skills / rlm() 子代理 → agent_message → 父模型 → 答案
+[两个抽象卡片]
+抽象1: RLM(递归语言模型) —— 上下文当变量、子代理当函数调用,跑在持久 REPL
+抽象2: Continual Harness —— 补充 prompt/记忆/skill 规格作为持久状态,小步证据更新
+[双层结构说明]
+TypeScript 宿主:provider 调用/会话持久化/调度/安全策略
+IPython Kernel:模型可编程表面,Python 状态跨压缩存活
+[数据来源] 来源:docs/rlm.md + docs/architecture.md 2026-08-17

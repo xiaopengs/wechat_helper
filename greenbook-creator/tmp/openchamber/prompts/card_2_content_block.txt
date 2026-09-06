@@ -1,0 +1,13 @@
+[标题] 项目速览
+[副标题] 8 个核心数据一次看清
+[数据网格]
+- ⭐ Stars: 7,980（接近 8k）
+- 🍴 Forks: 850
+- 👥 贡献者: 20+（核心作者 btriapitsyn 1,579 commits）
+- 📦 License: MIT（可商用）
+- 📝 语言: TypeScript 主导（17.1MB 代码）+ JavaScript 4.3MB
+- 📅 创建: 2025-09-11 · 最近更新: 2026-08-10（活跃）
+- 🔖 版本: v1.18.1（2026-08-04 发布，迭代极快）
+- 🏷️ 定位: OpenCode AI agent 的桌面 + Web 界面
+[官网] openchamber.dev · GitHub: openchamber/openchamber
+[数据来源] GitHub API + README (2026-08-10)

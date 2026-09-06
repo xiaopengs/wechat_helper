@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  /* ===== guizang Style A · 编辑墨水 · 主题: 靛蓝瓷 (Indigo Porcelain) · 技术拆解版 ===== */
+  :root{
+    --ink:#0a1f3d; --ink-rgb:10,31,61;
+    --paper:#f1f3f5; --paper-rgb:241,243,245;
+    --paper-tint:#e4e8ec; --ink-tint:#152a4a;
+    --mono:"DejaVu Sans Mono","Noto Sans Mono CJK SC",monospace;
+    --serif-zh:"Noto Serif CJK SC","Noto Serif SC",serif;
+    --sans-zh:"Noto Sans CJK SC","Noto Sans SC",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#222;font-family:var(--sans-zh);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .card{width:1080px;height:1440px;position:relative;overflow:hidden;display:flex;flex-direction:column;padding:64px 72px 56px 72px;margin:24px auto}
+  .card.light{color:var(--ink);background:var(--paper)}
+  .card.dark{color:var(--paper);background:var(--ink)}
+
+  .chrome{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:15px;letter-spacing:.22em;text-transform:uppercase;opacity:.6}
+  .chrome .sep{width:48px;height:1px;background:currentColor;opacity:.4}
+  .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;font-family:var(--mono);font-size:14px;letter-spacing:.18em;text-transform:uppercase;opacity:.5;padding-top:36px}
+  .foot .title{font-family:var(--serif-zh);font-weight:400;letter-spacing:.05em;text-transform:none;opacity:.8;font-size:17px}
+  .kicker{font-family:var(--mono);font-size:15px;letter-spacing:.3em;text-transform:uppercase;opacity:.6;margin-bottom:22px}
+  .rule{width:100%;height:1px;background:currentColor;opacity:.25;margin:26px 0}
+  .h1-zh{font-family:var(--serif-zh);font-weight:700;font-size:56px;line-height:1.12;letter-spacing:-.005em}
+  .h2-zh{font-family:var(--serif-zh);font-weight:600;font-size:36px;line-height:1.2}
+  .body-zh{font-family:var(--sans-zh);font-weight:400;font-size:24px;line-height:1.65;opacity:.85}
+  .lead{font-family:var(--serif-zh);font-weight:400;font-size:32px;line-height:1.5;opacity:.88}
+  .meta{font-family:var(--mono);font-size:14px;letter-spacing:.16em;text-transform:uppercase;opacity:.6}
+  .mid-num{font-family:var(--serif-zh);font-weight:700;font-size:60px;line-height:.95;letter-spacing:-.02em;font-feature-settings:"tnum"}
+  .en{font-family:var(--serif-zh);font-style:italic;font-weight:500}
+  .stat{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+  .stat .n{font-family:var(--serif-zh);font-weight:700;font-size:56px;line-height:.9;letter-spacing:-.02em;font-feature-settings:"tnum"}
+  .stat .l{font-family:var(--sans-zh);font-size:19px;opacity:.7;margin-top:8px;font-weight:400;line-height:1.45}
+  .stat .m{font-family:var(--mono);font-size:13px;letter-spacing:.22em;text-transform:uppercase;opacity:.5;margin-bottom:4px}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:32px 48px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:28px 32px}
+  .grid-4{display:grid;grid-template-columns:1fr 1fr;gap:26px 40px}
+  .col{display:flex;flex-direction:column;gap:18px}
+  .fill{flex:1}
+  .callout{padding:24px 28px;border-left:3px solid currentColor;font-family:var(--serif-zh);font-size:26px;line-height:1.55;opacity:.92}
+  .card.light .callout{background:rgba(var(--ink-rgb),.05)}
+  .card.dark .callout{background:rgba(var(--paper-rgb),.07)}
+  .callout .cite{display:block;margin-top:14px;font-family:var(--mono);font-size:13px;letter-spacing:.2em;text-transform:uppercase;opacity:.6}
+  code{font-family:var(--mono);font-size:22px;background:rgba(var(--ink-rgb),.07);padding:2px 8px;border-radius:4px}
+  .dark code{background:rgba(var(--paper-rgb),.1)}
+
+  /* 流水线（pipeline） */
+  .pipe{display:flex;align-items:stretch;gap:10px}
+  .pipe .step-p{flex:1;border:1px solid currentColor;opacity:.85;padding:14px 12px;text-align:center;display:flex;flex-direction:column;justify-content:center;gap:4px}
+  .pipe .step-p .pn{font-family:var(--mono);font-size:12px;letter-spacing:.18em;opacity:.55}
+  .pipe .step-p .pt{font-family:var(--sans-zh);font-weight:600;font-size:18px;line-height:1.3}
+  .pipe .step-p .pd{font-family:var(--sans-zh);font-size:13px;line-height:1.35;opacity:.65}
+  .pipe .arr{align-self:center;font-family:var(--mono);opacity:.5;font-size:18px}
+
+  /* 时序（timeline vertical） */
+  .tl{display:flex;flex-direction:column}
+  .tl .tstep{display:flex;gap:20px;align-items:flex-start;position:relative;padding-bottom:14px}
+  .tl .tstep::before{content:"";position:absolute;left:15px;top:34px;bottom:0;width:1px;background:currentColor;opacity:.18}
+  .tl .tstep:last-child::before{display:none}
+  .tl .tnum{font-family:var(--mono);font-size:14px;width:30px;height:30px;border:1px solid currentColor;border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:.75;flex-shrink:0}
+  .tl .tt{font-family:var(--sans-zh);font-weight:600;font-size:22px;line-height:1.4}
+  .tl .td{font-family:var(--sans-zh);font-size:18px;line-height:1.55;opacity:.72;margin-top:2px}
+
+  /* 工具网格 */
+  .tools{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
+  .tool{display:flex;gap:14px;align-items:flex-start;border-bottom:1px solid currentColor;opacity:.3;padding-bottom:12px}
+  .tool .tn{font-family:var(--mono);font-weight:600;font-size:19px;white-space:nowrap;opacity:.95}
+  .tool .td{font-family:var(--sans-zh);font-size:16px;line-height:1.45;opacity:.7;margin-top:1px}
+  ul{list-style:none}
+  ul li{position:relative;padding-left:30px;font-family:var(--sans-zh);font-size:22px;line-height:1.6;opacity:.86;margin-bottom:12px}
+  ul li::before{content:"";position:absolute;left:0;top:13px;width:14px;height:1px;background:currentColor;opacity:.5}
+  .display-zh{font-family:var(--serif-zh);font-weight:700;font-size:82px;line-height:1.06;letter-spacing:-.005em}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ 卡 1 · 封面 ═══════════ -->
+<div class="card dark">
+  <div class="chrome">
+    <span>DeepSeek AI</span>
+    <span class="sep"></span>
+    <span>Tech Deep-Dive</span>
+  </div>
+  <div class="fill" style="display:flex;flex-direction:column;justify-content:center;gap:8px">
+    <div class="kicker">Agent Harness · 技术拆解</div>
+    <div class="display-zh">DeepSeek<br>Harness</div>
+    <div class="lead" style="margin-top:26px;opacity:.78">架构 · 执行原理 · 工具调用<br>Loop 运行机制，一次讲透</div>
+  </div>
+  <div class="rule"></div>
+  <div class="grid-3">
+    <div class="stat"><div class="m">Packages</div><div class="n">24</div><div class="l">工具插件包</div></div>
+    <div class="stat"><div class="m">Tools</div><div class="n">52</div><div class="l">模型可见工具</div></div>
+    <div class="stat"><div class="m">Stack</div><div class="n">TS</div><div class="l">TypeScript · MIT</div></div>
+  </div>
+  <div class="foot">
+    <span class="title">github.com/deepseek-ai/deepseek-harness</span>
+    <span>01 / 08</span>
+  </div>
+</div>
+
+<!-- ═══════════ 卡 2 · 整体架构 ═══════════ -->
+<div class="card light">
+  <div class="chrome">
+    <span>DeepSeek Harness</span>
+    <span class="sep"></span>
+    <span>01 · Architecture</span>
+  </div>
+  <div class="fill" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="kicker">01 · 整体架构</div>
+    <div class="h1-zh">一条主干，六个包</div>
+    <div class="body-zh" style="margin-top:20px">
+      一个轮次按同一条循环流经六个核心包：driver 认领排队提示词 → 在会话日志上开轮 → 组装 prompt + 工具 schema → LLM 流式响应 → 工具注册表分发调用 → 每个模型可见的事实追加回日志。
+    </div>
+    <div class="pipe" style="margin-top:32px">
+      <div class="step-p"><span class="pn">DRIVER</span><span class="pt">agent-loop</span><span class="pd">认领输入、驱动循环</span></div>
+      <div class="arr">→</div>
+      <div class="step-p"><span class="pn">LOG</span><span class="pt">session</span><span class="pd">事件溯源的唯一真源</span></div>
+      <div class="arr">→</div>
+      <div class="step-p"><span class="pn">PROMPT</span><span class="pt">system-prompt</span><span class="pd">段落 + schema 组装</span></div>
+      <div class="arr">→</div>
+      <div class="step-p"><span class="pn">LLM</span><span class="pt">llm seam</span><span class="pd">流式取模型响应</span></div>
+      <div class="arr">→</div>
+      <div class="step-p"><span class="pn">TOOLS</span><span class="pt">tools</span><span class="pd">注册表 + 受保护执行</span></div>
+    </div>
+    <div class="grid-2" style="margin-top:32px">
+      <div class="col">
+        <div class="h2-zh">一切皆插件</div>
+        <div class="body-zh" style="font-size:21px">模型适配器、工具注册表、会话日志、甚至 agent 主循环本身都是插件——<b>没有特权核心</b>。</div>
+      </div>
+      <div class="col">
+        <div class="h2-zh">替换即配置</div>
+        <div class="body-zh" style="font-size:21px">注册是效果，插件卸载自动回滚；换 provider 就换掉整个能力接缝。</div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:26px">
+      扩展 dsh = 在插件树旁挂一个插件，其余全在配置层解决。
+      <span class="cite">docs/architecture.md</span>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="title">六包主干 · 无特权核心</span>
+    <span>02 / 08</span>
+  </div>
+</div>
+
+<!-- ═══════════ 卡 3 · 执行原理 ═══════════ -->
+<div class="card dark">
+  <div class="chrome">
+    <span>DeepSeek Harness</span>
+    <span class="sep"></span>
+    <span>02 · Execution Model</span>
+  </div>
+  <div class="fill" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="kicker">02 · 执行原理</div>
+    <div class="h1-zh">Turn / Step 双层模型</div>
+    <div class="body-zh" style="margin-top:20px">
+      <b>step</b> = 一次模型请求 + 它调用的工具。<b>turn</b> = 零或多个 step：在第一个输入被认领前开启，直到没有未偿债务才关闭。
+    </div>
+    <div class="grid-2" style="margin-top:30px">
+      <div class="stat"><div class="m">持久事件</div><div class="n" style="font-size:44px">12</div><div class="l">turn/step/user/assistant/tool 全链路入日志</div></div>
+      <div class="stat"><div class="m">Surface 类型</div><div class="n" style="font-size:44px">3</div><div class="l">user/message · assistant/message · tool/result</div></div>
+    </div>
+    <div class="rule"></div>
+    <div class="h2-zh">三条核心不变量</div>
+    <ul style="margin-top:18px">
+      <li><b>模型可见 = 已入日志</b>：任何到达模型请求的输入，都必须能从会话日志重建，运行时强约束</li>
+      <li><b>请求是日志的纯函数</b>：prompt + schema + 历史全部从日志派生，可完整重放</li>
+      <li><b>事件三域分工</b>：session 事件存事实、agent 事件管在飞工作、capability 事件挂策略</li>
+    </ul>
+  </div>
+  <div class="foot">
+    <span class="title">step 一次请求 · turn 一轮对话</span>
+    <span>03 / 08</span>
+  </div>
+</div>
+
+<!-- ═══════════ 卡 4 · Loop 运行机制 ═══════════ -->
+<div class="card light">
+  <div class="chrome">
+    <span>DeepSeek Harness</span>
+    <span class="sep"></span>
+    <span>03 · Loop Runtime</span>
+  </div>
+  <div class="fill" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="kicker">03 · Loop 是怎么跑的</div>
+    <div class="h1-zh">一轮的完整时序</div>
+    <div class="tl" style="margin-top:26px">
+      <div class="tstep"><div class="tnum">1</div><div><div class="tt">输入入队，driver 被唤醒</div><div class="td">followup/steer 写入 inbox，agent/status → running</div></div></div>
+      <div class="tstep"><div class="tnum">2</div><div><div class="tt">turn/start + 认领批次</div><div class="td">认领全部 next-step 输入 + 一条 next-turn 消息</div></div></div>
+      <div class="tstep"><div class="tnum">3</div><div><div class="tt">agent/pre-step 拦截</div><div class="td">waterfall 可改写或拒绝；拒绝则本轮不花 step</div></div></div>
+      <div class="tstep"><div class="tnum">4</div><div><div class="tt">step/start → 组装请求</div><div class="td">user/message 入日志 → system-prompt/assemble → 从日志派生历史</div></div></div>
+      <div class="tstep"><div class="tnum">5</div><div><div class="tt">agent/request → llm/stream</div><div class="td">流式返回 StreamChunk，逐块记 assistant/chunk</div></div></div>
+      <div class="tstep"><div class="tnum">6</div><div><div class="tt">工具调用批次</div><div class="td">tool/call 入日志 → 受保护流水线执行 → tool/result 回写</div></div></div>
+      <div class="tstep"><div class="tnum">7</div><div><div class="tt">step/end → 决定续跑</div><div class="td">工具还欠请求或有 next-step 输入 → 下一 step；否则 turn-stopping</div></div></div>
+      <div class="tstep"><div class="tnum">8</div><div><div class="tt">turn/end → idle</div><div class="td">持久事件收尾，agent/status → idle，等待下一轮唤醒</div></div></div>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="title">agent-loop driver 驱动 · 循环可整体替换</span>
+    <span>04 / 08</span>
+  </div>
+</div>
+
+<!-- ═══════════ 卡 5 · 工具调用链 ═══════════ -->
+<div class="card dark">
+  <div class="chrome">
+    <span>DeepSeek Harness</span>
+    <span class="sep"></span>
+    <span>04 · Tool Pipeline</span>
+  </div>
+  <div class="fill" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="kicker">04 · 工具如何被调用</div>
+    <div class="h1-zh">一条受保护的流水线</div>
+    <div class="body-zh" style="margin-top:18px">模型发出 tool-call 后，调用依次穿过 7 段流水线，任何一段都可以拦截：</div>
+    <div class="pipe" style="margin-top:24px;flex-wrap:wrap">
+      <div class="step-p" style="min-width:150px"><span class="pn">1</span><span class="pt">tool/call 入日志</span><span class="pd">执行前先落账 + UI pending</span></div>
+      <div class="arr">→</div>
+      <div class="step-p" style="min-width:150px"><span class="pn">2</span><span class="pt">pre-execute</span><span class="pd">hooks · 权限 · 沙箱</span></div>
+      <div class="arr">→</div>
+      <div class="step-p" style="min-width:150px"><span class="pn">3</span><span class="pt">monotonic guards</span><span class="pd">只能拒绝，不可翻案</span></div>
+      <div class="arr">→</div>
+      <div class="step-p" style="min-width:150px"><span class="pn">4</span><span class="pt">approval</span><span class="pd">一次性询问，缺席即拒</span></div>
+      <div class="arr">→</div>
+      <div class="step-p" style="min-width:150px"><span class="pn">5</span><span class="pt">execute body</span><span class="pd">超时/重试/metrics 环绕</span></div>
+      <div class="arr">→</div>
+      <div class="step-p" style="min-width:150px"><span class="pn">6</span><span class="pt">post-execute</span><span class="pd">接受 / 替换 / 加上下文</span></div>
+      <div class="arr">→</div>
+      <div class="step-p" style="min-width:150px"><span class="pn">7</span><span class="pt">tools/result</span><span class="pd">冻结的权威结果</span></div>
+    </div>
+    <div class="grid-2" style="margin-top:30px">
+      <div class="col">
+        <div class="h2-zh">fs 写门禁</div>
+        <div class="body-zh" style="font-size:20px">工具-fs 的写/改先过 <code>fs/write-intent</code> / <code>fs/edit-intent</code>，先读后写策略由此注入。</div>
+      </div>
+      <div class="col">
+        <div class="h2-zh">guard 单调性</div>
+        <div class="body-zh" style="font-size:20px">guard 没有 allow 结果——监听器顺序无法把拒绝翻回允许，权限只会单向收紧。</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="title">docs/tool-execution-pipeline.md</span>
+    <span>05 / 08</span>
+  </div>
+</div>
+
+<!-- ═══════════ 卡 6 · 原生工具 · 核心组 ═══════════ -->
+<div class="card light">
+  <div class="chrome">
+    <span>DeepSeek Harness</span>
+    <span class="sep"></span>
+    <span>05 · Native Tools (Core)</span>
+  </div>
+  <div class="fill" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="kicker">05 · 原生工具 · 默认装配</div>
+    <div class="h1-zh">开箱即用的核心组</div>
+    <div class="tools" style="margin-top:26px">
+      <div class="tool"><div><div class="tn">bash / pwsh</div><div class="td">shell 执行器 seam 的消费方，支持后台任务</div></div></div>
+      <div class="tool"><div><div class="tn">read / read_image</div><div class="td">读文件、读图（需图像路由）</div></div></div>
+      <div class="tool"><div><div class="tn">write / edit</div><div class="td">写文件 / 精确编辑，走 fs 门禁</div></div></div>
+      <div class="tool"><div><div class="tn">glob / grep</div><div class="td">内置 ripgrep 的发现工具，无需装 rg</div></div></div>
+      <div class="tool"><div><div class="tn">str_replace_editor</div><div class="td">查看 / 创建 / 唯一字面量替换 / 按行插入</div></div></div>
+      <div class="tool"><div><div class="tn">web_search / web_fetch</div><div class="td">联网检索与抓取，provider 可换</div></div></div>
+      <div class="tool"><div><div class="tn">subagent / subagent_fork</div><div class="td">委派子 agent（可续跑 / 一次性）</div></div></div>
+      <div class="tool"><div><div class="tn">todo_write</div><div class="td">会话所有的待办清单，UI 渲染为检查项</div></div></div>
+      <div class="tool"><div><div class="tn">job_kill / list / output</div><div class="td">后台任务统一控制器</div></div></div>
+      <div class="tool"><div><div class="tn">create_goal / get_goal / update_goal</div><div class="td">目标管理，变更需人类根权限</div></div></div>
+      <div class="tool"><div><div class="tn">skill</div><div class="td">装载技能包（Skills）</div></div></div>
+      <div class="tool"><div><div class="tn">workflow / ralph</div><div class="td">工作流引擎 / 固定前台流程</div></div></div>
+      <div class="tool"><div><div class="tn">interrupt_agent / send_message</div><div class="td">控制后台子 agent</div></div></div>
+      <div class="tool"><div><div class="tn">report</div><div class="td">可续跑子级的汇报工具</div></div></div>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="title">dsh-base 默认装配 · packages/bundle/base</span>
+    <span>06 / 08</span>
+  </div>
+</div>
+
+<!-- ═══════════ 卡 7 · 原生工具 · 扩展组 ═══════════ -->
+<div class="card dark">
+  <div class="chrome">
+    <span>DeepSeek Harness</span>
+    <span class="sep"></span>
+    <span>06 · Native Tools (Optional)</span>
+  </div>
+  <div class="fill" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="kicker">06 · 原生工具 · 按需启用</div>
+    <div class="h1-zh">进阶工具组</div>
+    <div class="tools" style="margin-top:24px">
+      <div class="tool"><div><div class="tn">ask_user_question</div><div class="td">暂停执行，向人类提问拿答案</div></div></div>
+      <div class="tool"><div><div class="tn">exit_plan_mode</div><div class="td">计划模式：提交计划待批准</div></div></div>
+      <div class="tool"><div><div class="tn">run_code</div><div class="td">Code Mode 保留传输，子调用重进流水线</div></div></div>
+      <div class="tool"><div><div class="tn">terminal_open / read / send / close</div><div class="td">持久 PTY 终端（6 个工具）</div></div></div>
+      <div class="tool"><div><div class="tn">schedule_create / list / delete</div><div class="td">定时任务调度</div></div></div>
+      <div class="tool"><div><div class="tn">lsp</div><div class="td">语言服务器协议查询</div></div></div>
+      <div class="tool"><div><div class="tn">session_event_read / search / trace</div><div class="td">只读会话查询（5 个工具）</div></div></div>
+      <div class="tool"><div><div class="tn">cordis_define / run / stop …</div><div class="td">动态 Cordis 运行时（7 个工具）</div></div></div>
+    </div>
+    <div class="callout" style="margin-top:26px">
+      全套 24 个工具包、52 个模型可见工具——装什么组合由 profile 决定，schema 随配置增减。
+      <span class="cite">docs/tool-catalog.md · 生成目录</span>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="title">Optional · 显式启用才出现</span>
+    <span>07 / 08</span>
+  </div>
+</div>
+
+<!-- ═══════════ 卡 8 · 收尾 ═══════════ -->
+<div class="card light">
+  <div class="chrome">
+    <span>DeepSeek Harness</span>
+    <span class="sep"></span>
+    <span>07 · Recap</span>
+  </div>
+  <div class="fill" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="kicker">07 · 一句话总结</div>
+    <div class="h1-zh">记住这四件事</div>
+    <ul style="margin-top:30px">
+      <li><b>架构</b>：六包主干 + 一切皆插件，无特权核心，改哪换哪</li>
+      <li><b>执行</b>：turn/step 双层，会话日志是唯一真源，请求是日志的纯函数</li>
+      <li><b>工具</b>：7 段受保护流水线，guard 单向收紧，fs 写有门禁</li>
+      <li><b>Loop</b>：driver 认领 → pre-step → step → llm/stream → tool → step/end，循环可整体替换</li>
+    </ul>
+    <div class="callout" style="margin-top:34px">
+      上手：<code>npx @deepseek-ai/dsh web</code> → 127.0.0.1:3080，填 API Key 就能派任务。
+      <span class="cite">github.com/deepseek-ai/deepseek-harness</span>
+    </div>
+    <div class="grid-2" style="margin-top:34px">
+      <div class="col">
+        <div class="h2-zh">想深入？</div>
+        <div class="body-zh" style="font-size:21px">docs/architecture.md → subsystems/* → cookbook/*，架构文档本身就是一套完整的 agent 教案。</div>
+      </div>
+      <div class="col">
+        <div class="h2-zh">想参与？</div>
+        <div class="body-zh" style="font-size:21px">去 GitHub 点 Star，插件仓库打上 <code>dsh-plugin</code> 话题，加入 Discussions / Discord。</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="title">DeepSeek Harness · Everything is a Plugin</span>
+    <span>08 / 08</span>
+  </div>
+</div>
+
+</body>
+</html>

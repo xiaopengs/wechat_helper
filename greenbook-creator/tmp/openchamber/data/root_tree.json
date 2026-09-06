@@ -1,0 +1,562 @@
+[
+  {
+    "name": ".agents",
+    "path": ".agents",
+    "sha": "b0d3e786b8e07035a36f64c39c127d98651a2222",
+    "size": 0,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/.agents?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/tree/main/.agents",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/trees/b0d3e786b8e07035a36f64c39c127d98651a2222",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/.agents?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/trees/b0d3e786b8e07035a36f64c39c127d98651a2222",
+      "html": "https://github.com/openchamber/openchamber/tree/main/.agents"
+    }
+  },
+  {
+    "name": ".claude",
+    "path": ".claude",
+    "sha": "d8e2af42c76c54bc83316fbadec7d67393e66162",
+    "size": 0,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/.claude?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/tree/main/.claude",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/trees/d8e2af42c76c54bc83316fbadec7d67393e66162",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/.claude?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/trees/d8e2af42c76c54bc83316fbadec7d67393e66162",
+      "html": "https://github.com/openchamber/openchamber/tree/main/.claude"
+    }
+  },
+  {
+    "name": ".dockerignore",
+    "path": ".dockerignore",
+    "sha": "3ba6be7fae451305d5a698d3c112d076692f8123",
+    "size": 285,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/.dockerignore?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/.dockerignore",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/3ba6be7fae451305d5a698d3c112d076692f8123",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/.dockerignore",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/.dockerignore?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/3ba6be7fae451305d5a698d3c112d076692f8123",
+      "html": "https://github.com/openchamber/openchamber/blob/main/.dockerignore"
+    }
+  },
+  {
+    "name": ".env",
+    "path": ".env",
+    "sha": "c0d6652113c57f1b75cf4aad86eaa925b6696723",
+    "size": 21,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/.env?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/.env",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/c0d6652113c57f1b75cf4aad86eaa925b6696723",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/.env",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/.env?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/c0d6652113c57f1b75cf4aad86eaa925b6696723",
+      "html": "https://github.com/openchamber/openchamber/blob/main/.env"
+    }
+  },
+  {
+    "name": ".gitattributes",
+    "path": ".gitattributes",
+    "sha": "17597d2fdba8727c0bf582f4a704fd6905861474",
+    "size": 513,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/.gitattributes?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/.gitattributes",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/17597d2fdba8727c0bf582f4a704fd6905861474",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/.gitattributes",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/.gitattributes?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/17597d2fdba8727c0bf582f4a704fd6905861474",
+      "html": "https://github.com/openchamber/openchamber/blob/main/.gitattributes"
+    }
+  },
+  {
+    "name": ".github",
+    "path": ".github",
+    "sha": "98c0f27a22d4ea4ad3d2d99d944d5a201dba49c2",
+    "size": 0,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/.github?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/tree/main/.github",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/trees/98c0f27a22d4ea4ad3d2d99d944d5a201dba49c2",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/.github?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/trees/98c0f27a22d4ea4ad3d2d99d944d5a201dba49c2",
+      "html": "https://github.com/openchamber/openchamber/tree/main/.github"
+    }
+  },
+  {
+    "name": ".gitignore",
+    "path": ".gitignore",
+    "sha": "51ed5714d619c83c9cd15e6e0eb32ad84fa03a9f",
+    "size": 852,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/.gitignore?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/.gitignore",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/51ed5714d619c83c9cd15e6e0eb32ad84fa03a9f",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/.gitignore",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/.gitignore?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/51ed5714d619c83c9cd15e6e0eb32ad84fa03a9f",
+      "html": "https://github.com/openchamber/openchamber/blob/main/.gitignore"
+    }
+  },
+  {
+    "name": ".nvmrc",
+    "path": ".nvmrc",
+    "sha": "b009dfb9d9f98f39d71d2a4ecc3110332b969fd3",
+    "size": 6,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/.nvmrc?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/.nvmrc",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/b009dfb9d9f98f39d71d2a4ecc3110332b969fd3",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/.nvmrc",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/.nvmrc?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/b009dfb9d9f98f39d71d2a4ecc3110332b969fd3",
+      "html": "https://github.com/openchamber/openchamber/blob/main/.nvmrc"
+    }
+  },
+  {
+    "name": ".opencode",
+    "path": ".opencode",
+    "sha": "e793ef36df1d2dd49a9d9a48f912cf2513dd17e9",
+    "size": 0,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/.opencode?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/tree/main/.opencode",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/trees/e793ef36df1d2dd49a9d9a48f912cf2513dd17e9",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/.opencode?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/trees/e793ef36df1d2dd49a9d9a48f912cf2513dd17e9",
+      "html": "https://github.com/openchamber/openchamber/tree/main/.opencode"
+    }
+  },
+  {
+    "name": "AGENTS.md",
+    "path": "AGENTS.md",
+    "sha": "968cccc498dfde224067d2c180ebef1d5a691fa3",
+    "size": 7153,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/AGENTS.md?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/AGENTS.md",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/968cccc498dfde224067d2c180ebef1d5a691fa3",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/AGENTS.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/AGENTS.md?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/968cccc498dfde224067d2c180ebef1d5a691fa3",
+      "html": "https://github.com/openchamber/openchamber/blob/main/AGENTS.md"
+    }
+  },
+  {
+    "name": "CHANGELOG.md",
+    "path": "CHANGELOG.md",
+    "sha": "2b01553fbbea3b792afaae50c6eb0baa356dbc5a",
+    "size": 140338,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/CHANGELOG.md?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/CHANGELOG.md",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/2b01553fbbea3b792afaae50c6eb0baa356dbc5a",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/CHANGELOG.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/CHANGELOG.md?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/2b01553fbbea3b792afaae50c6eb0baa356dbc5a",
+      "html": "https://github.com/openchamber/openchamber/blob/main/CHANGELOG.md"
+    }
+  },
+  {
+    "name": "CLAUDE.md",
+    "path": "CLAUDE.md",
+    "sha": "47dc3e3d863cfb5727b87d785d09abf9743c0a72",
+    "size": 9,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/CLAUDE.md?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/CLAUDE.md",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/47dc3e3d863cfb5727b87d785d09abf9743c0a72",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/CLAUDE.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/CLAUDE.md?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/47dc3e3d863cfb5727b87d785d09abf9743c0a72",
+      "html": "https://github.com/openchamber/openchamber/blob/main/CLAUDE.md"
+    }
+  },
+  {
+    "name": "CONTRIBUTING.md",
+    "path": "CONTRIBUTING.md",
+    "sha": "859a2f62bf0be448beb82572e65e1e674a4e3969",
+    "size": 9767,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/CONTRIBUTING.md?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/CONTRIBUTING.md",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/859a2f62bf0be448beb82572e65e1e674a4e3969",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/CONTRIBUTING.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/CONTRIBUTING.md?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/859a2f62bf0be448beb82572e65e1e674a4e3969",
+      "html": "https://github.com/openchamber/openchamber/blob/main/CONTRIBUTING.md"
+    }
+  },
+  {
+    "name": "Caddyfile",
+    "path": "Caddyfile",
+    "sha": "85bc4ff559c61e1ddad5ced7a2f1bec0c733c9c6",
+    "size": 493,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/Caddyfile?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/Caddyfile",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/85bc4ff559c61e1ddad5ced7a2f1bec0c733c9c6",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/Caddyfile",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/Caddyfile?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/85bc4ff559c61e1ddad5ced7a2f1bec0c733c9c6",
+      "html": "https://github.com/openchamber/openchamber/blob/main/Caddyfile"
+    }
+  },
+  {
+    "name": "Dockerfile",
+    "path": "Dockerfile",
+    "sha": "8a5bb0c9f1c46c12098c3b5a68c18ba79aac3996",
+    "size": 2317,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/Dockerfile?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/Dockerfile",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/8a5bb0c9f1c46c12098c3b5a68c18ba79aac3996",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/Dockerfile",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/Dockerfile?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/8a5bb0c9f1c46c12098c3b5a68c18ba79aac3996",
+      "html": "https://github.com/openchamber/openchamber/blob/main/Dockerfile"
+    }
+  },
+  {
+    "name": "LICENSE",
+    "path": "LICENSE",
+    "sha": "6a9621709b871757b8a26d5ab173f63f1aab6065",
+    "size": 1074,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/LICENSE?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/LICENSE",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/6a9621709b871757b8a26d5ab173f63f1aab6065",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/LICENSE",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/LICENSE?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/6a9621709b871757b8a26d5ab173f63f1aab6065",
+      "html": "https://github.com/openchamber/openchamber/blob/main/LICENSE"
+    }
+  },
+  {
+    "name": "README.md",
+    "path": "README.md",
+    "sha": "7241e03a53514617b90c154fa4241e29ea86dda9",
+    "size": 8453,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/README.md?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/README.md",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/7241e03a53514617b90c154fa4241e29ea86dda9",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/README.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/README.md?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/7241e03a53514617b90c154fa4241e29ea86dda9",
+      "html": "https://github.com/openchamber/openchamber/blob/main/README.md"
+    }
+  },
+  {
+    "name": "SECURITY.md",
+    "path": "SECURITY.md",
+    "sha": "c7eba14b006e393c767553fe7d1cdd8ae262a3b5",
+    "size": 961,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/SECURITY.md?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/SECURITY.md",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/c7eba14b006e393c767553fe7d1cdd8ae262a3b5",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/SECURITY.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/SECURITY.md?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/c7eba14b006e393c767553fe7d1cdd8ae262a3b5",
+      "html": "https://github.com/openchamber/openchamber/blob/main/SECURITY.md"
+    }
+  },
+  {
+    "name": "bun-patches",
+    "path": "bun-patches",
+    "sha": "4fe33f391f34d2f6761afd311fcee740eee3c5f5",
+    "size": 0,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/bun-patches?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/tree/main/bun-patches",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/trees/4fe33f391f34d2f6761afd311fcee740eee3c5f5",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/bun-patches?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/trees/4fe33f391f34d2f6761afd311fcee740eee3c5f5",
+      "html": "https://github.com/openchamber/openchamber/tree/main/bun-patches"
+    }
+  },
+  {
+    "name": "bun.lock",
+    "path": "bun.lock",
+    "sha": "09c3712f01da1eb0d0ef24ee1a269f154d33f499",
+    "size": 475004,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/bun.lock?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/bun.lock",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/09c3712f01da1eb0d0ef24ee1a269f154d33f499",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/bun.lock",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/bun.lock?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/09c3712f01da1eb0d0ef24ee1a269f154d33f499",
+      "html": "https://github.com/openchamber/openchamber/blob/main/bun.lock"
+    }
+  },
+  {
+    "name": "components.json",
+    "path": "components.json",
+    "sha": "73afbdbccb6826d0580bf8f234a77ae3380c75ae",
+    "size": 425,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/components.json?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/components.json",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/73afbdbccb6826d0580bf8f234a77ae3380c75ae",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/components.json",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/components.json?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/73afbdbccb6826d0580bf8f234a77ae3380c75ae",
+      "html": "https://github.com/openchamber/openchamber/blob/main/components.json"
+    }
+  },
+  {
+    "name": "docker-compose.yml",
+    "path": "docker-compose.yml",
+    "sha": "0a5feb1ff0a7c079ac486b5652f924c8a143f37d",
+    "size": 1725,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/docker-compose.yml?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/docker-compose.yml",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/0a5feb1ff0a7c079ac486b5652f924c8a143f37d",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/docker-compose.yml",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/docker-compose.yml?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/0a5feb1ff0a7c079ac486b5652f924c8a143f37d",
+      "html": "https://github.com/openchamber/openchamber/blob/main/docker-compose.yml"
+    }
+  },
+  {
+    "name": "docs",
+    "path": "docs",
+    "sha": "084989f4bb616251e734b5c9117d2c949e2329a1",
+    "size": 0,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/docs?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/tree/main/docs",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/trees/084989f4bb616251e734b5c9117d2c949e2329a1",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/docs?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/trees/084989f4bb616251e734b5c9117d2c949e2329a1",
+      "html": "https://github.com/openchamber/openchamber/tree/main/docs"
+    }
+  },
+  {
+    "name": "eslint.config.js",
+    "path": "eslint.config.js",
+    "sha": "552d2124d528fe24146d97d945765cfc799e1a3a",
+    "size": 626,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/eslint.config.js?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/eslint.config.js",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/552d2124d528fe24146d97d945765cfc799e1a3a",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/eslint.config.js",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/eslint.config.js?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/552d2124d528fe24146d97d945765cfc799e1a3a",
+      "html": "https://github.com/openchamber/openchamber/blob/main/eslint.config.js"
+    }
+  },
+  {
+    "name": "fix-deprecation.js",
+    "path": "fix-deprecation.js",
+    "sha": "17c49be54ea451f045c7f402459653a276193dbc",
+    "size": 2606,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/fix-deprecation.js?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/fix-deprecation.js",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/17c49be54ea451f045c7f402459653a276193dbc",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/fix-deprecation.js",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/fix-deprecation.js?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/17c49be54ea451f045c7f402459653a276193dbc",
+      "html": "https://github.com/openchamber/openchamber/blob/main/fix-deprecation.js"
+    }
+  },
+  {
+    "name": "knip.json",
+    "path": "knip.json",
+    "sha": "f2e4c8235cccd0855d4462f4ed61692fa19dfdf9",
+    "size": 1936,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/knip.json?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/knip.json",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/f2e4c8235cccd0855d4462f4ed61692fa19dfdf9",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/knip.json",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/knip.json?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/f2e4c8235cccd0855d4462f4ed61692fa19dfdf9",
+      "html": "https://github.com/openchamber/openchamber/blob/main/knip.json"
+    }
+  },
+  {
+    "name": "package.json",
+    "path": "package.json",
+    "sha": "2fae8f9a7ac969bcfc7bc576645e5e4e3d15f91c",
+    "size": 7799,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/package.json?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/package.json",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/2fae8f9a7ac969bcfc7bc576645e5e4e3d15f91c",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/package.json",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/package.json?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/2fae8f9a7ac969bcfc7bc576645e5e4e3d15f91c",
+      "html": "https://github.com/openchamber/openchamber/blob/main/package.json"
+    }
+  },
+  {
+    "name": "packages",
+    "path": "packages",
+    "sha": "33013934d5f8c028d6a954f340dae783d374373a",
+    "size": 0,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/packages?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/tree/main/packages",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/trees/33013934d5f8c028d6a954f340dae783d374373a",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/packages?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/trees/33013934d5f8c028d6a954f340dae783d374373a",
+      "html": "https://github.com/openchamber/openchamber/tree/main/packages"
+    }
+  },
+  {
+    "name": "patches",
+    "path": "patches",
+    "sha": "abd524df555f4df30c29d60ab9128e1cac66bc02",
+    "size": 0,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/patches?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/tree/main/patches",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/trees/abd524df555f4df30c29d60ab9128e1cac66bc02",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/patches?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/trees/abd524df555f4df30c29d60ab9128e1cac66bc02",
+      "html": "https://github.com/openchamber/openchamber/tree/main/patches"
+    }
+  },
+  {
+    "name": "postcss.config.js",
+    "path": "postcss.config.js",
+    "sha": "db3c3d1be36b0498a8714f226cbc8f49bdaaf00f",
+    "size": 68,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/postcss.config.js?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/postcss.config.js",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/db3c3d1be36b0498a8714f226cbc8f49bdaaf00f",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/postcss.config.js",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/postcss.config.js?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/db3c3d1be36b0498a8714f226cbc8f49bdaaf00f",
+      "html": "https://github.com/openchamber/openchamber/blob/main/postcss.config.js"
+    }
+  },
+  {
+    "name": "renovate.json",
+    "path": "renovate.json",
+    "sha": "839d21bcf20c63ec15d04c380fd0ad4b7beba92b",
+    "size": 490,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/renovate.json?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/renovate.json",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/839d21bcf20c63ec15d04c380fd0ad4b7beba92b",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/renovate.json",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/renovate.json?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/839d21bcf20c63ec15d04c380fd0ad4b7beba92b",
+      "html": "https://github.com/openchamber/openchamber/blob/main/renovate.json"
+    }
+  },
+  {
+    "name": "scripts",
+    "path": "scripts",
+    "sha": "50bfcfc5d7733f8760241171d65692e25acc3947",
+    "size": 0,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/scripts?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/tree/main/scripts",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/trees/50bfcfc5d7733f8760241171d65692e25acc3947",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/scripts?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/trees/50bfcfc5d7733f8760241171d65692e25acc3947",
+      "html": "https://github.com/openchamber/openchamber/tree/main/scripts"
+    }
+  },
+  {
+    "name": "tsconfig.json",
+    "path": "tsconfig.json",
+    "sha": "d7898f2dd00094d517d2cdc442b35895aef1e283",
+    "size": 534,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/tsconfig.json?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/tsconfig.json",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/d7898f2dd00094d517d2cdc442b35895aef1e283",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/tsconfig.json",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/tsconfig.json?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/d7898f2dd00094d517d2cdc442b35895aef1e283",
+      "html": "https://github.com/openchamber/openchamber/blob/main/tsconfig.json"
+    }
+  },
+  {
+    "name": "vite-theme-plugin.ts",
+    "path": "vite-theme-plugin.ts",
+    "sha": "0e5b08f213695bb34d4a0c778fea2b5492d0205a",
+    "size": 205,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/vite-theme-plugin.ts?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/vite-theme-plugin.ts",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/0e5b08f213695bb34d4a0c778fea2b5492d0205a",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/vite-theme-plugin.ts",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/vite-theme-plugin.ts?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/0e5b08f213695bb34d4a0c778fea2b5492d0205a",
+      "html": "https://github.com/openchamber/openchamber/blob/main/vite-theme-plugin.ts"
+    }
+  },
+  {
+    "name": "vite.config.ts",
+    "path": "vite.config.ts",
+    "sha": "bcaf5d27e59c2e74e0f7344ea9c839641217cb2d",
+    "size": 3996,
+    "url": "https://api.github.com/repos/openchamber/openchamber/contents/vite.config.ts?ref=main",
+    "html_url": "https://github.com/openchamber/openchamber/blob/main/vite.config.ts",
+    "git_url": "https://api.github.com/repos/openchamber/openchamber/git/blobs/bcaf5d27e59c2e74e0f7344ea9c839641217cb2d",
+    "download_url": "https://raw.githubusercontent.com/openchamber/openchamber/main/vite.config.ts",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/openchamber/openchamber/contents/vite.config.ts?ref=main",
+      "git": "https://api.github.com/repos/openchamber/openchamber/git/blobs/bcaf5d27e59c2e74e0f7344ea9c839641217cb2d",
+      "html": "https://github.com/openchamber/openchamber/blob/main/vite.config.ts"
+    }
+  }
+]

@@ -1,0 +1,10 @@
+[主标题] Prime Agent 深度拆解
+[副标题] 自我改进的 RLM 编码·研究 Agent
+[核心数据行]
+⭐ 16,810 Stars ｜ 🍴 1,808 Forks ｜ 📦 MIT 全开源
+[定位句] 用持久 IPython + 递归子代理,跑长时自治任务
+[3 个亮点标签]
+▸ 一切皆代码:IPython 是唯一内置工具
+▸ 递归子代理:rlm() 原生并行子任务
+▸ 自我改进:/refine 沉淀可复用教训
+[底部数据来源] 数据来源:github.com/PrimeIntellect-ai/prime-agent (2026-08-17)

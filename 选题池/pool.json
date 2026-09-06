@@ -1,7 +1,27 @@
 {
   "version": "1.0",
-  "updatedAt": "2026-06-17T14:44:35+08:00",
+  "updatedAt": "2026-09-07T00:04:07+08:00",
   "topics": [
+    {
+      "id": "topic-20260906-001",
+      "title": "每次GPT发新模型，国内用户都在经历什么？",
+      "angle": "从2026-09-04 OpenAI发布GPT-6 Astra切入，拆解国内用户'梯子-买号-代充'灰色产业链，用QuestMobile数据对比DeepSeek/Kimi/豆包/通义千问，立论'国产AI日常够用'。修正了原文两处硬伤：DeepSeek月活3亿系豆包数据(实际Q1约1.27亿第三)，以及'逼近GPT-5.5'无横评依据；全文GPT-5.5更新为GPT-6 Astra。",
+      "outline": [
+        "开头场景:发布会刚结束,国内用户Access denied",
+        "一、朝圣流程:找梯子/搞账号/开会员,月付三百体验还差",
+        "二、收割体系:机场/淘宝/虚拟卡/代充,限制即筛选",
+        "三、数据说话:QuestMobile口径 DeepSeek 1.27亿/Kimi K3百万token/豆包3.82亿/千问1.7亿",
+        "四、四个神器卡片:DeepSeek/Kimi/豆包/通义千问",
+        "五、隐性成本 vs 国产替代,站着用工具"
+      ],
+      "difficulty": "⭐⭐",
+      "source": "热点话题:OpenAI GPT-6 Astra 发布(2026-09-04,腾讯新闻等)",
+      "createdAt": "2026-09-06T11:55:24+08:00",
+      "selectedAt": "2026-09-06T11:55:24+08:00",
+      "publishedAt": "2026-09-06T11:55:24+08:00",
+      "status": "published",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQrm1RCHvIolZcw5hHvVFzBy-5u-OdME2Ut-5SS0KKlfG"
+    },
     {
       "id": "topic-20260616-001",
       "title": "Agent 不需要更多 context,需要一张地图——CodeGraph 涨到 20k 星背后的工程哲学、实测数据与踩坑指南",
@@ -827,6 +847,25 @@
       "selectedAt": "2026-06-17T08:36:00+08:00",
       "publishedAt": "2026-06-17T14:43:00+08:00",
       "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQsBwyRu3niJW49LIGkEaSITAuPLWvsyKx2UTQLJvqd7t"
+    },
+    {
+      "id": "topic-20260906-002",
+      "title": "架构图\"活\"了:Archify 五万星,和一份真伪参半的网红清单",
+      "angle": "AI Agent Skill 让架构图从图形资产变代码资产;网红工具清单一半是 AI 编的,逐仓实测核查",
+      "outline": [
+        "真伪对照",
+        "Archify 拆解",
+        "生态盘点",
+        "选型对比",
+        "收尾判断"
+      ],
+      "source": "用户提供趋势素材+GitHub 实时核查(2026-09-06)",
+      "difficulty": "★★",
+      "status": "published",
+      "createdAt": "2026-09-07T00:04:07+08:00",
+      "selectedAt": null,
+      "publishedAt": "2026-09-07T00:04:07+08:00",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQo8dCL09S5G-8fjLnp4F88zGx4XFrFeuWl9VAGcni209"
     }
   ]
 }

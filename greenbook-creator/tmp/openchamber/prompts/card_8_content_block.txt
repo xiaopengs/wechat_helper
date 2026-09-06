@@ -1,0 +1,11 @@
+[标题] 注意事项
+[副标题] 6 个坑，用之前先看
+[警示清单]
+1. Linux AppImage 依赖 FUSE（libfuse.so.2）；没有就 APPIMAGE_EXTRACT_AND_RUN=1，否则起不来
+2. CLI/Web/VS Code 模式要自己装 OpenCode CLI；只有桌面版自带
+3. 默认只监听 127.0.0.1；暴露网络必须先设 --ui-password，远程优先 Private Relay/tunnel，别裸开端口
+4. 移动端还是 beta：iOS 走 TestFlight、Android 走 APK，未上架应用商店
+5. 项目很新（2025-09 创建），迭代极快，v1.18 已有 824 个 open issues，API 可能变动
+6. 独立项目，与 OpenCode 团队无隶属；支持走 ko-fi，无企业背书
+[安全提醒] OpenChamber 能访问你的机器和代码，务必先锁再开
+[数据来源] github.com/openchamber/openchamber (2026-08-10)

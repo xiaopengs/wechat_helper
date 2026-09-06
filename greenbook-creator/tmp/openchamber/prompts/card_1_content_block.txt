@@ -1,0 +1,11 @@
+[主标题] OpenChamber 深度拆解
+[副标题] 基于代理的开发环境 · 开源 · MIT License
+[核心定位] 在桌面 / 浏览器 / 手机 / VS Code 上运行、监督、审查 AI 编码工作
+[核心数据大字]
+- ⭐ 7,980 Stars
+- 🍴 850 Forks
+- 📦 v1.18.1 最新版
+- 📅 2025-09 创建 · 2026-08-10 仍在更新
+[关键能力标签] 会话目标 · 多模型并行 · 变更走查 · issue→PR · 定时任务 · 跨设备
+[底部标语] Run agent work. Keep control. Ship from anywhere.
+[数据来源] github.com/openchamber/openchamber (2026-08-10)

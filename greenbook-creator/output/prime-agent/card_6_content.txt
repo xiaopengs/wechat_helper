@@ -1,0 +1,10 @@
+[标题] 5 分钟上手
+[副标题] 从安装到跑通第一个任务
+[步骤流程 - 5 步命令]
+步骤1 安装:curl -fsSL https://app.primeintellect.ai/prime-agent/install.sh | sh
+步骤2 启动:cd /path/to/project && prime-agent
+步骤3 登录:首次运行输入 /login 选订阅或 API key
+步骤4 提问:输入"Summarize this repository and tell me how to run its checks"
+步骤5 管理:prime-agent agents / attach / status / shutdown
+[提示条] 支持订阅登录:Claude Pro/Max、ChatGPT Plus/Pro、GitHub Copilot;也支持 ANTHROPIC_API_KEY 环境变量
+[数据来源] 来源:官方 Quickstart 文档 2026-08-17

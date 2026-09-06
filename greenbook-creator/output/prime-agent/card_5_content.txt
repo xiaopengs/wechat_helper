@@ -1,0 +1,12 @@
+[标题] 对比优势
+[副标题] 同类编码 Agent 横向对比
+[对比表格 - 4 维度 × 3 项目]
+维度 | Prime Agent | Claude Code | Codex CLI
+核心模型 | RLM:持久 IPython + 递归子代理 | 工具调用循环 | 工具调用循环
+子代理 | 一等公民 rlm() 可互发消息 | 有限 | 有限
+自我改进 | /refine 持久化 Harness | 无 | 无
+长时任务 | daemon+心跳+调度+自治 | 有限 | 有限
+后台挂接 | prime-agent attach 原生 | 无 | 无
+Skill | Python 包可执行 | Markdown 指令 | 无
+[结论条] 差异化:自我改进 + 递归子代理 + 长时自治 = 为研究评测而生
+[数据来源] 来源:官方 README + 公开文档 2026-08-17

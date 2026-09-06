@@ -1,0 +1,9 @@
+[标题] 原理与架构
+[副标题] OpenCode SDK 之上的一层"监督与编排"
+[架构要点]
+- 底座：基于 OpenCode SDK（opencode.ai 的开源 agent 引擎）——OpenChamber 是它外面的监督/审查/编排层，独立项目
+- Monorepo 6 个包：electron（桌面壳）/ web（Web+PWA）/ ui（共享 UI）/ vscode（编辑器扩展）/ mobile（iOS/Android）/ docs
+- Session Goals 循环：agent 停下 → 小模型审计（继续/完成/卡住）→ 发继续 prompt → 连续 3 次"卡住"才判 blocked；有 token 预算、续跑上限、报错即停三道硬安全闸
+- Multi-run 隔离：isolate runs 开启后每个 run 独立 git worktree + branch，互不碰文件
+- 安全模型：默认只绑 127.0.0.1；--ui-password 保护 UI；passkeys（Face ID/Touch ID）支持；设备一次性 QR 配对 + 每设备独立 token 可吊销
+[数据来源] github.com/openchamber/openchamber (2026-08-10)

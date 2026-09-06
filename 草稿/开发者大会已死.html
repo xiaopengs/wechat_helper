@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>开发者大会已死，这场演讲就是证据</title>
+</head>
+<body style="margin:0;padding:0;background:#f7f7f7;">
+<section style="max-width:677px;margin:0 auto;background:#ffffff;padding:24px 18px 40px;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;">
+
+<!-- 标题区 -->
+<section style="padding:18px 4px 8px;border-bottom:3px solid #1a1a1a;">
+  <p style="margin:0 0 10px;font-size:13px;letter-spacing:2px;color:#D43D2A;font-weight:bold;">反观点 · 开发者生态</p>
+  <h1 style="margin:0;font-size:26px;line-height:1.4;color:#1a1a1a;font-weight:800;">开发者大会已死，<br>这场演讲就是证据</h1>
+  <p style="margin:12px 0 6px;font-size:13px;color:#888;">听完 Google 开发者大会上一场 Agent 架构演讲，我发现台上讲的每一个字，都不是说给人听的</p>
+</section>
+
+<!-- 开场 -->
+<section style="padding:22px 4px 6px;">
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;">这届 Google 开发者大会，我印象最深的是一场关于 <strong>Medo</strong> 的技术演讲——一个跑在 Google Cloud 上的 Agent 应用构建产品。演讲者用了九个章节，把他们的四层自研架构从头到尾拆了一遍：Agentway 托管会话、Sandbox 控制面、弹性底座、AgentDebug 平台、数据飞轮与 AgentLake。</p>
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;">内容本身非常扎实。但听着听着，一个越来越强烈的违和感击中了我：<strong>这场演讲里几乎没有一个环节，是围绕"人写代码"设计的。</strong></p>
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;">Sandbox 是给 Agent 跑的，会话是给 Agent 托管的，数据湖是给算法迭代喂的。人在哪里？人在最上面那一层——"UX 体验"，负责说一句话，起一个任务。然后就没有然后了。</p>
+  <section style="margin:18px 0;padding:14px 16px;background:#FBEDEA;border-left:4px solid #D43D2A;">
+    <p style="margin:0;font-size:15px;line-height:1.8;color:#8c2b1d;">过去的开发者大会，台上讲"这个 API 怎么调用"，台下记笔记回去写代码。这一场，台上讲的是"Agent 生成的代码怎么跑、跑出来的数据怎么回流训练 Agent"。听众还在记笔记——但记的东西，他们这辈子可能都不会亲手用到。</p>
+  </section>
+  <p style="margin:0;font-size:15px;line-height:1.9;color:#3f3f3f;">这篇文章不是演讲纪要。我想说的是一个更残酷的判断：<strong>这场演讲本身就是开发者大会消亡的证据</strong>——连舞台中央的技术内容，都已经默认代码不是人写的了。</p>
+</section>
+
+<!-- 第一章 -->
+<section style="padding:26px 4px 6px;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <span style="display:inline-block;background:#1a1a1a;color:#fff;font-size:14px;font-weight:bold;padding:3px 10px;margin-right:10px;">01</span>
+    <h2 style="margin:0;font-size:19px;color:#1a1a1a;font-weight:700;">四层架构里，人的位置只剩一句话</h2>
+  </section>
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;">先看这场演讲的骨架。Medo 的四层自研架构，全部建在 Google Cloud 边界内：</p>
+  <!-- 四层表 -->
+  <section style="margin:16px 0;border:1px solid #e5e5e5;">
+    <section style="display:flex;background:#1a1a1a;">
+      <span style="flex:1;padding:10px 8px;font-size:13px;color:#fff;font-weight:bold;">层</span>
+      <span style="flex:2.2;padding:10px 8px;font-size:13px;color:#fff;font-weight:bold;">干什么</span>
+      <span style="flex:2.6;padding:10px 8px;font-size:13px;color:#fff;font-weight:bold;">给谁服务</span>
+    </section>
+    <section style="display:flex;border-bottom:1px solid #eee;background:#fff;">
+      <span style="flex:1;padding:10px 8px;font-size:13px;color:#3f3f3f;font-weight:bold;">L1 产品</span>
+      <span style="flex:2.2;padding:10px 8px;font-size:13px;color:#666;">Medo 产品界面：对话、应用画布、实时预览</span>
+      <span style="flex:2.6;padding:10px 8px;font-size:13px;color:#D43D2A;font-weight:bold;">人 · 说一句话，起一个任务</span>
+    </section>
+    <section style="display:flex;border-bottom:1px solid #eee;background:#fafafa;">
+      <span style="flex:1;padding:10px 8px;font-size:13px;color:#3f3f3f;font-weight:bold;">L2 编排</span>
+      <span style="flex:2.2;padding:10px 8px;font-size:13px;color:#666;">Agentway 托管会话，三种 Agent↔Sandbox 拓扑</span>
+      <span style="flex:2.6;padding:10px 8px;font-size:13px;color:#666;">Agent · 跑在 GKE，调 Gemini</span>
+    </section>
+    <section style="display:flex;border-bottom:1px solid #eee;background:#fff;">
+      <span style="flex:1;padding:10px 8px;font-size:13px;color:#3f3f3f;font-weight:bold;">L3 执行</span>
+      <span style="flex:2.2;padding:10px 8px;font-size:13px;color:#666;">Sandbox 统一底座：gVisor · 池化 · COW</span>
+      <span style="flex:2.6;padding:10px 8px;font-size:13px;color:#666;">Agent 生成的代码</span>
+    </section>
+    <section style="display:flex;background:#fafafa;">
+      <span style="flex:1;padding:10px 8px;font-size:13px;color:#3f3f3f;font-weight:bold;">L4 数据</span>
+      <span style="flex:2.2;padding:10px 8px;font-size:13px;color:#666;">AgentDebug 回放评测 + AgentLake 数据湖</span>
+      <span style="flex:2.6;padding:10px 8px;font-size:13px;color:#666;">算法 · 每次执行全量埋点回流</span>
+    </section>
+  </section>
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;">看清楚这张表的逻辑：<strong>四层里三层半在服务 Agent，人只占有 L1 的一个对话框。</strong>用户请求从上往下穿，运行数据从下往上回流——整个闭环转起来之后，中间不需要任何一个"开发者"角色。</p>
+  <p style="margin:0;font-size:15px;line-height:1.9;color:#3f3f3f;">这就是我在大会现场感到荒诞的原因：一场"开发者大会"上的核心技术演讲，讲的却是一个<strong>把开发者从链路里抽掉</strong>的架构。而且讲得非常自然，非常理所当然——仿佛这已经是所有人的共识。</p>
+</section>
+
+<!-- 第二章 -->
+<section style="padding:26px 4px 6px;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <span style="display:inline-block;background:#D43D2A;color:#fff;font-size:14px;font-weight:bold;padding:3px 10px;margin-right:10px;">02</span>
+    <h2 style="margin:0;font-size:19px;color:#1a1a1a;font-weight:700;">新发布的接口，已经不是给人设计的了</h2>
+  </section>
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;">以往开发者大会的主角是新 API、新 SDK——教人怎么接。这场演讲里出现的"接口"，画风完全不同。看 Agentway 托管会话的设计：三种运行入口（Managed Session 有状态会话、Serverless Fn 无状态函数、Stateful Object 长驻单实例）统一成一套会话抽象；每个会话再拆成逻辑层和物理层——逻辑层装会话内容、代码、Agent 配置，物理层装计算、文件系统、网络，两层解耦。</p>
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;">这套设计图什么？图的是<strong>逻辑状态可以在物理实例间自由迁移</strong>：断线续接、fork rollout、60 秒内故障接管。再看 Sandbox 内部：sandboxfs 用 reflink 秒建 COW 工作区、Landlock 内核级只准写自己目录；sandboxsh 走 WebSocket 转发、全量留痕审计；sandboxnet 出站全过代理、密钥永不进沙箱。</p>
+  <section style="margin:18px 0;padding:14px 16px;background:#FBEDEA;border-left:4px solid #D43D2A;">
+    <p style="margin:0;font-size:15px;line-height:1.8;color:#8c2b1d;">请注意这些设计的"用户画像"：需要 fork、需要审计、需要隔离、密钥不能进环境——这不是给人准备的开发环境，这是给一个不可信、会犯错、需要被全程监控的执行体准备的笼子。这个执行体，就是 AI。</p>
+  </section>
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;">过去平台设计接口，一切巧思——命名直觉、参数好记、文档友好——都是为讨好人类认知。而这场演讲展示的接口设计哲学，全部是围绕 <strong>Agent 的执行特性</strong> 展开的：Runtime 可插拔，"加一种后端 = 实现一个 Runtime 接口"。接口的消费者变了，接口的设计语言就整个变了。</p>
+  <p style="margin:0;font-size:15px;line-height:1.9;color:#3f3f3f;">这才是大会真正的信号：<strong>能力模块设计没有消失，但它的服务对象从人换成了 Agent。</strong>那些精心设计给人用的封装，正在被一层层绕过；而新设计的模块，从第一天起就没打算让人亲手碰。</p>
+</section>
+
+<!-- 第三章 -->
+<section style="padding:26px 4px 6px;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <span style="display:inline-block;background:#1a1a1a;color:#fff;font-size:14px;font-weight:bold;padding:3px 10px;margin-right:10px;">03</span>
+    <h2 style="margin:0;font-size:19px;color:#1a1a1a;font-weight:700;">最扎心的一页 PPT：数据飞轮</h2>
+  </section>
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;">整场演讲最震撼我的，是最后一章"数据飞轮 & AgentLake"。</p>
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;">机制是这样的：每次使用沉淀数据，全量落进 AgentLake——L0 用户交互行为（click / input / accept / abandon），L1 应用数据与源码（PRD → repo → build → artifact），L2 Agent 轨迹（state → action → observation），L3 Benchmark 开发数据。底下是 BigQuery Iceberg 列存、向量召回、DuckDB 分析、Ray 并行加工，上面接 Dashboard、AgentDebug、Benchmark 三个出口。一条轨迹能在线对比、能提取重放、能 fork 出来改工具改指令再评估——评估通过就上线，上线的新运行又落回轨迹库，<strong>闭环自己转起来</strong>。</p>
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;">然后演讲者放出了一个数字：</p>
+  <section style="margin:18px 0;padding:14px 16px;background:#FBEDEA;border-left:4px solid #D43D2A;">
+    <p style="margin:0;font-size:15px;line-height:1.8;color:#8c2b1d;">超长轮次样本里约 30% 在反复改同一个 bug、甚至死循环，同一问题修 3–50 次——这些恰恰是驱动算法迭代的金矿。</p>
+  </section>
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;">细品这个逻辑：Agent 犯的每一次错、打转的每一个死循环，都被全量记录、采样、标注，变成下一轮算法迭代的训练燃料。<strong>系统的每一次失败，都在让系统变强。</strong>每日轨迹回流，周更算法上下线——这个迭代节奏，不是"学手艺"的节奏，是"养模型"的节奏。</p>
+  <p style="margin:0;font-size:15px;line-height:1.9;color:#3f3f3f;">再对比一下：一个开发者踩了坑，教训存在他的脑子里，跳槽就带走；一个 Agent 踩了坑，教训存在 AgentLake 里，全平台永久复用。个人的经验在贬值，系统的数据在复利——这就是飞轮和人脑的区别。</p>
+</section>
+
+<!-- 第四章 -->
+<section style="padding:26px 4px 6px;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <span style="display:inline-block;background:#D43D2A;color:#fff;font-size:14px;font-weight:bold;padding:3px 10px;margin-right:10px;">04</span>
+    <h2 style="margin:0;font-size:19px;color:#1a1a1a;font-weight:700;">那开发者大会还剩下什么？</h2>
+  </section>
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;">值得停下来想一想：既然内容已经变成"给 Agent 搭底座"，为什么大会还一届比一届盛大？</p>
+  <p style="margin:0 0 8px;font-size:15px;line-height:1.9;color:#3f3f3f;"><strong>一是大会早已不是技术事件，是营销事件。</strong>它的真实观众不是台下的开发者，是直播镜头外的生态、客户和资本市场。演讲里每一个名词——GKE、Gemini Enterprise Agent Platform、BigQuery、Filestore、Cloud Storage——都是生态绑定的广告位。开发者是布景板。</p>
+  <p style="margin:0 0 8px;font-size:15px;line-height:1.9;color:#3f3f3f;"><strong>二是生态信仰需要定期充值。</strong>把多种云服务重新组合、补齐单个服务的短板——演讲者自己说这是"搭 infra 的核心工作"。翻译成大白话：深度绑定一朵云的每一块积木。仪式感本身就是一种生态税，你交的不是钱，是两天时间和一份忠诚。</p>
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;"><strong>三是惯性。</strong>信息分发的功能已经被架空——演讲 PPT 挂出来当天，AI 比你消化得更快、更全、更准。但一台运转了十几年的巨型机器，不会因为底层逻辑消失就立刻停下。</p>
+  <p style="margin:0;font-size:15px;line-height:1.9;color:#3f3f3f;">所以我的判断：<strong>开发者大会不会被取消，只会被稀释</strong>——教人写代码的内容逐年消失，给 Agent 搭基建、给生态讲信仰的内容逐年膨胀，直到它和一场产品发布会再无任何区别。</p>
+</section>
+
+<!-- 第五章 -->
+<section style="padding:26px 4px 6px;">
+  <section style="display:flex;align-items:center;margin-bottom:14px;">
+    <span style="display:inline-block;background:#1a1a1a;color:#fff;font-size:14px;font-weight:bold;padding:3px 10px;margin-right:10px;">05</span>
+    <h2 style="margin:0;font-size:19px;color:#1a1a1a;font-weight:700;">给开发者的三条建议</h2>
+  </section>
+  <section style="margin:0 0 12px;padding:14px 16px;background:#fafafa;border-left:4px solid #D43D2A;">
+    <p style="margin:0;font-size:15px;line-height:1.8;color:#3f3f3f;"><strong>1. 把大会当情报站，别当课堂。</strong>这场演讲真正值钱的信息不是技术细节，而是方向判断：头部团队已经在"四层架构 + 数据飞轮"上卷 infra 了。至于 gVisor 怎么配、Runtime 接口怎么实现——让 AI 课后去补，它比你学得快。</p>
+  </section>
+  <section style="margin:0 0 12px;padding:14px 16px;background:#fafafa;border-left:4px solid #D43D2A;">
+    <p style="margin:0;font-size:15px;line-height:1.8;color:#3f3f3f;"><strong>2. 从"会写代码"升级到"会设计闭环"。</strong>Medo 架构里最难替代的不是代码，是那些设计决策：逻辑/物理为什么解耦、轨迹为什么要做成可重放可 fork 的一等资产、30% 的死循环数据为什么是金矿。判断力是仅剩的护城河。</p>
+  </section>
+  <section style="margin:0 0 12px;padding:14px 16px;background:#fafafa;border-left:4px solid #D43D2A;">
+    <p style="margin:0;font-size:15px;line-height:1.8;color:#3f3f3f;"><strong>3. 警惕"生态忠诚"的隐性成本。</strong>整套架构建在一个 Google Cloud 边界内，跑得越顺，迁出来越难。平台设计模块是为了它的生态战略，不是为了你的架构自由。AI 时代切换成本在崩塌——忠诚度应该在崩塌之前先被你主动清算一遍。</p>
+  </section>
+</section>
+
+<!-- 结尾 -->
+<section style="padding:26px 4px 6px;">
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;">演讲结束，台上放完最后一页"越用越准"的飞轮图，台下鼓掌。</p>
+  <p style="margin:0 0 16px;font-size:15px;line-height:1.9;color:#3f3f3f;">我环顾四周突然意识到：这场演讲的每个章节——托管会话、沙箱、弹性底座、轨迹回放、数据飞轮——合起来其实只讲了一件事：<strong>一个不再需要开发者的开发系统，应该长什么样。</strong>而它出现在开发者大会的舞台上，这本身就是这个时代最诚实的注脚。</p>
+  <section style="margin:20px 0;padding:20px 16px;background:#1a1a1a;text-align:center;">
+    <p style="margin:0;font-size:17px;line-height:1.8;color:#ffffff;font-weight:bold;">大会还会一年年办下去，<br>但台上讲的东西，已经越来越不是说给人听的了。</p>
+  </section>
+  <p style="margin:0;font-size:13px;line-height:1.8;color:#999;">注：本文基于 Google 开发者大会现场一场 Medo 架构演讲（四层自研架构 / Agentway / Sandbox / 弹性底座 / AgentDebug / 数据飞轮与 AgentLake）的真实内容写成，技术细节以演讲 PPT 为准；观点评论仅代表作者本人。</p>
+</section>
+
+</section>
+</body>
+</html>

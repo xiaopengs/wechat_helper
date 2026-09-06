@@ -1,0 +1,10 @@
+[标题] 核心特性
+[副标题] 6 大能力：从设目标到合并 PR
+[特性列表]
+1. 会话目标 Session Goals —— 设终点线，agent 每轮自动推进，关掉应用也继续，独立审计模型检查进度
+2. 多模型并行 Multi-run —— 同一任务最多 5 个模型各跑各的，保留最佳结果，或用 Fusion 融合最强部分
+3. 变更走查 Walkthrough —— 大 diff 按逻辑分组为有序步骤，AI 讲解"这段为什么这样改"
+4. 预览 Preview —— 指向运行中应用的任意元素，截图/样式/报错一键发给 agent
+5. GitHub 全流程 —— 从 issue/PR 开始，失败 checks 发回 agent，原地更新/合并 PR
+6. 定时任务 —— cron 计划跑 prompt，可与会话目标配对，朝结果推进
+[数据来源] github.com/openchamber/openchamber (2026-08-10)

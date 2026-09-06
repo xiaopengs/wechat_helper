@@ -1,0 +1,12 @@
+[标题] 对比优势
+[副标题] OpenChamber vs 同类方案
+[对比表格]
+维度 | OpenChamber | OpenCode CLI | Cursor/Windsurf | OpenClaw
+定位 | agent 工作区（监督层） | agent 引擎（终端） | 闭源 IDE AI | 消息渠道 agent 平台
+界面 | 桌面/Web/手机/VS Code 四端 | 终端 TUI | IDE 内 | 聊天渠道
+开源 | ✅ MIT | ✅ | ❌ 闭源 | ✅
+会话目标 | ✅ 自动推进+审计 | ❌ | ❌ | 部分（cron）
+多模型并行 | ✅ 最多 5 模型+融合 | 单模型为主 | 单模型 | 可配
+远程访问 | Private Relay 端到端加密 | 无 | 无 | 网关
+[结论] 不是替代 OpenCode，而是给它装上"监督、审查、跨设备"的工作台
+[数据来源] github.com/openchamber/openchamber (2026-08-10)

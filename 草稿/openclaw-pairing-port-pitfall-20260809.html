@@ -1,0 +1,137 @@
+<section style="text-align:center;margin:8px 0 20px 0;">
+<span style="display:inline-block;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">手机配对自家服务器上的 OpenClaw 网关。主机、端口、令牌全填对了,证书指纹也对上、点了<strong style="color:#1a73e8;">「信任」</strong>,最后界面还是弹出一句:<strong style="color:#ff6b35;">「连接问题 · 无法访问您的 Gateway」</strong>。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">排障排了一个多小时。最后发现,问题不在网关,不在证书,在服务器上三个端口的反代配置。一个看起来完全正常、却把 WebSocket 请求转发给了博客程序的 <span style="font-size:14px;color:#ff6b35;background-color:#f7f8fa;padding:2px 6px;border-radius:3px;">443</span> 端口。</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">记录:2026-08-09 上午 · 一次 OpenClaw 手机节点配对排障</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">01</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">现象:什么都对了,还是连不上</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">OpenClaw 官方 App 手动配对网关,流程走到底:<strong style="color:#1a73e8;">证书指纹</strong>从服务器抓下来、SHA-256 核对一致,点了信任,然后就卡在 <strong style="color:#ff6b35;">「连接问题」</strong>。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">这个报错最迷惑的地方在于:证书信任弹窗是正常出现的。按直觉,证书都过了,说明网络通、TLS 通,那剩下的就是令牌问题。但令牌明明是对的。</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="font-size:15px;color:#333333;line-height:1.8;font-style:italic;">证书信任通过 ≠ 连接成功。TLS 握手和 WebSocket 建连是两回事,中间隔着一整层反代。</span>
+</section>
+<section style="margin:25px 0;text-align:center;padding:40px 20px;background-color:#f7f8fa;border-radius:6px;border:1px dashed #cccccc;">
+<span style="font-size:14px;color:#999999;">📷 图 1 · 手动设置:主机、端口、令牌三项</span>
+</section>
+<section style="margin:25px 0;text-align:center;padding:40px 20px;background-color:#f7f8fa;border-radius:6px;border:1px dashed #cccccc;">
+<span style="font-size:14px;color:#999999;">📷 图 2 · 报错页:「连接问题 · 无法访问您的 Gateway」</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">02</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">排障:服务器侧全绿,手机侧全红</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#f7f8fa;border-radius:6px;">
+<span style="display:block;font-size:14px;font-weight:bold;color:#1a73e8;margin-bottom:6px;">STEP 1 · 网关健康检查</span>
+<span style="font-size:15px;color:#333333;line-height:1.8;">openclaw status 一切正常:网关运行中、ws 可达、auth token 有效、8443 端口代理正常。</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#f7f8fa;border-radius:6px;">
+<span style="display:block;font-size:14px;font-weight:bold;color:#1a73e8;margin-bottom:6px;">STEP 2 · 证书指纹核对</span>
+<span style="font-size:15px;color:#333333;line-height:1.8;">从 thinkspc.fun:8443 抓取 Let’s Encrypt 证书,计算 SHA-256 指纹,与 App 要求一致。</span>
+</section>
+<section style="margin:25px 0;text-align:center;padding:40px 20px;background-color:#f7f8fa;border-radius:6px;border:1px dashed #cccccc;">
+<span style="font-size:14px;color:#999999;">📷 图 3 · 信任此网关:SHA-256 指纹核对对话框</span>
+</section>
+<section style="margin:14px 0;padding:14px 16px;background-color:#f7f8fa;border-radius:6px;">
+<span style="display:block;font-size:14px;font-weight:bold;color:#1a73e8;margin-bottom:6px;">STEP 3 · 关键一击:网关日志</span>
+<span style="font-size:15px;color:#333333;line-height:1.8;">查看 11:43~11:49 的网关日志,没有任何来自手机的 WebSocket 连接记录。</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">网关日志里没有连接记录,意味着手机发的请求根本没到网关。服务端全绿、请求却到不了,问题只可能出在中间那一层:反向代理。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">03</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">根因:443 端口把请求转发给了博客</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">检查 nginx 配置,真相大白。服务器上有<strong style="color:#1a73e8;">三个监听端口</strong>,反代目标完全不一样:</span>
+</section>
+<section style="margin:10px 0;padding:12px 16px;background-color:#f7f8fa;border-left:4px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="display:inline-block;min-width:56px;font-size:16px;font-weight:bold;color:#1a73e8;vertical-align:middle;">80</span>
+<span style="font-size:14px;color:#333333;vertical-align:middle;">→ 301 跳转 https</span>
+<span style="float:right;font-size:12px;color:#1a73e8;vertical-align:middle;">正常</span>
+</section>
+<section style="margin:10px 0;padding:12px 16px;background-color:#f7f8fa;border-left:4px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="display:inline-block;min-width:56px;font-size:16px;font-weight:bold;color:#ff6b35;vertical-align:middle;">443</span>
+<span style="font-size:14px;color:#333333;vertical-align:middle;">→ 127.0.0.1:8090(Halo 博客)</span>
+<span style="float:right;font-size:12px;color:#ff6b35;vertical-align:middle;">❌ 抢了网关的流量</span>
+</section>
+<section style="margin:10px 0;padding:12px 16px;background-color:#f7f8fa;border-left:4px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="display:inline-block;min-width:56px;font-size:16px;font-weight:bold;color:#1a73e8;vertical-align:middle;">8443</span>
+<span style="font-size:14px;color:#333333;vertical-align:middle;">→ 127.0.0.1:18789(OpenClaw 网关)</span>
+<span style="float:right;font-size:12px;color:#1a73e8;vertical-align:middle;">✅ 正确</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">OpenClaw 的 device-pair 插件,publicUrl 配置指向 <span style="font-size:14px;color:#ff6b35;background-color:#f7f8fa;padding:2px 6px;border-radius:3px;">wss://thinkspc.fun/gateway</span>,默认走 <strong style="color:#ff6b35;">443 端口</strong>。而 nginx 的 443 端口,<span style="font-size:14px;color:#ff6b35;background-color:#f7f8fa;padding:2px 6px;border-radius:3px;">/</span> 路径反代给的是 Halo 博客(8090),只有 <strong style="color:#1a73e8;">8443</strong> 端口才带 WebSocket upgrade 头、正确转发给网关(18789)。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">为什么证书信任能通过?因为 443 和 8443 用的是同一张 Let’s Encrypt 证书,TLS 握手照样成功,信任弹窗正常出现。但紧接着的 WebSocket 升级请求,被 443 转发给了博客程序。博客不认识 WebSocket 协议,连接直接失败,App 报「连接问题」。</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #ff6b35;border-radius:0 6px 6px 0;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">最坑的地方就在这里:证书是同一个,信任流程完全正常,肉眼可见的一切都对,只有请求被悄悄转发错了地方。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">04</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">修复:让配对码指向 8443</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">把 publicUrl 从 <span style="font-size:14px;color:#ff6b35;background-color:#f7f8fa;padding:2px 6px;border-radius:3px;">wss://thinkspc.fun/gateway</span> 改成 <span style="font-size:14px;color:#ff6b35;background-color:#f7f8fa;padding:2px 6px;border-radius:3px;">wss://thinkspc.fun:8443</span>,重新生成配对码,手机重新配对,<strong style="color:#1a73e8;">openclaw nodes approve</strong> 放行设备,一次通过。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;">顺带还踩了两个小坑,一并记录:</span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;">bootstrap token 有效期只有 10 分钟,过期要重新生成配对码,不能用旧的反复试。</span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;">手动设置里端口默认填 18789 是内网端口,公网连接必须走 8443。</span>
+</section>
+<section style="margin-bottom:8px;padding:6px 0 6px 12px;border-left:2px solid #1a73e8;">
+<span style="font-size:14px;color:#666666;line-height:1.7;">443 是「看起来最对」的默认端口,恰恰是最容易踩的坑。</span>
+</section>
+<section style="text-align:center;margin:30px 0 6px 0;">
+<span style="display:inline-block;vertical-align:middle;font-size:12px;color:#1a73e8;letter-spacing:3px;font-weight:bold;margin-right:12px;">05</span>
+<span style="display:inline-block;vertical-align:middle;width:42px;height:4px;background-color:#1a73e8;border-radius:2px;"></span>
+</section>
+<section style="margin-top:28px;margin-bottom:12px;">
+<span style="font-size:17px;font-weight:bold;color:#333333;line-height:1.6;">三条经验</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong style="color:#1a73e8;">1. 证书信任通过,不代表 WebSocket 能通</strong>。TLS 和 WS 是两层,中间还夹着反代。信任弹窗正常,只说明 TLS 握手成功,不代表升级请求能到应用。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong style="color:#1a73e8;">2. 服务端日志里没有连接记录,先查代理层,别查应用层</strong>。这次如果继续在网关配置里找原因,永远找不到。请求根本没到网关。「日志无记录」本身就是最重要的线索。</span>
+</section>
+<section style="margin-bottom:18px;">
+<span style="font-size:16px;color:#333333;line-height:1.85;letter-spacing:0.3px;"><strong style="color:#1a73e8;">3. 多端口公网服务器,先画一张端口对照表</strong>。80/443/8443 各自反代到哪、带不带 WS 支持,写清楚。一次画表十分钟,排查时省一小时。</span>
+</section>
+<section style="margin:20px 0;padding:16px 18px;background-color:#f7f8fa;border-left:3px solid #1a73e8;border-radius:0 6px 6px 0;">
+<span style="font-size:15px;color:#333333;line-height:1.8;font-style:italic;">排查连通性问题,先回答「请求到底到了哪一层」,再谈修哪里。</span>
+</section>
+<section style="margin-bottom:12px;">
+<span style="font-size:15px;color:#666666;line-height:1.8;">全文完 · 如果你也在自建 OpenClaw 网关,欢迎交流</span>
+</section>

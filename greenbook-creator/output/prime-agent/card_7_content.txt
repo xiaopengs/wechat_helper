@@ -1,0 +1,12 @@
+[标题] 适用场景
+[副标题] 什么任务适合 Prime Agent
+[✅ 适用 - 4 项]
+▸ 长时编码任务:跨会话持续进展、自动压缩不丢状态
+▸ 研究/评测自动化:README 明说 built for evaluations in research
+▸ 并行子任务:安全审查+测试覆盖+集成审计同时跑
+▸ 无人值守:终端断开后 daemon 继续跑,可 attach 回来
+[❌ 不适用 - 3 项]
+▸ 单轮快速问答:直接 LLM API 更轻量
+▸ 不可信执行环境:模型生成的代码以你的权限执行,非安全沙箱
+▸ Windows 原生:官方支持 macOS/Linux,Windows 需 WSL/Termux
+[数据来源] 来源:官方 README + Quickstart 2026-08-17

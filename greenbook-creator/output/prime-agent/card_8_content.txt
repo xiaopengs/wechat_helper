@@ -1,0 +1,10 @@
+[标题] 注意事项
+[副标题] 用之前必读的 5 条坑点
+[警示列表 - 5 项]
+⚠️ 1 非安全沙箱:模型生成的 Python 以你的用户权限执行,不信任代码必须外部沙箱
+⚠️ 2 首次配置:需 /login 选 provider(订阅或 API key)
+⚠️ 3 上游依赖:构建于 earendil-works/pi 之上,上游更新影响行为
+⚠️ 4 会动文件:在当前目录执行命令/改文件,用可丢弃 clone 或干净 worktree
+⚠️ 5 平台限制:仅 macOS/Linux 官方支持,Windows 用户走 WSL 或 Termux
+[底线提示] 审查变更,只用可信仓库/指令/skill/扩展
+[数据来源] 来源:官方 README WARNING + docs 2026-08-17

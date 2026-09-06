@@ -1,0 +1,13 @@
+[标题] 适用场景
+[副标题] 什么时候该用它
+[适用 ✅]
+- "放出去干、回来审"：设好会话目标关掉应用，回来审查 diff，agent 自己推进
+- 多模型 PK：同一任务 5 个模型并行，挑最好或融合（Multi-run + Fusion）
+- 跨设备接力：办公室桌面 ↔ 通勤手机看进度/审批/回答问题
+- 定时维护：cron + Session Goals 配对，让定时任务朝结果跑
+- 团队 issue→PR：VS Code 旁开 session，失败 checks 直接发回 agent
+[不适用 ❌]
+- 纯终端党：只要 CLI，直接 OpenCode 更轻
+- 非编码自动化（消息机器人/定时报告）：OpenClaw 这类平台更合适
+- 无 Node.js 22+ / 不允许本地常驻服务的环境
+[数据来源] github.com/openchamber/openchamber (2026-08-10)

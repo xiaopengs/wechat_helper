@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  /* ===== guizang Style A · 编辑墨水 · 主题: 靛蓝瓷 (Indigo Porcelain) ===== */
+  :root{
+    --ink:#0a1f3d; --ink-rgb:10,31,61;
+    --paper:#f1f3f5; --paper-rgb:241,243,245;
+    --paper-tint:#e4e8ec; --ink-tint:#152a4a;
+    --mono:"DejaVu Sans Mono","Noto Sans Mono CJK SC",monospace;
+    --serif-zh:"Noto Serif CJK SC","Noto Serif SC",serif;
+    --sans-zh:"Noto Sans CJK SC","Noto Sans SC",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#222;font-family:var(--sans-zh);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .card{width:1080px;height:1440px;position:relative;overflow:hidden;display:flex;flex-direction:column;padding:72px 84px 64px 84px;margin:24px auto}
+  .card.light{color:var(--ink);background:var(--paper)}
+  .card.dark{color:var(--paper);background:var(--ink)}
+
+  .chrome{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:17px;letter-spacing:.22em;text-transform:uppercase;opacity:.6}
+  .chrome .sep{width:56px;height:1px;background:currentColor;opacity:.4}
+  .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;font-family:var(--mono);font-size:15px;letter-spacing:.18em;text-transform:uppercase;opacity:.5}
+  .foot .title{font-family:var(--serif-zh);font-weight:400;letter-spacing:.05em;text-transform:none;opacity:.8;font-size:19px}
+  .kicker{font-family:var(--mono);font-size:16px;letter-spacing:.32em;text-transform:uppercase;opacity:.6;margin-bottom:28px}
+  .rule{width:100%;height:1px;background:currentColor;opacity:.25;margin:36px 0}
+  .display-zh{font-family:var(--serif-zh);font-weight:700;font-size:96px;line-height:1.06;letter-spacing:-.005em}
+  .h1-zh{font-family:var(--serif-zh);font-weight:700;font-size:64px;line-height:1.12;letter-spacing:-.005em}
+  .h2-zh{font-family:var(--serif-zh);font-weight:600;font-size:44px;line-height:1.2}
+  .body-zh{font-family:var(--sans-zh);font-weight:400;font-size:30px;line-height:1.72;opacity:.84}
+  .lead{font-family:var(--serif-zh);font-weight:400;font-size:38px;line-height:1.5;opacity:.88}
+  .meta{font-family:var(--mono);font-size:16px;letter-spacing:.16em;text-transform:uppercase;opacity:.6}
+  .big-num{font-family:var(--serif-zh);font-weight:700;font-size:110px;line-height:.9;letter-spacing:-.02em;font-feature-settings:"tnum"}
+  .mid-num{font-family:var(--serif-zh);font-weight:700;font-size:72px;line-height:.95;letter-spacing:-.02em;font-feature-settings:"tnum"}
+  .en{font-family:var(--serif-zh);font-style:italic;font-weight:500}
+  .stat{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+  .stat .n{font-family:var(--serif-zh);font-weight:700;font-size:72px;line-height:.9;letter-spacing:-.02em;font-feature-settings:"tnum"}
+  .stat .l{font-family:var(--sans-zh);font-size:22px;opacity:.7;margin-top:10px;font-weight:400;line-height:1.5}
+  .stat .m{font-family:var(--mono);font-size:15px;letter-spacing:.22em;text-transform:uppercase;opacity:.5;margin-bottom:4px}
+  .grid-4{display:grid;grid-template-columns:1fr 1fr;gap:48px 56px}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:40px 56px}
+  .col{display:flex;flex-direction:column;gap:22px}
+  .fill{flex:1}
+  .center{align-items:center;justify-content:center;text-align:center}
+  .callout{padding:30px 32px;border-left:3px solid currentColor;font-family:var(--serif-zh);font-size:32px;line-height:1.55;opacity:.92}
+  .card.light .callout{background:rgba(var(--ink-rgb),.05)}
+  .card.dark .callout{background:rgba(var(--paper-rgb),.07)}
+  .callout .cite{display:block;margin-top:18px;font-family:var(--mono);font-size:15px;letter-spacing:.2em;text-transform:uppercase;opacity:.6}
+  .tag{display:inline-block;font-family:var(--mono);font-size:15px;letter-spacing:.24em;text-transform:uppercase;padding:10px 20px;border:1px solid currentColor;opacity:.85}
+  .step{display:flex;gap:26px;align-items:flex-start}
+  .step-nb{font-family:var(--serif-zh);font-weight:700;font-size:44px;opacity:.45;line-height:1}
+  .step-title{font-family:var(--sans-zh);font-weight:600;font-size:30px;line-height:1.4}
+  .step-desc{font-family:var(--sans-zh);font-weight:400;font-size:24px;line-height:1.6;opacity:.78;margin-top:6px}
+  code{font-family:var(--mono);font-size:26px;background:rgba(var(--ink-rgb),.07);padding:2px 10px;border-radius:4px}
+  .dark code{background:rgba(var(--paper-rgb),.1)}
+  ul{list-style:none}
+  ul li{position:relative;padding-left:34px;font-family:var(--sans-zh);font-size:28px;line-height:1.62;opacity:.86;margin-bottom:16px}
+  ul li::before{content:"";position:absolute;left:0;top:14px;width:16px;height:1px;background:currentColor;opacity:.5}
+  .ghost{font-family:var(--serif-zh);font-weight:900;font-size:460px;line-height:.8;opacity:.045;letter-spacing:-.04em;position:absolute;pointer-events:none}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ 卡 1 · 封面 ═══════════ -->
+<div class="card dark">
+  <div class="chrome">
+    <span>DeepSeek AI</span>
+    <span class="sep"></span>
+    <span>Open Source · 2026</span>
+  </div>
+  <div class="fill" style="display:flex;flex-direction:column;justify-content:center;gap:10px">
+    <div class="kicker">Agent Harness · Everything is a Plugin</div>
+    <div class="display-zh">DeepSeek<br>Harness</div>
+    <div class="lead" style="margin-top:34px;opacity:.75">一切皆插件<br><span class="en">Nothing is privileged.</span></div>
+  </div>
+  <div class="rule"></div>
+  <div class="grid-2" style="margin-bottom:36px">
+    <div class="stat"><div class="m">GitHub Stars</div><div class="n">21.5K+</div><div class="l">发布当天</div></div>
+    <div class="stat"><div class="m">Stack</div><div class="n">TS</div><div class="l">TypeScript · MIT</div></div>
+  </div>
+  <div class="foot">
+    <span class="title">github.com/deepseek-ai/deepseek-harness</span>
+    <span>01 / 06</span>
+  </div>
+</div>
+
+<!-- ═══════════ 卡 2 · 项目速览 ═══════════ -->
+<div class="card light">
+  <div class="chrome">
+    <span>DeepSeek Harness</span>
+    <span class="sep"></span>
+    <span>What is it</span>
+  </div>
+  <div class="fill" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="kicker">01 · 项目速览</div>
+    <div class="h1-zh">DeepSeek 的开源<br>智能体框架 <span class="en">dsh</span></div>
+    <div class="rule"></div>
+    <div class="body-zh">
+      DeepSeek Harness（<code>dsh</code>）是 DeepSeek AI 官方开源的 agent harness——
+      一套「<b>一切皆插件</b>」的智能体运行框架，由 <b>Cordis</b> 插件框架驱动。
+      模型适配器、工具注册表、会话日志、甚至 agent 主循环本身都是插件，
+      <b>没有特权核心</b>，每个部件都可以从配置里被替换。
+    </div>
+    <div class="callout" style="margin-top:44px">
+      开发者预览阶段，正在快速迭代——未来会有破坏性变更。
+      <span class="cite">README · DeepSeek AI</span>
+    </div>
+  </div>
+  <div class="rule"></div>
+  <div class="grid-4">
+    <div class="stat"><div class="m">Stars</div><div class="n">21.5K</div><div class="l">2026-08-13 发布当天</div></div>
+    <div class="stat"><div class="m">Forks</div><div class="n">1.5K</div><div class="l">快速扩散中</div></div>
+    <div class="stat"><div class="m">License</div><div class="n">MIT</div><div class="l">可商用可改造</div></div>
+    <div class="stat"><div class="m">版本</div><div class="n">rc.5</div><div class="l">v0.1.0-rc.5</div></div>
+  </div>
+  <div class="foot">
+    <span class="title">DeepSeek Harness · 一切皆插件</span>
+    <span>02 / 06</span>
+  </div>
+</div>
+
+<!-- ═══════════ 卡 3 · 核心特性 ═══════════ -->
+<div class="card dark">
+  <div class="chrome">
+    <span>DeepSeek Harness</span>
+    <span class="sep"></span>
+    <span>Why it matters</span>
+  </div>
+  <div class="fill" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="kicker">02 · 核心特性</div>
+    <div class="h1-zh">为什么说<br>「一切皆插件」？</div>
+    <div class="rule"></div>
+    <div class="col">
+      <div class="step">
+        <div class="step-nb">01</div>
+        <div><div class="step-title">没有特权核心</div>
+        <div class="step-desc">模型适配、工具注册、会话日志、agent 主循环——全部是可替换的插件。</div></div>
+      </div>
+      <div class="step">
+        <div class="step-nb">02</div>
+        <div><div class="step-title">Profile + Bundle 分层组合</div>
+        <div class="step-desc">web / headless 双模板开箱即用，配置行可被上层 patch 逐条覆盖。</div></div>
+      </div>
+      <div class="step">
+        <div class="step-nb">03</div>
+        <div><div class="step-title">扩展即挂载</div>
+        <div class="step-desc">在插件树旁挂一个插件就完成扩展；注册是效果，插件卸载时自动回滚。</div></div>
+      </div>
+      <div class="step">
+        <div class="step-nb">04</div>
+        <div><div class="step-title">类型化事件驱动</div>
+        <div class="step-desc">session 持久事件 + agent 实时事件 + 能力策略事件，三类扩展点各司其职。</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="title">来自官方架构文档 docs/architecture.md</span>
+    <span>03 / 06</span>
+  </div>
+</div>
+
+<!-- ═══════════ 卡 4 · 架构原理 ═══════════ -->
+<div class="card light">
+  <div class="chrome">
+    <span>DeepSeek Harness</span>
+    <span class="sep"></span>
+    <span>Architecture</span>
+  </div>
+  <div class="fill" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="kicker">03 · 架构原理</div>
+    <div class="h1-zh">Cordis 驱动的<br>插件树</div>
+    <div class="rule"></div>
+    <div class="body-zh">
+      一个运行中的 <code>dsh</code> 是一棵由分层 bundle 组合而成的插件树：
+      <b>dsh-base</b> 提供模型适配、工具、持久化、沙箱与审批策略；
+      <b>dsh-web-app</b> 加上浏览器应用；<b>dsh-headless</b> 提供无服务端的一次性执行器。
+    </div>
+    <div class="callout" style="margin-top:40px">
+      会话日志是模型上下文的唯一来源——「模型可见 = 已入日志」是运行时强约束。
+      <span class="cite">Architecture · Session log</span>
+    </div>
+    <ul style="margin-top:40px">
+      <li>服务按 <code>ctx.llm</code> / <code>ctx.tools</code> / <code>ctx.sessions</code> 等键注册，按需注入，加载顺序由依赖声明决定</li>
+      <li>能力接缝（seam）可整体换实现：换一个 fs / sandbox 提供方，Bash、PTY、LSP 一起切换</li>
+      <li>看本机启动树：<code>dsh --profile web --dump-config</code></li>
+    </ul>
+  </div>
+  <div class="foot">
+    <span class="title">Everything is a Plugin</span>
+    <span>04 / 06</span>
+  </div>
+</div>
+
+<!-- ═══════════ 卡 5 · 5 分钟上手 ═══════════ -->
+<div class="card dark">
+  <div class="chrome">
+    <span>DeepSeek Harness</span>
+    <span class="sep"></span>
+    <span>Quickstart</span>
+  </div>
+  <div class="fill" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="kicker">04 · 5 分钟上手</div>
+    <div class="h1-zh">一行命令<br>跑起 Web UI</div>
+    <div class="rule"></div>
+    <div class="col" style="gap:30px">
+      <div class="step">
+        <div class="step-nb">1</div>
+        <div><div class="step-title">启动</div>
+        <div class="step-desc"><code>npx @deepseek-ai/dsh web</code> — 默认地址 http://127.0.0.1:3080</div></div>
+      </div>
+      <div class="step">
+        <div class="step-nb">2</div>
+        <div><div class="step-title">配模型</div>
+        <div class="step-desc">Settings → Models，填入 DeepSeek API Key，保存即可用，无需重启。</div></div>
+      </div>
+      <div class="step">
+        <div class="step-nb">3</div>
+        <div><div class="step-title">选工作区</div>
+        <div class="step-desc">Choose workspace 添加项目目录，会话编辑器随即可用。</div></div>
+      </div>
+      <div class="step">
+        <div class="step-nb">4</div>
+        <div><div class="step-title">派任务</div>
+        <div class="step-desc">「总结这个仓库」——它能读写文件、跑命令、委派子任务、维护计划。</div></div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:40px">
+      从源码跑：<code>pnpm install</code> → <code>pnpm run build</code> → <code>pnpm dsh web</code>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="title">需要 Node.js 环境</span>
+    <span>05 / 06</span>
+  </div>
+</div>
+
+<!-- ═══════════ 卡 6 · 场景 + 行动 ═══════════ -->
+<div class="card light">
+  <div class="chrome">
+    <span>DeepSeek Harness</span>
+    <span class="sep"></span>
+    <span>Next step</span>
+  </div>
+  <div class="fill" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="kicker">05 · 谁适合 & 下一步</div>
+    <div class="h1-zh">适合谁？<br>怎么跟上？</div>
+    <div class="rule"></div>
+    <div class="grid-2" style="gap:36px 48px">
+      <div class="col">
+        <div class="h2-zh">适合</div>
+        <ul>
+          <li>想研究 DeepSeek 官方 agent 架构的人</li>
+          <li>想自研插件 / 工具链的开发者</li>
+          <li>本地优先、模型无关的工作流玩家</li>
+        </ul>
+      </div>
+      <div class="col">
+        <div class="h2-zh">注意</div>
+        <ul>
+          <li>开发者预览：破坏性变更随时可能</li>
+          <li>需 Node.js，默认 Bash 工具链（Windows 走 PowerShell）</li>
+          <li>新仓库迭代快，以官方 README 为准</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:44px">
+      去 GitHub 点个 Star，给插件仓库打上 <code>dsh-plugin</code> 话题，加入 Discussions 和 Discord。
+      <span class="cite">github.com/deepseek-ai/deepseek-harness</span>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="title">DeepSeek Harness · Everything is a Plugin</span>
+    <span>06 / 06</span>
+  </div>
+</div>
+
+</body>
+</html>
