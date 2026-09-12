@@ -1,6 +1,6 @@
 {
  "version": "1.0",
- "updatedAt": "2026-09-12T22:25:05+08:00",
+ "updatedAt": "2026-09-13T00:12:07+08:00",
  "topics": [
   {
    "id": "topic-20260906-001",
@@ -870,14 +870,15 @@
   {
    "id": "topic-20260912-001",
    "title": "OpenAI 把 Codex 的 harness 做成了 API：这跟你自建智能体，到底差在哪？",
-   "angle": "从 Michael Luo 入职 OpenAI 及其 Agents API 切入，对照自建 Agent Harness（OpenClaw 类）。核心判断：抽象层是同一件事（会话/工具/编排/运行时/恢复五件套），但控制权相反——托管 vs 自托管、模型锁定 vs 模型无关、API vs 渠道优先、数据合规、计费口径、以及 OpenAI 自家把 Agents API/SDK/Responses 并列为三种 runtime。落点：harness 商品化 + 抽象泄漏。",
+   "angle": "从 Michael Luo 入职 OpenAI 及其 Agents API 切入，用 OpenClaw 官方架构逐条对照。核心判断：抽象层是同一件事（会话/工具/编排/运行时/恢复五件套），控制权相反（托管 vs 自托管、模型锁定 vs 模型无关、API vs 渠道优先、数据合规、计费口径），真正的增量只有一样——把既有 harness 能力做成对外开放的 API（各家 claw 早就有，只是没开放）。落点：harness 商品化 + 抽象泄漏 + 可插拔 vs 黑盒。",
    "outline": [
     "开头：Michael Luo 入职两周发 Agents API + 群里那句「跟自建智能体没区别」",
     "01 五件套逐条对照：会话/工具/编排/运行时/恢复 → K8s→托管K8s、MySQL→RDS 的第三次重演",
     "02 六条方向相反：托管/模型锁定/交互面/数据合规/计费/官方自家三种 runtime",
-    "03 卖的是「不用运维」：附早期客户数据并标注为厂商口径",
-    "04 抽象泄漏：换模型、数据出境、压缩策略不可改 → 掉回底层",
-    "05 写在最后：标准件只保证标准场景；时间 vs 控制权；公测期先别上生产"
+    "03 把 Agents API 放回 OpenClaw 架构当场对一遍：Session/压缩+memory flush/steer 模型边界/spawn 回传/自托管沙箱/MCP 双向/三层工具治理 → 没有一项是新的",
+    "04 卖的是「不用运维」：附早期客户数据并标注为厂商口径",
+    "05 抽象泄漏：换模型、数据出境、压缩策略黑盒 vs 可插拔引擎",
+    "06 写在最后：分水岭不是技术是形态；时间 vs 控制权；公测期先别上生产"
    ],
    "difficulty": "⭐⭐",
    "source": "OpenAI Agents API 发布（2026-09-10，官方博客/文档 + 华尔街见闻报道 + 开发者社区帖）",
@@ -885,7 +886,8 @@
    "selectedAt": "2026-09-12T22:25:05+08:00",
    "publishedAt": "2026-09-12T22:25:05+08:00",
    "status": "published",
-   "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQkTqGeaOrIQo8AHv-ygVg-LYEp3F4954It5ciyxD_lSr"
+   "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQkTqGeaOrIQo8AHv-ygVg-LYEp3F4954It5ciyxD_lSr",
+   "updatedAt": "2026-09-13T00:12:07+08:00"
   }
  ]
 }
