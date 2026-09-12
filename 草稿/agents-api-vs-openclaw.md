@@ -4,63 +4,70 @@
 
 一个华裔工程师，入职两周就参与发了 Agents API，节奏快得他自己在 X 上都感叹 crazy fast。但比人事新闻更值得聊的，是那个产品本身：OpenAI 把 Codex 背后的 Agent Harness，直接做成了 API 对外卖。
 
-群里转的那篇稿子，末尾有人下了一句判断，说这东西跟我们在云上自己部署智能体没什么区别，无非换了个 harness 的概念。
+群里转的那篇稿子，末尾有人下了一句判断，说这东西跟我们在云上自己养的智能体没什么区别，无非换了个 harness 的概念，各家 claw 不过是没把 API 开放出来。
 
-作为每天自己搭 agent 干活的 AI Native Coder，我对这句话半信半疑。半信，是因为抽象层面确实像；半疑，是因为我越看越觉得，这两件事的方向是反的。
+这句话，前半句我不同意，后半句我同意。
 
-这篇我把 OpenAI 官方文档翻了一遍，也把转载里那堆数字挨个核了。结论先放这儿：**抽象层是同一件事，控制权正好相反。**
+抽象层确实像，但控制权的方向是反的；而它真正的增量，也确实不在能力上——是在形态上。
+
+这篇我把 OpenAI 官方文档翻了一遍，也把 OpenClaw 的架构文档逐节对着看了一遍。结论先放这儿：**能力早就有了，OpenAI 的增量是把这套 harness 变成了一个 API 商品。**
 
 [图片]
 
-## 01 先把两边的"五件套"摊开看
+## 01 先把两套东西摆到一张桌子上
 
-要吵"有没有区别"，得先把能力拆开，一样一样对。
+先看 OpenAI 这边。官方给了四个核心概念：Agent（模型、指令、工具、MCP 服务器）、Environment（沙箱或电脑）、Session（可持久运行的实例）、Events and items（送进去的输入和跑出来的产出）。围绕这四个概念，harness 提供五件事：会话与上下文、工具、编排、运行时、恢复与介入。
 
-**会话与上下文。** 官方管它叫 Session，会话持久化，接近上下文窗口上限时自动压缩早期内容，能跨多个 context window 接着跑，目标是让任务稳跑几天。你自建那边，等价物是自己的会话历史、memory 文件，加一段自己写的摘要逻辑。
+再看 OpenClaw 这边。我按它的架构文档拆下来，长这样：
 
-**工具。** MCP 服务器、自定义 function、内置 web search，还有两个细节：tool search 按需检索工具定义、programmatic tool calling 在代码里并行调工具。自建那边就是 MCP 加 skills，加你自己包的函数。
+一个常驻的 Gateway 进程，把消息面和控制面收在一个进程里，内部跑着 agent runtime、session store、渠道适配器、provider 连接和一个 cron 调度器。
 
-**编排。** 官方文档里的写法是 `multi_agent.enabled` 配 `max_concurrent_subagents`，主 agent 拆子任务分派下去，子 agent 各有上下文。自建那边，就是主 agent spawn 几个子 agent。
+agent loop 是这么走的：请求进来先返回一个 runId，然后按 session 的通道串行跑这一轮，把 assistant、tool、lifecycle 事件流式吐出来。上下文不是模型自己管的，是 OpenClaw 拼好了再喂——基础系统提示、skills 列表、启动时注入的 AGENTS.md / SOUL.md / MEMORY.md 这些文件，再加每轮的覆盖项，skills 正文按需再读。
 
-**运行时。** 托管沙箱里跑代码、读写文件、装包、产出 artifact。自建那边，就是你自己那台服务器或容器。
+上下文压缩它也自己做：auto-compaction 默认开着，接近上限、或者模型直接返回 overflow，就把旧轮摘要掉重试；压缩之前还会静默跑一次 memory flush。Session 落盘在 `~/.openclaw/agents/<agentId>/sessions/`，一个索引文件加每会话一个 jsonl。中途想插话也有：默认走 steer，新消息在模型边界注入，不会打断正在跑的工具调用。
 
-**恢复与介入。** session 可从检查点恢复，agent 干活时你能中途 steer。自建那边，就是你自己写的检查点和中断重放。
+工具按组划分，fs、sessions、web、automation、messaging、nodes、media、plugins 各自成组，策略是一条链：profile → provider → allow/deny → per-agent → sandbox。沙箱默认关，开了之后分 off / non-main / all 三种模式，后端可选 docker、ssh、openshell。记忆是纯 Markdown，MEMORY.md 启动时注入，memory/*.md 默认不进上下文、按需检索。主动性有两套：heartbeat 是主 session 的周期唤醒，cron 走精确调度，每次执行还留一条 task 记录。
 
-五件对上五件，所以"没区别"这句不是错觉。OpenAI 干的事，是把这层胶水标准化、托管化、按量卖。
+把两边的概念硬对上，大概是这么一张表：
 
-这事十年前发生过一次：自建 K8s 变成托管 K8s。五年前又发生过一次：自建 MySQL 变成 RDS。现在轮到 harness。
+Agent ↔ agent 人设
+Session ↔ session（落盘 + 可恢复）
+Events and items ↔ 流式事件 + 会话记录
+multi_agent ↔ 子 agent 派生 + 结果回传
+steering ↔ 运行时 steer
+context compaction ↔ 自动压缩 + memory flush
+hosted sandbox ↔ docker / ssh / openshell 后端
+MCP ↔ 挂载为插件工具
 
-> 每一次被商品化的都不是"技术"，是那层又脏又累、谁都不想维护的胶水。
+对完这张表，我原来那句"抽象层是同一件事"就不是感觉了，是能逐条列出来的。有意思的是差异只在两个方向：OpenClaw 缺一个一级的 Environment 原语，用工作区加沙箱近似；反过来，多渠道加确定性路由、heartbeat 和 cron、Markdown 记忆、三层工具治理，这些 Agents API 一个都没有。
 
-## 02 但拆开看，每一条的方向都不一样
+## 02 真正的差异：不是能力，是形态
 
-对完五件套，我原本准备认同那句"没什么区别"。结果往下多看一层，发现方向是反的。
+对完表我得说句实话：这套 harness 的逻辑，自建智能体里早就跑起来了，而且跑了好几年。各家 claw 不是没有 harness，是没把它对外做成 API。
 
-**第一，托管对自托管。** 这是商业模式差异，不是技术差异。运维归谁，责任就归谁。
+OpenAI 干的是三件事：API 化，一次调用起一个云端 agent；托管化，harness 归它运维；商品化，按 token、按工具、按容器资源计费。
 
-**第二，模型。** 这是最硬的一条。官方示例里的模型是 `gpt-6-astra`，只能选 OpenAI 自家的。自建 harness 是模型无关的，DeepSeek 顺、MiniMax 也顺，本地模型也能接。一个是接受中介给你的房源，一个是自己挑房。
+所以"换个概念"这个说法，说反了。它换的不是概念，是交付形态。**能力从来不是瓶颈，封装和分发才是。** 十年前托管 K8s 赢的也不是技术，是谁来运维。
 
-**第三，交互面。** Agents API 是给开发者嵌进自己 App 的，前端还得你自己写。自建的智能体是渠道优先的，直接对话、群里发言、定时主动找人，天生自带一副"身体"。
+这也解释了为什么它的定位写得那么清楚：给"有想法、有用户、但不想养一支基础设施团队"的人用。你要是已经有自己的 harness 在跑，它对你最大的价值可能不是替换，而是当一面镜子，照出你自己那套缺哪一块。
 
-**第四，数据合规。** 转载里写公测期数据驻留仅美国、暂不支持 Zero Data Retention。这条我暂时没核到原始出处，但对国内团队，它常常是一票否决。
+## 03 但拆开看，每一条的方向都不一样
 
-**第五，计费。** 官方口径还算清楚：Agents API 本身不额外收费，模型按所选模型费率、内置工具按标准费率、托管沙箱按标准容器费率。翻译一下就是，接口免费，算力和工具照单收费。至于转载里那组"1/4/16/64GB 档位、20 分钟单价"，我在官方页面没找到出处，先别当事实用。
+对完架构，我原本准备认同那句"没什么区别"。结果往下多看一层，发现方向是反的。
 
-**第六，这条是我自己翻文档翻出来的。** OpenAI 把 Agents API、Agents SDK、Responses API 并列为三种 agent runtime，让开发者按"谁来跑 agent loop、谁管状态"来选。要自己掌控部署、存储、审批的时候，官方让你退回 SDK，或者退回 Responses API。
+第一，托管对自托管。这是商业模式差异，不是技术差异。运维归谁，责任就归谁。
+
+第二，模型。这是最硬的一条。官方示例里的模型是 `gpt-6-astra`，只能选 OpenAI 自家的。自建 harness 是模型无关的，DeepSeek 顺、MiniMax 也顺，本地模型也能接。一个是接受中介给你的房源，一个是自己挑房。
+
+第三，交互面。Agents API 是给开发者嵌进自己 App 的，前端还得你自己写。自建的智能体是渠道优先的，直接对话、群里发言、定时主动找人，天生自带一副"身体"。
+
+第四，数据合规。转载里写公测期数据驻留仅美国、暂不支持 Zero Data Retention。这条我暂时没核到原始出处，但对国内团队，它常常是一票否决。
+
+第五，计费。官方口径还算清楚：Agents API 本身不额外收费，模型按所选模型费率、内置工具按标准费率、托管沙箱按标准容器费率。翻译一下就是，接口免费，算力和工具照单收费。至于转载里那组"1/4/16/64GB 档位、20 分钟单价"，我在官方页面没找到出处，先别当事实用。
+
+第六，这条是我自己翻文档翻出来的。OpenAI 把 Agents API、Agents SDK、Responses API 并列为三种 agent runtime，让开发者按"谁来跑 agent loop、谁管状态"来选。要自己掌控部署、存储、审批的时候，官方让你退回 SDK，或者退回 Responses API。
 
 连官方都不认为托管 harness 能覆盖所有场景。这是整件事里最有意思的一处。
-
-## 03 它卖的不是技术，是"你不用运维"
-
-官方公告里有句话说得挺实在：每次发新模型，开发者都得重搭一遍自己的 harness。Agents API 换了种做法，用版本化让模型更新直接对应能力入口。
-
-换句话说，它省下的不是技术，是那部分"本来用于打磨产品、结果花在基础设施上的精力"。
-
-买家画像其实很清楚：有想法、有用户、但不想养一支基础设施团队的小团队。华尔街见闻那篇报道里给了几个早期客户的数据，SafetyKit 把案例审核流程迁过去之后，单案处理成本降了 60%；Hypha 把 agent 执行框架和沙箱解耦，响应失败率降了 86%；另一家 Cirridae 的评估分从 0.71 升到 0.85，延迟降了 4 倍。
-
-这几个数字确实挺猛。不过我留了个心眼：这类数字都是厂商自己披露的口径，样本和条件都没公开，看看方向就行，别当 benchmark。
-
-真正要控数据、要换模型的人，还是会自建。所以我说这是两个联赛，不是同场比赛的两匹马。
 
 ## 04 抽象泄漏才是真批判
 
@@ -70,7 +77,9 @@
 
 用的时候觉得省了三个月，出问题的时候，可能还回去六个月。
 
-所以那句"没区别"，我现在的版本是：**对急着上线的人，它确实替你省了事；对要长期掌控的人，它换走的东西比想象中多。**
+不过话说回来，自建那边也不是没有抽象泄漏，只是泄漏在自己人身上：你的 harness 没人托管，模型一升级、渠道一改版，活儿还是你的。
+
+所以那句"没区别"，我现在的版本是：**能力上确实没区别，区别在于谁替你扛运维，以及你为此交出去多少控制权。**
 
 ## 05 写在最后
 
@@ -80,16 +89,17 @@
 
 所以这事最后落到每个人身上的问题，其实就一句：你更贵的是时间，还是控制权。
 
-至于要不要现在就上，我的建议是先等等。公测阶段，按官方自己的说法也是"会快速迭代"，别急着把生产环境搬进去。真要试，拿个内部工具练手就够了。
+至于要不要现在就上，我的建议是先等等。公测阶段，按官方自己的说法也是"会快速迭代"，别急着把生产环境搬进去。真要试，拿个内部工具练手就够了；真要学，不如先把自己的 harness 对着它那四个概念过一遍，看差在哪。
 
 ---
 
 **参考资料（均为 2026-09-12 核对）**
 
-openai.com/index/introducing-the-agents-api/ （官方发布公告）
-developers.openai.com/api/docs/guides/agents-api/overview （官方文档 · Agents API 概览）
-developers.openai.com/api/docs/guides/agents （官方文档 · 三种 runtime 对比）
-community.openai.com/t/introducing-the-agents-api-and-hosted-sandboxes/1396481 （开发者社区帖，2026-09-10）
-www.163.com/dy/article/L6H2UMJ505198NMR.html （华尔街见闻报道转载，2026-09-11）
+openai.com/index/introducing-the-agents-api/（官方发布公告）
+developers.openai.com/api/docs/guides/agents-api/overview（官方文档 · Agents API 概览）
+developers.openai.com/api/docs/guides/agents（官方文档 · 三种 runtime 对比）
+community.openai.com/t/introducing-the-agents-api-and-hosted-sandboxes/1396481（开发者社区帖，2026-09-10）
+www.163.com/dy/article/L6H2UMJ505198NMR.html（华尔街见闻报道转载，2026-09-11）
+docs.openclaw.ai（OpenClaw 架构文档：agent loop / compaction / session / sandboxing / multi-agent / channels / memory / heartbeat）
 
-**核对说明**：模型名 `gpt-6-astra`、字段 `multi_agent.enabled` / `max_concurrent_subagents`、沙箱合作方 9 家（Blaxel AI、Cloudflare Dev、Daytona、DigitalOcean、E2B、Modal、Oracle Cloud、Runloop AI、Vercel）、计费口径，均已对照官方文档确认。仍未核实的：数据驻留与 ZDR 措辞、沙箱具体档位单价、Michael Luo 个人履历细节。
+**核对说明**：模型名 `gpt-6-astra`、字段 `multi_agent.enabled` / `max_concurrent_subagents`、沙箱合作方 9 家（Blaxel AI、Cloudflare Dev、Daytona、DigitalOcean、E2B、Modal、Oracle Cloud、Runloop AI、Vercel）、计费口径，均已对照官方文档确认。OpenClaw 侧架构描述（Gateway 单进程、auto-compaction 与 memory flush、session 落盘路径、steer 在模型边界注入、沙箱 off/non-main/all 与 docker/ssh/openshell 后端、工具分组与策略链、heartbeat 与 cron 分工）均对照其架构文档逐条核实。仍未核实的：数据驻留与 ZDR 措辞、沙箱具体档位单价、Michael Luo 个人履历细节。
