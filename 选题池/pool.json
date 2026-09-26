@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updatedAt": "2026-09-25T19:31:00+08:00",
+  "updatedAt": "2026-09-26T09:01:49+08:00",
   "topics": [
     {
       "id": "topic-20260906-001",
@@ -930,6 +930,26 @@
       "publishedAt": "2026-09-25T19:31:00+08:00",
       "status": "published",
       "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQm_mn6nDmN8Yq-kZORs4W33KIooZCA64eQmpwuEqfqIF"
+    },
+    {
+      "id": "topic-20260926-001",
+      "title": "Meta 承认 Muse 深受 OpenClaw 启发，但它把三样控制权收走了",
+      "angle": "同源范式、相反归属：运行时/模型/信任三样控制权的架构、流程与商业对比",
+      "outline": [
+        "Meta 发布会叙事",
+        "架构五层对比",
+        "一次任务的十阶段流程对比",
+        "Muse 安全工程 vs OpenClaw 可选沙箱",
+        "商业差异与外部性成本",
+        "控制权三问"
+      ],
+      "difficulty": "★★★",
+      "source": "TechCrunch / Meta 安全设计说明 / GitHub openclaw/openclaw",
+      "createdAt": "2026-09-26T08:58:00+08:00",
+      "selectedAt": "2026-09-26T08:58:00+08:00",
+      "publishedAt": "2026-09-26T09:10:00+08:00",
+      "status": "published",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQm0tbq1_JxdEkJLd05UgBrrRvYyL4MjnTpTEEaYcUNK-"
     }
   ]
 }
