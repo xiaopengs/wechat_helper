@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updatedAt": "2026-09-27T12:15:13+08:00",
+  "updatedAt": "2026-10-06T06:23:32.062520Z",
   "topics": [
     {
       "id": "topic-20260906-001",
@@ -950,6 +950,50 @@
       "publishedAt": "2026-09-27T12:15:13+08:00",
       "status": "published",
       "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQm0tbq1_JxdEkJLd05UgBrrRvYyL4MjnTpTEEaYcUNK-"
+    },
+    {
+      "id": "topic-20261004-001",
+      "title": "OpenDots 与 OpenMuse：数字员工和数字助理，造 agent 的方式正在换",
+      "angle": "把两个仓库并成一个判断：模型负责想，系统负责做和记——要让模型干活，得在它外面装上「记性/手脚/刹车」三样能力，两个仓库只是不同的组合方式。全程本地实测服务端与 mobile 源码，不引媒体转述。落地判断口径：差异不在能力清单，在每样能力做到了什么程度；刹车的分界是「动作会不会写到别人系统里」；OpenDots 只有 Web，OpenMuse 才有移动端。附核实 dot.com 归属（xAI 7 月转让、无整活实锤、dots.com 也不在 OpenAI 手中）。",
+      "outline": [
+        "导语:模型只会说话,干活要装记性/手脚/刹车",
+        "一、范式原理:模型负责想,系统负责做和记",
+        "二、记性:91 行 lease 调度器 + 任务状态机约束 + 周期监控",
+        "三、手脚:浏览器登录态跨任务保留 / 隔离容器 / 出网隔离两种哲学 / PDF 表单",
+        "四、刹车:tool 语义闸门 vs 提案状态机,分界看副作用是否出自家系统",
+        "五、上设备:mobile 9,587 行超 server 8,544 行,newArch + 三个 config plugin + native/web 双实现",
+        "六、躲不掉的云端 key,OpenMuse 留 agui 口子",
+        "七、dot.com 核实"
+      ],
+      "difficulty": "⭐⭐⭐",
+      "source": "CopilotKit/OpenDots + CopilotKit/openmuse 本地实测（MIT，2026-10-04 采样）",
+      "createdAt": "2026-10-04T22:13:00+08:00",
+      "selectedAt": "2026-10-04T22:13:00+08:00",
+      "publishedAt": "2026-10-04T22:13:00+08:00",
+      "status": "published",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQmo2Jg5a5CMQa6gwcrtm5kmTmqCNNfP5u1JSTtASZtk3"
+    },
+    {
+      "id": "topic-20261006-001",
+      "title": "MCP 转向异步 event，Android 直接把它做进了手机",
+      "angle": "从 MCP 2026-07-28 无状态化 + Tasks 扩展切入，落到移动端架构师视角：Android AppFunctions 作为设备端 MCP Server 的实现，讲「同步→事件驱动」的范式转移与端上/云端取舍边界；正文含 2 张自制架构图（MCP 范式流程 / AppFunctions 整体架构）+ 时序图 + 官方文档截图，共 4 张；与 topic-20260516-003（USB-C 通用接口角度）不同角度，不撞车；含接入端/使用端代码段（Kotlin + manifest）",
+      "outline": [
+        "开场：MCP 协议大改 + Android AppFunctions 两条线合并",
+        "背景：MCP 是什么、一年长到什么规模",
+        "问题：同步阻塞在长任务场景的死结",
+        "新范式三动作：去状态 / input_required 反向追问 / Tasks 移入扩展",
+        "时序图：长任务如何拆成可推进的事件流",
+        "移动端视角：AppFunctions = 设备端 MCP Server + 权限模型",
+        "工程判断四条（带适用边界）：必须异步 / 端上vs云端 / 权限即边界 / 现在是准备期",
+        "升华：协议处理「不优雅部分」的能力决定生死"
+      ],
+      "source": "MCP spec changelog (2026-07-28) + Android AppFunctions 官方文档",
+      "difficulty": "⭐⭐⭐",
+      "status": "published",
+      "createdAt": "2026-10-06T04:35:47.623170Z",
+      "selectedAt": "2026-10-06T04:35:47.623170Z",
+      "publishedAt": "2026-10-06T06:23:00.000Z",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQppYratPTpME-PlXIEttNBmGB3kWb1qW3QAvxRcCpFf6"
     }
   ]
 }
