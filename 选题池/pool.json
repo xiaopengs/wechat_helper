@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updatedAt": "2026-10-06T06:23:32.062520Z",
+  "updatedAt": "2026-10-11T05:39:23.347384Z",
   "topics": [
     {
       "id": "topic-20260906-001",
@@ -994,6 +994,36 @@
       "selectedAt": "2026-10-06T04:35:47.623170Z",
       "publishedAt": "2026-10-06T06:23:00.000Z",
       "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQppYratPTpME-PlXIEttNBmGB3kWb1qW3QAvxRcCpFf6"
+    },
+    {
+      "id": "topic-20261009-001",
+      "title": "拆解 RRSI：让 Agent 自己改自己容易上分，难的是怎么验收",
+      "angle": "产品总监视角重构版：术语统一为「方案」；删原 07；结构=结论先行→问题→效果→一道方案纪律+三道验收门→怎么接进现在的工作→适合谁→风险边界→行动清单。",
+      "outline": [
+        "导语：仓库硬数据",
+        "01 它在解决什么（harness/过拟合）",
+        "02 用了之后涨多少（9 基准效果表）",
+        "03 范式判断：约束搜索轨迹",
+        "04 提案侧三道约束",
+        "05 选择侧三条规则",
+        "06 评估前 Critic",
+        "07 worktree 隔离",
+        "08 提升的是什么能力",
+        "09 怎么接入（跑现成 / 接自域）",
+        "10 适合谁",
+        "11 移动端视角",
+        "12 能搬走的判断",
+        "13 冷水",
+        "14 启发",
+        "结尾"
+      ],
+      "source": "git clone google-research/rrsi + 源码取证 + gh api 硬数据",
+      "difficulty": "⭐⭐⭐",
+      "status": "published",
+      "createdAt": "2026-10-08T17:22:47.792375Z",
+      "selectedAt": "2026-10-08T17:22:47.792375Z",
+      "publishedAt": "2026-10-11T05:38:00.000Z",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQph3hBpF3ovDPm-Rc_4tcYBcJECKmvg3zdQXGtwzikO2"
     }
   ]
 }
