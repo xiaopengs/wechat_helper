@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updatedAt": "2026-10-11T05:40:06.829360Z",
+  "updatedAt": "2026-11-12T01:03:48.001963Z",
   "topics": [
     {
       "id": "topic-20260906-001",
@@ -1024,6 +1024,28 @@
       "selectedAt": "2026-10-08T17:22:47.792375Z",
       "publishedAt": "2026-10-11T05:38:00.000Z",
       "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQph3hBpF3ovDPm-Rc_4tcYBcJECKmvg3zdQXGtwzikO2"
+    },
+    {
+      "id": "topic-20261109-001",
+      "title": "模型只提议，系统才决定——nanoMuse 把端云一体写成了时序",
+      "angle": "端侧 Agent 系列第四篇（OpenMinis / Mika / dsh-go 之后）。浙大团队 2026-10-06 挂 arXiv 的 nanoMuse（12 页报告，两天后上 HF Daily Papers 当日第三，26 天 2000 star，GPL-3.0-or-later）不是从零造 Agent，而是把 OpenMinis 的整机结构、DeepSeek Harness 的桌面端、UI-TARS-desktop 与 MemGUI-Bench 的操作器用一套协议缝成一个人。核心论点：personal agent 是一类软件，不是一个模型——所以必然有调用顺序、协议、权限边界。全文不聊模型多聪明，只把一句话从说出到落在某台设备某只手上按 T(意图调度) / S(端云帧) / G(工具闸门) / P(真机调用) 四条链逐帧还原，每一步都说明为什么必须排在下一步之后。落点：决定 Agent 上限的不再只是模型聪明或它站在哪个 UID 上，而是每一步站在哪一时序、经谁批准、留下什么证据。",
+      "outline": [
+        "01 THE DEFINITION：什么才算 Personal Agent（五问 + 三个地平线），与 Meta Muse 四家公司五周同形状的对照表",
+        "02 THE INTENT：意图不是被理解的，是被路由的——T0→T7 单轮八时点，四级 ladder（skill/CLI/MCP → 带登录态 fetch → 应用内浏览器 → 屏幕），屏幕永远是最后一级",
+        "03 THE WIRE：Agent 不搬家只搬帧——S0→S9 十段帧时序，relay 只路由不存文本，call/result 同 id 配对，4009/4001/4003 等断线协议",
+        "04 THE GATE：模型只提议，系统才决定——G0→G9 全链路，Sentinel 六步短路决策顺序，taint 与 warning 两条旁路把 allow 强制升级为 ask",
+        "05 THE HANDS：屏幕内循环 Look → Decide → Act，那句 Action 是整个系统唯一能被确定性策略审核的东西",
+        "06 THE REAL CALL：微信回张三「明天见」的真实 12 时点 P0→P11，三个不能省的时点（P7 taint / P9 敏感词 / P10 审批回发起设备）",
+        "07 THE NUMBERS：38MB 手机端 / 928MB 桌面端 / 85MB relay，18→25 家 provider，自架 relay 约 ¥30–60 每月",
+        "08 THE SHIFT：三个默认值被改写 + 普通工程师五步掌握路径 + 四个最容易踩的坑 + 论文 Limitations"
+      ],
+      "source": "arXiv: nanoMuse: An Open-Source Personal Agent for Every Device You Own（浙大，2026-10-06，12 页）+ GitHub nanoMuse 仓库（GPL-3.0-or-later）+ HF Daily Papers 2026-10-08 当日第三",
+      "difficulty": "⭐⭐⭐",
+      "status": "published",
+      "createdAt": "2026-11-09T19:31:00+08:00",
+      "selectedAt": "2026-11-09T19:31:00+08:00",
+      "publishedAt": "2026-11-12T09:02:00+08:00",
+      "wechatDraftMediaId": "ZcYQQnSQkYyxy87FVQTFQgDvZckr7YQ6DFjNkwUtvakyBz5ZhotMqeoi0XX2baj7"
     }
   ]
 }
